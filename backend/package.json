@@ -1,0 +1,10 @@
+{
+  "name": "cognito-app-backend",
+  "version": "1.0.0",
+  "description": "Backend for the Cognito App",
+  "main": "app.js",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
