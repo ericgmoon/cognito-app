@@ -6,12 +6,14 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
 
+// Configure environment variables
+dotenv.config();
+
 // Declare a new express app
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Use AWS serverless middleware if being run remotely
-dotenv.config();
 // if (process.env.ENV === 'dev') {
 //   AWS.config.update({
 //     region: 'ap-southeast-2',
