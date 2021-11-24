@@ -2,9 +2,23 @@
   "name": "cognito-app-backend",
   "version": "1.0.0",
   "description": "Backend for the Cognito App",
-  "main": "app.js",
+  "main": "src/index.ts",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "@types/node": "^16.11.10",
+    "aws-sdk": "^2.1035.0",
+    "aws-serverless-express": "^3.4.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "typescript": "^4.5.2",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "nodemon src/index.ts"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
