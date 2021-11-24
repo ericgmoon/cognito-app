@@ -60,7 +60,10 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.12",
     "cypress": "^9.1.0",
-    "eslint": "^8.3.0",
-    "jest": "^27.3.1"
+    "eslint": "^7.11.0",
+    "jest": "26.6.0"
+  },
+  "optionalDependencies": {
+    "babel-loader": "8.1.0"
   }
 }
