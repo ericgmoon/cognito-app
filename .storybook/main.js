@@ -1,3 +1,6 @@
+const path = require('path');
+const toPath = (filePath) => path.join(process.cwd(), filePath);
+
 module.exports = {
   "stories": [
     "../src/**/*.stories.mdx",
@@ -8,6 +11,22 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/preset-create-react-app"
   ],
-  // TODO: Remove temporary fix: https://githubmemory.com/repo/storybookjs/storybook/issues/16099?page=2
-  features: { modernInlineRender: true }
+  // TODO: Remove the following temporary fix: https://githubmemory.com/repo/storybookjs/storybook/issues/16099?page=2
+  features: { modernInlineRender: true },
+  // TODO: Check and remove Storybook compatibility code once Storybook is in v7: 
+  // https://mui.com/guides/migration-v4/#storybook-emotion-with-v5
+  webpackFinal: async (config) => {
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.resolve.alias,
+          '@emotion/core': toPath('node_modules/@emotion/react'),
+          'emotion-theming': toPath('node_modules/@emotion/react'),
+        },
+      },
+    };
+  },
+
 }
