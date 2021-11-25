@@ -6,7 +6,10 @@ module.exports = {
     jest: true,
   },
   extends: [
-    'airbnb', 'plugin:react/jsx-runtime', 'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'eslint:recommended',
+    'airbnb',
   ],
   overrides: [
     {
@@ -14,12 +17,18 @@ module.exports = {
       rules: { 'import/no-anonymous-default-export': 'off' },
     },
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaFeatures: { jsx: true },
+    ecmaFeatures: {
+      jsx: true,
+    },
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: [
+    'react',
+    '@typescript-eslint',
+  ],
   rules: {
     'react/jsx-props-no-spreading': 'off',
     'object-curly-newline': [
@@ -52,6 +61,11 @@ module.exports = {
             group: 'external',
             position: 'before',
           },
+          {
+            pattern: '@blahaj/**',
+            group: 'internal',
+            position: 'before',
+          },
         ],
         pathGroupsExcludedImportTypes: ['builtin'],
         alphabetize: {
@@ -60,6 +74,7 @@ module.exports = {
         },
       },
     ],
+    'react/no-unescaped-entities': 'off',
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': [
       'error',
