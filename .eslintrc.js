@@ -1,5 +1,4 @@
 const commonRules = {
-
   'react/jsx-props-no-spreading': 'off',
   'object-curly-newline': [
     'error', {
