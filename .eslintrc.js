@@ -91,7 +91,7 @@ module.exports = {
       'error',
       {
         devDependencies: [
-          'webpack.*.js', '**/*.test.js', '**/*.spec.js',
+          'webpack.*.js', '**/*.test.js', '**/*.spec.js', '**/*.stories.jsx', 'webpack.*.ts', '**/*.test.ts', '**/*.spec.ts', '**/*.stories.tsx',
         ],
       },
     ],
