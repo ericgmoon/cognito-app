@@ -10,6 +10,7 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'eslint:recommended',
     'airbnb',
+    'plugin:import/typescript',
   ],
   overrides: [
     {
@@ -48,6 +49,16 @@ module.exports = {
         ignoreCase: true,
         ignoreDeclarationSort: true,
         ignoreMemberSort: false,
+      },
+    ],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
       },
     ],
     'import/order': [
@@ -89,8 +100,15 @@ module.exports = {
     'no-plusplus': 'off',
     'function-paren-newline': 'off',
     'react/jsx-one-expression-per-line': 'off',
+    'react/jsx-filename-extension': [2, { extensions: ['.jsx', '.tsx'] }],
     'array-bracket-newline': [
       'error', 'consistent',
+    ],
+    'react/function-component-definition': [
+      2,
+      {
+        namedComponents: 'function-declaration',
+      },
     ],
   },
 };
