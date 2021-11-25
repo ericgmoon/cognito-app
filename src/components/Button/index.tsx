@@ -9,7 +9,7 @@ const Button = () => (
     <HelloContainer>
       Hello World!
     </HelloContainer>
-    <MaterialButton variant="outlined">Hello</MaterialButton>
+    <MaterialButton color="primary" variant="contained">Hello</MaterialButton>
   </>
 );
 
