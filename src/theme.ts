@@ -33,8 +33,6 @@ const theme = {
       light: '#5982c5',
       contrastText: '#fff',
     },
-    black: '#000',
-    white: '#fff',
     error: {
       main: '#f44336',
       light: '#e57373',
