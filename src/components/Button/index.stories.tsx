@@ -1,11 +1,12 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Button from '.';
 
 export default {
-    title: 'Cognito/Button',
-    component: Button,
+  title: 'Cognito/Button',
+  component: Button,
 } as ComponentMeta<typeof Button>;
 
 const Template: ComponentStory<typeof Button> = () => <Button />;
