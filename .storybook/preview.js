@@ -1,5 +1,8 @@
-import { ThemeProvider } from '@mui/material/styles';
 import theme from '../src/theme';
+
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from 'styled-components';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -13,9 +16,11 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      {console.log(theme)}
-      <Story />
-    </ThemeProvider>
+    <MUIThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Story />
+      </ThemeProvider>
+    </MUIThemeProvider>
   )
 ]

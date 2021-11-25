@@ -1,26 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import './App.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from 'styled-components';
+
+import Button from './components/Button';
+import theme from './theme';
+
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <MUIThemeProvider theme={theme}>
+      <CssBaseline />
+      <Button />
+    </MUIThemeProvider>
+  </ThemeProvider>
+);
 
 export default App;
