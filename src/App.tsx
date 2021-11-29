@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './App.css';
+import './fonts/fonts.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { ThemeProvider } from 'styled-components';
@@ -12,7 +13,7 @@ const App = () => (
   <ThemeProvider theme={theme}>
     <MUIThemeProvider theme={theme}>
       <CssBaseline />
-      <Button />
+      <Button text="epic stuff" />
     </MUIThemeProvider>
   </ThemeProvider>
 );

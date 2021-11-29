@@ -1,15 +1,27 @@
 import React, { Fragment } from 'react';
 
-import { Button as MaterialButton } from '@mui/material';
+import { Typography } from '@mui/material';
 
-import { HelloContainer } from './index.styles';
+import { StyledButton } from './index.styles';
 
-const Button = () => (
+interface ButtonProps {
+  color?: 'primary' | 'secondary';
+  variant?: 'text' | 'contained' | 'outlined';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+  text: string;
+  onClick?: () => void;
+}
+
+const Button = ({ disabled = false, color = 'primary', size = 'small', variant = 'contained', text, onClick }: ButtonProps) => (
   <>
-    <HelloContainer>
-      Hello World!
-    </HelloContainer>
-    <MaterialButton color="primary" variant="contained">Hello</MaterialButton>
+    <Typography variant="h1">Hello</Typography>
+    <Typography>
+      Hello HelloHelloHelloHelloHello
+    </Typography>
+    <StyledButton disabled={disabled} color={color} size={size} variant={variant} onClick={onClick}>
+      {text}
+    </StyledButton>
   </>
 );
 
