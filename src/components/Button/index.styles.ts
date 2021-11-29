@@ -1,5 +1,9 @@
-import styled, { StyledComponent } from 'styled-components';
+import { Button } from '@mui/material';
+// import { styled } from '@mui/material/styles';
+import styled from 'styled-components';
 
-export const HelloContainer: StyledComponent<'div', any, {}, never> = styled.div(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.main,
-}));
+const StyledButton = styled(Button)`
+  color: white;
+`;
+
+export { StyledButton };

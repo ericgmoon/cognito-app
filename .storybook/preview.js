@@ -3,6 +3,7 @@ import theme from '../src/theme';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from 'styled-components';
+import '../src/fonts/fonts.css';
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
