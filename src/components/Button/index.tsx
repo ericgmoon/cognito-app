@@ -1,28 +1,32 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import { Typography } from '@mui/material';
+import { ButtonProps as MUIButtonProps } from '@mui/material/Button';
+import { useTheme } from 'styled-components';
 
 import { StyledButton } from './index.styles';
 
-interface ButtonProps {
-  color?: 'primary' | 'secondary';
-  variant?: 'text' | 'contained' | 'outlined';
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
-  text: string;
-  onClick?: () => void;
+interface ButtonProps extends Omit<MUIButtonProps, 'color'> {
+  // Background color of the button
+  color: string,
+  // Color of the button text
+  textColor: string,
 }
 
-const Button = ({ disabled = false, color = 'primary', size = 'small', variant = 'contained', text, onClick }: ButtonProps) => (
-  <>
-    <Typography variant="h1">Hello</Typography>
-    <Typography>
-      Hello HelloHelloHelloHelloHello
-    </Typography>
-    <StyledButton disabled={disabled} color={color} size={size} variant={variant} onClick={onClick}>
-      {text}
+const Button = ({ variant = 'contained', color, textColor, children, ...rest }: ButtonProps) => {
+  const theme = useTheme();
+  console.log(theme);
+
+  return (
+    <StyledButton
+      variant={variant}
+      cssColor={color}
+      cssTextColor={textColor}
+      disableRipple
+      {...rest}
+    >
+      {children}
     </StyledButton>
-  </>
-);
+  );
+};
 
 export default Button;

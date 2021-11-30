@@ -1,19 +1,6 @@
-import { createTheme } from '@mui/material/styles';
-
-// Augment module to accept custom theme values
-// declare module '@mui/material/styles' {
-//     interface Theme {
-//       status: {
-//         danger: string;
-//       };
-//     }
-//     // allow configuration using `createTheme`
-//     interface ThemeOptions {
-//       status?: {
-//         danger?: string;
-//       };
-//     }
-//   }
+import {
+  createTheme,
+} from '@mui/material/styles';
 
 const theme = {
   spacing: 8,
@@ -26,6 +13,12 @@ const theme = {
       dark: '#32989a',
       light: '#d1eff0',
       contrastText: '#000',
+    },
+    darkPrimary: {
+      main: '#32989a',
+      dark: '#143D3E',
+      light: '#70d0d1',
+      contrastText: '#fff',
     },
     secondary: {
       main: '#345995',
