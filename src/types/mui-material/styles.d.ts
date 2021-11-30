@@ -3,21 +3,11 @@ import '@mui/material/styles';
 // Add more properties here as required in theme.ts
 declare module '@mui/material/styles' {
   export interface Palette {
-      darkPrimary: {
-        main: string,
-        dark: string,
-        light: string,
-        contrastText: string,
-    }
+      darkPrimary: Palette['primary'],
   }
 
   export interface PaletteOptions{
-    darkPrimary?: {
-      main?: string,
-      dark?: string,
-      light?: string,
-      contrastText?: string,
-    }
+    darkPrimary?: PaletteOptions['primary'],
   }
 
   export interface Theme {
