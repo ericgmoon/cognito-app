@@ -1,6 +1,4 @@
-import React, { Fragment } from 'react';
-
-import { Typography } from '@mui/material';
+import React from 'react';
 
 import { StyledButton } from './index.styles';
 
@@ -14,15 +12,9 @@ interface ButtonProps {
 }
 
 const Button = ({ disabled = false, color = 'primary', size = 'small', variant = 'contained', text, onClick }: ButtonProps) => (
-  <>
-    <Typography variant="h1">Hello</Typography>
-    <Typography>
-      Hello HelloHelloHelloHelloHello
-    </Typography>
-    <StyledButton disabled={disabled} color={color} size={size} variant={variant} onClick={onClick}>
-      {text}
-    </StyledButton>
-  </>
+  <StyledButton disabled={disabled} color={color} size={size} variant={variant} onClick={onClick}>
+    {text}
+  </StyledButton>
 );
 
 export default Button;
