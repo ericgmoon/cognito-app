@@ -1,13 +1,10 @@
 import React from 'react';
 
+import { TextFieldProps as MUITextFieldProps } from '@mui/material';
+
 import { StyledTextField } from './index.styles';
 
-interface TextFieldProps {
-    label: string;
-    disabled?: boolean;
-}
-
-const TextField = ({ disabled = false, label }: TextFieldProps) => (
+const TextField = ({ disabled = false, label }: MUITextFieldProps) => (
   <StyledTextField label={label} disabled={disabled} variant="outlined" />
 );
 

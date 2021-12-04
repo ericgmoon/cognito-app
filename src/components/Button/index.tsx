@@ -1,19 +1,24 @@
 import React from 'react';
 
+import { ButtonProps as MUIButtonProps } from '@mui/material/Button';
+
 import { StyledButton } from './index.styles';
 
-interface ButtonProps {
-  color?: 'primary' | 'secondary';
-  variant?: 'text' | 'contained' | 'outlined';
-  size?: 'small' | 'medium' | 'large';
-  disabled?: boolean;
-  text: string;
-  onClick?: () => void;
+interface ButtonProps extends MUIButtonProps {
+  /**
+   * If `true`, the button text is no longer transformed
+   */
+  disableCaps?: boolean,
 }
 
-const Button = ({ disabled = false, color = 'primary', size = 'small', variant = 'contained', text, onClick }: ButtonProps) => (
-  <StyledButton disabled={disabled} color={color} size={size} variant={variant} onClick={onClick}>
-    {text}
+const Button = ({ variant = 'contained', color = 'darkPrimary', children, ...rest }: ButtonProps) => (
+  <StyledButton
+    variant={variant}
+    color={color}
+    disableRipple
+    {...rest}
+  >
+    {children}
   </StyledButton>
 );
 
