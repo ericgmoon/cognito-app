@@ -11,6 +11,21 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/preset-create-react-app"
   ],
+  typescript: {
+    reactDocgen: "react-docgen-typescript",
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      compilerOptions: {
+        allowSyntheticDefaultImports: false,
+        esModuleInterop: false,
+      },
+      propFilter: (prop) => {
+        return prop.parent
+            ?  prop.parent.name !== 'DOMAttributes' && prop.parent.name !== 'HTMLAttributes' && prop.parent.name !== 'AriaAttributes'
+            : true;
+      },
+    },
+  },
   // TODO: Remove the following temporary fix: https://githubmemory.com/repo/storybookjs/storybook/issues/16099?page=2
   features: { modernInlineRender: true },
   // TODO: Check and remove Storybook compatibility code once Storybook is in v7: 
