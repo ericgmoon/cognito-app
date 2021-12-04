@@ -16,7 +16,7 @@ const theme = {
     },
     darkPrimary: {
       main: '#32989a',
-      dark: '#143D3E',
+      dark: '#287a7b',
       light: '#70d0d1',
       contrastText: '#fff',
     },
