@@ -9,12 +9,4 @@ declare module '@mui/material/styles' {
   export interface PaletteOptions{
     darkPrimary?: PaletteOptions['primary'],
   }
-
-  export interface Theme {
-    palette: Palette
-  }
-
-  export interface ThemeOptions {
-    palette?: PaletteOptions
-  }
 }
