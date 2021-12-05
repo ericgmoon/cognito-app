@@ -2,7 +2,7 @@ import { TextField, TextFieldProps } from '@mui/material';
 import styled from 'styled-components';
 
 const StyledTextField = styled(TextField)<TextFieldProps>`
-  background-color: ${(props) => (props.theme.palette.gray.main)};;
+  background-color: ${({ theme }) => (theme.palette.gray.main)};
   border-radius: 32px;
   
   & label {
@@ -11,21 +11,21 @@ const StyledTextField = styled(TextField)<TextFieldProps>`
   }
 
   & label.Mui-focused {
-    border-color: ${(props) => (props.theme.palette.primary.main)},
+    border-color: ${({ theme }) => (theme.palette.primary.main)};
   }
 
   & .MuiOutlinedInput-root {
     padding-left: 8px;
     padding-right: 8px;
     & fieldset {
-      border-color: ${(props) => (props.theme.palette.gray.main)};
+      border-color: ${({ theme }) => (theme.palette.gray.main)};
       border-radius: 32px;
     }
     &:hover fieldset {
-      border-color: ${(props) => (props.theme.palette.primary.main)};
+      border-color: ${({ theme }) => (theme.palette.primary.main)};
     }
     &.Mui-focused fieldset {
-      border-color: ${(props) => (props.theme.palette.primary.main)};
+      border-color: ${({ theme }) => (theme.palette.primary.main)};
     }
   }
 `;
