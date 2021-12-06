@@ -1,5 +1,4 @@
 const commonRules = {
-  'react/jsx-props-no-spreading': 'off',
   'object-curly-newline': [
     'error', {
       ObjectExpression: {
@@ -24,9 +23,7 @@ const commonRules = {
     'ignorePackages',
     {
       js: 'never',
-      jsx: 'never',
       ts: 'never',
-      tsx: 'never',
     },
   ],
   'import/order': [
@@ -35,11 +32,6 @@ const commonRules = {
       'newlines-between': 'always',
       groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
       pathGroups: [
-        {
-          pattern: 'react',
-          group: 'external',
-          position: 'before',
-        },
         // {
         //   pattern: '@blahaj/**',
         //   group: 'internal',
@@ -53,13 +45,12 @@ const commonRules = {
       },
     },
   ],
-  'react/no-unescaped-entities': 'off',
   'import/prefer-default-export': 'off',
   'import/no-extraneous-dependencies': [
     'error',
     {
       devDependencies: [
-        'webpack.*.js', '**/*.test.js', '**/*.spec.js', '**/*.stories.jsx', 'webpack.*.ts', '**/*.test.ts', '**/*.spec.ts', '**/*.stories.tsx',
+        'webpack.*.js', '**/*.test.js', '**/*.spec.js', 'webpack.*.ts', '**/*.test.ts', '**/*.spec.ts',
       ],
     },
   ],
@@ -67,24 +58,12 @@ const commonRules = {
   'operator-linebreak': 'off',
   'no-plusplus': 'off',
   'function-paren-newline': 'off',
-  'react/jsx-one-expression-per-line': 'off',
-  'react/jsx-filename-extension': [2, { extensions: ['.jsx', '.tsx'] }],
   'array-bracket-newline': [
     'error', 'consistent',
   ],
-  'react/function-component-definition': [
-    2,
-    {
-      unnamedComponents: 'arrow-function',
-      namedComponents: 'arrow-function',
-    },
-  ],
-  'react/require-default-props': 'off',
 };
 
 const commonExtensions = [
-  'plugin:react/recommended',
-  'plugin:react/jsx-runtime',
   'eslint:recommended',
   'airbnb',
 ];
@@ -99,12 +78,8 @@ module.exports = {
   extends: [...commonExtensions],
   overrides: [
     {
-      files: ['**/*.stories.*'],
-      rules: { 'import/no-anonymous-default-export': 'off' },
-    },
-    {
-      files: ['**/*.ts', '**/*.tsx'],
-      plugins: ['react', '@typescript-eslint'],
+      files: ['**/*.ts'],
+      plugins: ['@typescript-eslint'],
       extends: [
         ...commonExtensions,
         'plugin:import/typescript',
@@ -128,14 +103,9 @@ module.exports = {
     },
   ],
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react'],
   rules: { ...commonRules },
-  // These folders are hosted independently on AWS Lambda, so have their own ESLint instances
-  ignorePatterns: ['backend', 'functions'],
+  root: true,
 };
