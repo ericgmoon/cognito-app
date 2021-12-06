@@ -5,10 +5,10 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import Login from '.';
 
 export default {
-  title: 'Cognito/Login',
+  title: 'Components/Login',
   component: Login,
 } as ComponentMeta<typeof Login>;
 
 const Template: ComponentStory<typeof Login> = () => <Login />;
 
-export const Primary = Template.bind({});
+export const Default = Template.bind({});

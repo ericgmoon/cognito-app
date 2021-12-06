@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import { TextFieldProps as MUITextFieldProps } from '@mui/material';
+import { InputBaseProps } from '@mui/material/InputBase';
 
 import { StyledTextField } from './index.styles';
 
-const TextField = ({ disabled = false, label }: MUITextFieldProps) => (
-  <StyledTextField label={label} disabled={disabled} variant="outlined" />
-);
+const TextField = forwardRef((props: InputBaseProps, ref) => (
+  <StyledTextField inputRef={ref} {...props} />
+));
 
 export default TextField;

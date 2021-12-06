@@ -1,8 +1,9 @@
-// import { styled } from '@mui/material/styles';
-// // import styled from 'styled-components';
+import styled from 'styled-components';
 
-// const StyledLogin = styled()(({ theme }) => ({
-//   backgroundColor: theme.palette.gray.main,
-// }));
+const StyledLogin = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 
-// export { StyledLogin };
+export { StyledLogin };
