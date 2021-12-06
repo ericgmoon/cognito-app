@@ -113,7 +113,7 @@ module.exports = {
       parserOptions: { project: ['./tsconfig.json'] },
       rules: {
         ...commonRules,
-        // Turn off the default `no-unused-vars` and use the TS one instead
+        // Use TS-adjusted rules instead
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],
         indent: 'off',
