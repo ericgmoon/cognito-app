@@ -14,7 +14,6 @@ const StyledButton = styled(Button)<StyledButtonProps>`
     padding-top: 12px;
     padding-bottom: 12px;
     border-radius: 8px;
-    margin: 8px;
   }
 `;
 
