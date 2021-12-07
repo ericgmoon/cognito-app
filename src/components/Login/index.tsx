@@ -8,10 +8,6 @@ import {
   StyledButton, StyledLogin, TextFieldContainer,
 } from './index.styles';
 
-// interface LoginProps {
-//   mobile: boolean,
-// }
-
 interface Data {
   email:string;
   password:string;
