@@ -26,6 +26,12 @@ const theme = {
       light: '#5982c5',
       contrastText: '#fff',
     },
+    gray: {
+      main: '#EFEFEF',
+      dark: '#D8D8D8',
+      light: '#FBFBFB',
+      contrastText: '#393939',
+    },
     error: {
       main: '#f44336',
       light: '#e57373',
