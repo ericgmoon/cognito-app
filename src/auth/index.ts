@@ -80,7 +80,7 @@ export const resendConfirmationCode = async (username: string | undefined) =>
  * @param onSuccess
  * @param onFailure
  */
-export const signIn = async (
+export const SignIn = async (
   username: string | undefined,
   password: string,
   onSuccess?: () => any,

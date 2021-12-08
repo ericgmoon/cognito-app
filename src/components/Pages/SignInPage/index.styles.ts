@@ -11,7 +11,7 @@ const RootContainer = styled.div`
 const Title = styled(Typography)`
   && {
     color: ${({ theme }) => (theme.palette.secondary.dark)};
-    margin: 24px;
+    margin-bottom: 24px;
     font-weight: bold;
   }
 `;
@@ -25,6 +25,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   align-items: center;
   justify-content: center;
 `;

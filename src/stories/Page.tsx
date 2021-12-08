@@ -5,14 +5,14 @@ import './page.css';
 
 interface PageProps {
   user?: {};
-  onLogin: () => void;
+  onSignIn: () => void;
   onLogout: () => void;
   onCreateAccount: () => void;
 }
 
-export const Page = ({ user, onLogin, onLogout, onCreateAccount }: PageProps) => (
+export const Page = ({ user, onSignIn, onLogout, onCreateAccount }: PageProps) => (
   <article>
-    <Header user={user} onLogin={onLogin} onLogout={onLogout} onCreateAccount={onCreateAccount} />
+    <Header user={user} onSignIn={onSignIn} onLogout={onLogout} onCreateAccount={onCreateAccount} />
 
     <section>
       <h2>Pages in Storybook</h2>

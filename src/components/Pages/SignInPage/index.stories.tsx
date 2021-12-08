@@ -2,14 +2,14 @@ import React from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import LoginPage from '.';
+import SignInPage from '.';
 
 export default {
-  title: 'Pages/LoginPage',
-  component: LoginPage,
-} as ComponentMeta<typeof LoginPage>;
+  title: 'Pages/SignInPage',
+  component: SignInPage,
+} as ComponentMeta<typeof SignInPage>;
 
-const Template: ComponentStory<typeof LoginPage> = () => <LoginPage />;
+const Template: ComponentStory<typeof SignInPage> = () => <SignInPage />;
 
 export const Default = Template.bind({});
 Default.args = {

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import TextField from '../TextField';
 
 import {
-  StyledButton, StyledLogin, TextFieldContainer,
+  StyledButton, StyledSignIn, TextFieldContainer,
 } from './index.styles';
 
 interface Data {
@@ -13,7 +13,7 @@ interface Data {
   password:string;
 }
 
-const Login = (/* { mobile = false }: LoginProps */) => {
+const SignIn = (/* { mobile = false }: SignInProps */) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data: Data) => console.log(data);
   console.log(errors);
@@ -33,7 +33,7 @@ const Login = (/* { mobile = false }: LoginProps */) => {
   };
 
   return (
-    <StyledLogin onSubmit={handleSubmit(onSubmit)}>
+    <StyledSignIn onSubmit={handleSubmit(onSubmit)}>
       <TextFieldContainer>
         <TextField
           placeholder="Email"
@@ -52,10 +52,10 @@ const Login = (/* { mobile = false }: LoginProps */) => {
         />
       </TextFieldContainer>
       <StyledButton type="submit">
-        Submit
+        Sign In
       </StyledButton>
-    </StyledLogin>
+    </StyledSignIn>
   );
 };
 
-export default Login;
+export default SignIn;

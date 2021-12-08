@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Button from '../Button';
 
-const StyledLogin = styled.form`
+const StyledSignIn = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,4 +18,4 @@ const StyledButton = styled(Button)`
     }
 `;
 
-export { StyledLogin, TextFieldContainer, StyledButton };
+export { StyledSignIn, TextFieldContainer, StyledButton };

@@ -8,13 +8,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import logo from '../../../images/logo.png';
 import Button from '../../Button';
-import Login from '../../Login';
+import SignIn from '../../SignIn';
 
 import {
   Bold, Container, Logo, RootContainer, Title,
 } from './index.styles';
 
-const LoginPage = () => {
+const SignInPage = () => {
   const theme = useTheme();
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -54,11 +54,11 @@ const LoginPage = () => {
           <Divider orientation={getOrientation()}> <Bold>OR</Bold> </Divider>
         </Grid>
         <Grid item xs={12} md={5}>
-          <Login />
+          <SignIn />
         </Grid>
       </Grid>
     </RootContainer>
   );
 };
 
-export default LoginPage;
+export default SignInPage;
