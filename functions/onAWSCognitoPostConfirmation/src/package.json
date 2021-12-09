@@ -1,0 +1,10 @@
+{
+  "name": "onAWSCognitoPostConfirmation",
+  "version": "1.0.0",
+  "description": "Lambda function triggered by post-confirmation on AWS Cognito",
+  "main": "index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1043.0"
+  }
+}

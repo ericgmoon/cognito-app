@@ -1,6 +1,5 @@
-export {};
+import serverlessExpress from '@vendia/serverless-express';
 
-const serverlessExpress = require('@vendia/serverless-express');
-const app = require('./app');
+import app from './app';
 
-exports.handler = serverlessExpress({ app })
+export default serverlessExpress({ app });
