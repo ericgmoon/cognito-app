@@ -51,7 +51,7 @@ const SignInPage = () => {
           </Container>
         </Grid>
         <Grid item xs={12} md={2}>
-          <Divider orientation={getOrientation()}> <Bold>OR</Bold> </Divider>
+          <Divider orientation={getOrientation()} variant={isMd ? 'fullWidth' : 'middle'}> <Bold>OR</Bold> </Divider>
         </Grid>
         <Grid item xs={12} md={5}>
           <SignIn />

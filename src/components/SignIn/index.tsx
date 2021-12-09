@@ -16,20 +16,16 @@ interface Data {
 const SignIn = (/* { mobile = false }: SignInProps */) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = (data: Data) => console.log(data);
-  console.log(errors);
 
   const getErrorMessage = (type: string, field: string): string => {
-    let error;
-
-    if (type === 'pattern') {
-      error = `Please enter a valid ${field}`;
-    } else if (type === 'required') {
-      error = `Please enter your ${field}`;
-    } else {
-      error = `Error: ${type}`;
+    switch (type) {
+      case 'pattern':
+        return `Please enter a valid ${field}`;
+      case 'required':
+        return `Please enter your ${field}`;
+      default:
+        return `Error: ${type}`;
     }
-
-    return error;
   };
 
   return (

@@ -12,6 +12,3 @@ export default {
 const Template: ComponentStory<typeof SignInPage> = () => <SignInPage />;
 
 export const Default = Template.bind({});
-Default.args = {
-  placeholder: 'Text Field',
-};
