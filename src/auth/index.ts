@@ -2,6 +2,8 @@ import {
   AuthenticationDetails, CognitoUserAttribute, NodeCallback,
 } from 'amazon-cognito-identity-js';
 
+import { validateNewUser } from '../services/users';
+
 import {
   getCognitoUser, getCognitoUserPool, getErrorMessage,
 } from './utils';
@@ -25,7 +27,7 @@ export const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.g
  * @param email
  * @param phoneNumber
  */
-export const signUp = async (
+const signUp = async (
   username: string | undefined,
   password: string | undefined,
   email: string | undefined,
@@ -45,10 +47,23 @@ export const signUp = async (
 
   const userAttributes = [emailAttribute, phoneNumberAttribute];
 
-  return getCognitoUserPool().signUp(username, password, userAttributes, [], (err, res) => {
+  return getCognitoUserPool().signUp(username, password, userAttributes, [], (err) => {
+    // TODO: Throw error in these cases once error handling is implemented
     if (err) console.log(getErrorMessage(err));
-    else console.log(res);
   });
+};
+
+export const signUpWithValidation = async (
+  username: string | undefined,
+  password: string | undefined,
+  email: string | undefined,
+  phoneNumber: string | undefined) => {
+  // Check if the user is validated / whitelisted
+  const response = await validateNewUser(phoneNumber, (err) =>
+    console.log(err?.response?.data?.message));
+
+  if (response) return signUp(username, password, email, phoneNumber);
+  return null;
 };
 
 /**
@@ -57,9 +72,8 @@ export const signUp = async (
  * @param verificationCode
  */
 export const confirmSignUp = async (username: string | undefined, verificationCode: string) =>
-  getCognitoUser(username)?.confirmRegistration(verificationCode, true, (err, res) => {
+  getCognitoUser(username)?.confirmRegistration(verificationCode, true, (err) => {
     if (err) console.log(getErrorMessage(err));
-    else console.log(res);
   });
 
 /**
@@ -68,9 +82,8 @@ export const confirmSignUp = async (username: string | undefined, verificationCo
  * @returns
  */
 export const resendConfirmationCode = async (username: string | undefined) =>
-  getCognitoUser(username)?.resendConfirmationCode((err, res) => {
+  getCognitoUser(username)?.resendConfirmationCode((err) => {
     if (err) console.log(getErrorMessage(err));
-    else console.log(res);
   });
 
 /**
@@ -96,6 +109,7 @@ export const signIn = async (
   return getCognitoUser(username)?.authenticateUser(authenticationDetails, {
     onSuccess: () => onSuccess && onSuccess(),
     onFailure: (err) => {
+      // TODO: Throw error in these cases once error handling is implemented
       console.log(getErrorMessage(err));
       return onFailure && onFailure();
     },
@@ -128,6 +142,7 @@ export const globalSignOut = async (
     await getCognitoUser(username)?.globalSignOut({
       onSuccess: () => onSuccess && onSuccess(),
       onFailure: (err) => {
+        // TODO: Throw error in these cases once error handling is implemented
         console.log(getErrorMessage(err));
         return onFailure && onFailure();
       },
@@ -147,9 +162,9 @@ export const changePassword = async (oldPassword: string, newPassword: string) =
   const username = await getCurrentUsername();
 
   if (username) {
-    await getCognitoUser(username)?.changePassword(oldPassword, newPassword, (err, res) => {
+    await getCognitoUser(username)?.changePassword(oldPassword, newPassword, (err) => {
+      // TODO: Throw error in these cases once error handling is implemented
       if (err) console.log(getErrorMessage(err));
-      else console.log(res);
     });
   } else {
     // TODO: Throw error in these cases once error handling is implemented
@@ -170,6 +185,7 @@ export const sendPasswordResetCode = (
   getCognitoUser(username)?.forgotPassword({
     onSuccess: () => onSuccess && onSuccess(),
     onFailure: (err) => {
+      // TODO: Throw error in these cases once error handling is implemented
       console.log(getErrorMessage(err));
       return onFailure && onFailure();
     },
@@ -193,6 +209,7 @@ export const confirmPasswordResetCode = (
   getCognitoUser(username)?.confirmPassword(verificationCode, newPassword, {
     onSuccess: () => onSuccess && onSuccess(),
     onFailure: (err) => {
+      // TODO: Throw error in these cases once error handling is implemented
       console.log(getErrorMessage(err));
       return onFailure && onFailure();
     },
@@ -231,6 +248,7 @@ export const sendEmailConfirmationCode = async (
     user.getAttributeVerificationCode('email', {
       onSuccess: () => onSuccess && onSuccess(),
       onFailure: (err) => {
+        // TODO: Throw error in these cases once error handling is implemented
         console.log(getErrorMessage(err));
         return onFailure && onFailure();
       },
@@ -256,6 +274,7 @@ export const confirmEmailConfirmationCode = async (
     user.verifyAttribute('email', verificationCode, {
       onSuccess: () => onSuccess && onSuccess(),
       onFailure: (err) => {
+        // TODO: Throw error in these cases once error handling is implemented
         console.log(getErrorMessage(err));
         return onFailure && onFailure();
       },

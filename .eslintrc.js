@@ -136,6 +136,6 @@ module.exports = {
   },
   plugins: ['react'],
   rules: { ...commonRules },
-  // These folders are hosted independently on AWS Lambda, so have their own ESLint instances
-  ignorePatterns: ['backend', 'functions'],
+  // The backend has its own ESLint configurations
+  ignorePatterns: ['backend'],
 };
