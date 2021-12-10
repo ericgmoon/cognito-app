@@ -1,0 +1,217 @@
+name: Branch Build
+
+# Run this workflow every time a new commit pushed to your repository
+on: push
+
+jobs:
+  setup-frontend:
+    name: Set up frontend
+    runs-on: ubuntu-latest
+    steps:
+      # Check out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Define GitHub Actions bot credentials
+      - name: Define credentials
+        run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com" && git config --local user.name "GitHub Actions"
+      # Merge with master
+      - name: Merge with master
+        run: ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD); (git checkout master || git checkout -b master) && git pull origin master && git merge $ORIG_BRANCH
+      # Cache node_modules and refresh the cache only when yarn.lock changes
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        # Use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+  setup-backend:
+    name: Set up backend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      # Check out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Define GitHub Actions bot credentials
+      - name: Define credentials
+        run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com" && git config --local user.name "GitHub Actions"
+      # Merge with master
+      - name: Merge with master
+        run: ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD); (git checkout master || git checkout -b master) && git pull origin master && git merge $ORIG_BRANCH
+      # Cache node_modules and refresh the cache only when yarn.lock changes
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        # Use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+  lint-frontend:
+    name: Run linting for frontend
+    runs-on: ubuntu-latest
+    needs: setup-frontend
+    steps:
+      # Check out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Define GitHub Actions bot credentials
+      - name: Define credentials
+        run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com" && git config --local user.name "GitHub Actions"
+      # Merge with master
+      - name: Merge with master
+        run: ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD); (git checkout master || git checkout -b master) && git pull origin master && git merge $ORIG_BRANCH
+      # Cache node_modules and refresh the cache only when yarn.lock changes
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        # Use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+      # Runs linting command
+      - name: Run linting tests
+        run: yarn lint .
+  lint-backend:
+    name: Run linting for backend
+    runs-on: ubuntu-latest
+    needs: setup-backend
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      # Check out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Define GitHub Actions bot credentials
+      - name: Define credentials
+        run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com" && git config --local user.name "GitHub Actions"
+      # Merge with master
+      - name: Merge with master
+        run: ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD); (git checkout master || git checkout -b master) && git pull origin master && git merge $ORIG_BRANCH
+      # Cache node_modules and refresh the cache only when yarn.lock changes
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        # Use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+      # Runs linting command
+      - name: Run linting tests
+        run: yarn lint .
+  unit-tests-frontend:
+    name: Run unit tests for frontend
+    runs-on: ubuntu-latest
+    needs: setup-frontend
+    steps:
+      # Check out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Define GitHub Actions bot credentials
+      - name: Define credentials
+        run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com" && git config --local user.name "GitHub Actions"
+      # Merge with master
+      - name: Merge with master
+        run: ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD); (git checkout master || git checkout -b master) && git pull origin master && git merge $ORIG_BRANCH
+      # Cache node_modules and refresh the cache only when yarn.lock changes
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        # Use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+      # Runs unit tests
+      - name: Run unit tests
+        run: yarn test ./src/*
+  unit-tests-backend:
+    name: Run unit tests for backend
+    runs-on: ubuntu-latest
+    needs: setup-backend
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      # Check out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      # Define GitHub Actions bot credentials
+      - name: Define credentials
+        run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com" && git config --local user.name "GitHub Actions"
+      # Merge with master
+      - name: Merge with master
+        run: ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD); (git checkout master || git checkout -b master) && git pull origin master && git merge $ORIG_BRANCH
+      # Cache node_modules and refresh the cache only when yarn.lock changes
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        # Use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Install dependencies
+      - name: Install dependencies
+        run: yarn install --prefer-offline
+      # Run unit tests
+      - name: Run unit tests
+        run: yarn test
