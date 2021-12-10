@@ -5,12 +5,12 @@ import './header.css';
 
 interface HeaderProps {
   user?: {};
-  onSignIn: () => void;
+  onLogIn: () => void;
   onLogout: () => void;
   onCreateAccount: () => void;
 }
 
-export const Header = ({ user, onSignIn, onLogout, onCreateAccount }: HeaderProps) => (
+export const Header = ({ user, onLogIn, onLogout, onCreateAccount }: HeaderProps) => (
   <header>
     <div className="wrapper">
       <div>
@@ -37,8 +37,8 @@ export const Header = ({ user, onSignIn, onLogout, onCreateAccount }: HeaderProp
           <Button size="small" onClick={onLogout} label="Log out" />
         ) : (
           <>
-            <Button size="small" onClick={onSignIn} label="Log in" />
-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
+            <Button size="small" onClick={onLogIn} label="Log in" />
+            <Button primary size="small" onClick={onCreateAccount} label="Log up" />
           </>
         )}
       </div>
