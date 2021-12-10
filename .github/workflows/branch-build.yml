@@ -140,14 +140,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --prefer-offline
       # Return to the frontend folder to install ESLint configs
-      - name: CD to frontend
-        run: cd ..
       # Install frontend dependencies
       - name: Install frontend depencies
-        run: yarn install
+        run: cd .. && yarn install --prefer-offline
       # Runs linting command
       - name: Run linting tests
-        run: yarn lint:backend
+        run: yarn lint .
   unit-tests-frontend:
     name: Run unit tests for frontend
     runs-on: ubuntu-latest
