@@ -1,33 +1,49 @@
-import { TextField, TextFieldProps } from '@mui/material';
+import {
+  InputBase, InputBaseProps, Typography,
+} from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import styled from 'styled-components';
 
-const StyledTextField = styled(TextField)<TextFieldProps>`
-  background-color: ${({ theme }) => (theme.palette.gray.main)};
-  border-radius: 32px;
-  
-  & label {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+interface TextFieldProps extends InputBaseProps {
+  errorMessage?: string
+}
 
-  & label.Mui-focused {
-    border-color: ${({ theme }) => (theme.palette.primary.main)};
-  }
+const StyledTextField = styled(InputBase)<TextFieldProps>`
+  && .MuiInputBase-input {
+    background-color: ${({ theme }) => (theme.palette.gray.main)};
+    border-radius: 32px;
+    width: 360px;
+    padding: 8px 16px;
+    border: 1px solid;
+    border-color: ${({ error, theme }) => (error ? theme.palette.error.main : 'transparent')};
+    box-shadow: ${({ error, theme }) => (error ? `${alpha(theme.palette.error.main, 0.25)} 0 0 0 0.1rem` : 'none')};
+    transition: ${({ theme }) => theme.transitions.create([
+    'border-color',
+    'box-shadow',
+  ])};
 
-  & .MuiOutlinedInput-root {
-    padding-left: 8px;
-    padding-right: 8px;
-    & fieldset {
-      border-color: ${({ theme }) => (theme.palette.gray.main)};
-      border-radius: 32px;
-    }
-    &:hover fieldset {
-      border-color: ${({ theme }) => (theme.palette.primary.main)};
-    }
-    &.Mui-focused fieldset {
-      border-color: ${({ theme }) => (theme.palette.primary.main)};
+    &:focus {
+      box-shadow: ${({ error, theme }) => (error ? alpha(theme.palette.error.main, 0.25) :
+    alpha(theme.palette.primary.main, 0.25))} 0 0 0 0.1rem;
+      border-color: ${({ error, theme }) => (error ? theme.palette.error.main :
+    theme.palette.primary.main)};
     }
   }
 `;
 
-export { StyledTextField };
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const ErrorText = styled(Typography)`
+  && {
+    color: ${({ theme }) => (theme.palette.error.main)};
+    margin-top: 0;
+    height: 0;
+    overflow: visible;
+  }
+`;
+
+export { StyledTextField, Container, ErrorText };
