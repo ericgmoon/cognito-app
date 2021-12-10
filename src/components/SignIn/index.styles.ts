@@ -9,12 +9,12 @@ const StyledSignIn = styled.form`
 `;
 
 const TextFieldContainer = styled.div`
-    margin: 12px;
+    margin: ${({ theme }) => theme.spacing(2)};
 `;
 
 const StyledButton = styled(Button)`
     && {
-        margin: 12px;
+        margin: ${({ theme }) => theme.spacing(2)};
     }
 `;
 
