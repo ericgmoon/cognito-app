@@ -1,6 +1,5 @@
 import React from 'react';
 
-import './App.css';
 import './fonts/fonts.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';

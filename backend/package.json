@@ -21,7 +21,9 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "nodemon src/index.ts"
+    "start": "nodemon src/index.ts",
+    "lint": "eslint",
+    "test": "echo 'Nothing to do'"
   },
   "devDependencies": {
     "eslint": "^8.3.0",
