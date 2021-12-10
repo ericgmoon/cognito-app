@@ -34,7 +34,9 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint",
-    "test": "./node_modules/.bin/jest"
+    "test": "./node_modules/.bin/jest",
+    "lint:backend": "cd backend && yarn lint .",
+    "test:backend": "cd backend && yarn test ."
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.4.0-rc.7",
