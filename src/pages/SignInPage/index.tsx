@@ -6,9 +6,9 @@ import {
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import logo from '../../../images/logo.png';
-import Button from '../../Button';
-import SignIn from '../../SignIn';
+import Button from '../../components/Button';
+import SignIn from '../../components/SignIn';
+import logo from '../../images/logo.png';
 
 import {
   Bold, Container, Logo, RootContainer, Title,

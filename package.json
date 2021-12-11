@@ -32,10 +32,14 @@
     "start": "react-scripts start",
     "start:backend": "cd backend && yarn && yarn start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test:react": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "lint": "eslint",
+    "test": "./node_modules/.bin/jest",
+    "lint:backend": "cd backend && yarn lint .",
+    "test:backend": "cd backend && yarn test ."
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.4.0-rc.7",
@@ -50,7 +54,8 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "jest": "26.6.0"
+    "jest": "26.6.0",
+    "ts-jest": "^26.5.6"
   },
   "optionalDependencies": {
     "babel-loader": "8.1.0"
@@ -66,5 +71,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
+    },
+    "moduleNameMapper":{
+      "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    }
   }
 }

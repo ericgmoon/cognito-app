@@ -8,11 +8,10 @@ interface StyledButtonProps extends LoadingButtonProps {
 const StyledButton = styled(Button)<StyledButtonProps>`
   && {
     text-transform: ${({ disableCaps }) => (disableCaps ? 'none' : undefined)};
-    padding-left: 48px;
-    padding-right: 48px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    border-radius: 8px;
+    padding-left: ${({ theme }) => theme.spacing(8)};
+    padding-right: ${({ theme }) => theme.spacing(8)};
+    padding-top: ${({ theme }) => theme.spacing(2)};
+    padding-bottom: ${({ theme }) => theme.spacing(2)};
   }
 `;
 

@@ -5,7 +5,7 @@ import {
 const theme = {
   spacing: 8,
   shape: {
-    borderRadius: 4,
+    borderRadius: 8,
   },
   palette: {
     primary: {

@@ -4,7 +4,7 @@ import {
 import styled from 'styled-components';
 
 const RootContainer = styled.div`
-  max-width:1024px;
+  max-width: 1024px;
   margin: auto;
   min-height: 80vh;
   display: flex;
@@ -15,7 +15,7 @@ const RootContainer = styled.div`
 const Title = styled(Typography)`
   && {
     color: ${({ theme }) => (theme.palette.secondary.dark)};
-    margin-bottom: 24px;
+    margin-bottom: ${({ theme }) => theme.spacing(3)};
     font-weight: bold;
   }
 `;
