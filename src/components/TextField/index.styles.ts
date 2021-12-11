@@ -11,8 +11,8 @@ interface TextFieldProps extends InputBaseProps {
 const StyledTextField = styled(InputBase)<TextFieldProps>`
   && .MuiInputBase-input {
     background-color: ${({ theme }) => (theme.palette.gray.main)};
-    border-radius: ${({ theme }) => theme.spacing(4)};
-    width: ${({ theme }) => theme.spacing(45)};
+    border-radius: ${({ theme }) => (Number(theme.shape.borderRadius) * 4)}px;
+    width: 360px;
     padding:  ${({ theme }) => theme.spacing(1, 2)};
     border: 1px solid;
     border-color: ${({ error, theme }) => (error ? theme.palette.error.main : 'transparent')};
