@@ -97,7 +97,7 @@ export const signIn = async (
   username: string | undefined,
   password: string,
   onSuccess?: () => any,
-  onFailure?: (err?) => any) => {
+  onFailure?: (err? : any) => any) => {
   // TODO: Throw error in these cases once error handling is implemented
   if (!username || !password) return null;
 

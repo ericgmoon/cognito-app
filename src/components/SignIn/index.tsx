@@ -7,10 +7,9 @@ import {
 import { useForm } from 'react-hook-form';
 
 import { signIn } from '../../auth';
-import TextField from '../TextField';
 
 import {
-  StyledButton, StyledSignIn, TextFieldContainer,
+  StyledButton, StyledSignIn, StyledTextField,
 } from './index.styles';
 
 interface Data {
@@ -20,20 +19,20 @@ interface Data {
 
 const SignIn = (/* { mobile = false }: SignInProps */) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [open, setOpen] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const onSuccess = () => {
     setLoading(false);
     setErrorMessage('Success!');
-    setOpen(true);
+    setErrorOpen(true);
   };
 
   const onFailure = (err: any) => {
     setLoading(false);
     setErrorMessage(err.message || 'An error has occurred');
-    setOpen(true);
+    setErrorOpen(true);
   };
 
   const onSubmit = async (data: Data) => {
@@ -54,7 +53,7 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
 
   return (
     <StyledSignIn onSubmit={handleSubmit(onSubmit)}>
-      <Collapse in={open}>
+      <Collapse in={errorOpen}>
         <Alert
           severity="error"
           action={(
@@ -62,9 +61,7 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
               aria-label="close"
               color="inherit"
               size="small"
-              onClick={() => {
-                setOpen(false);
-              }}
+              onClick={() => setErrorOpen(false)}
             >
               <CloseIcon fontSize="inherit" />
             </IconButton>
@@ -73,23 +70,19 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
           {errorMessage}
         </Alert>
       </Collapse>
-      <TextFieldContainer>
-        <TextField
-          placeholder="Email"
-          {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-          error={!!errors.email}
-          errorMessage={errors.email ? getErrorMessage(errors.email.type, 'email') : ''}
-        />
-      </TextFieldContainer>
-      <TextFieldContainer>
-        <TextField
-          placeholder="Password"
-          type="password"
-          {...register('password', { required: true })}
-          error={!!errors.password}
-          errorMessage={errors.password ? getErrorMessage(errors.password.type, 'password') : ''}
-        />
-      </TextFieldContainer>
+      <StyledTextField
+        placeholder="Email"
+        {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+        error={!!errors.email}
+        errorMessage={errors.email ? getErrorMessage(errors.email.type, 'email') : ''}
+      />
+      <StyledTextField
+        placeholder="Password"
+        type="password"
+        {...register('password', { required: true })}
+        error={!!errors.password}
+        errorMessage={errors.password ? getErrorMessage(errors.password.type, 'password') : ''}
+      />
       <StyledButton type="submit" loading={loading}>
         Sign In
       </StyledButton>

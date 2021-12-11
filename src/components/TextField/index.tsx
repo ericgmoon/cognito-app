@@ -11,9 +11,9 @@ interface TextFieldProps extends InputBaseProps {
   errorMessage?: string
 }
 
-const TextField = forwardRef(({ error, errorMessage, ...rest }: TextFieldProps, ref) => (
-  <Container>
-    <StyledTextField error={error} inputRef={ref} {...rest} />
+const TextField = forwardRef(({ error, errorMessage, className, ...rest }: TextFieldProps, ref) => (
+  <Container className={className}>
+    <StyledTextField fullWidth error={error} inputRef={ref} {...rest} />
     <Grow in={error} {...(error ? { timeout: 600 } : {})}>
       <ErrorText variant="caption">
         {errorMessage}
