@@ -67,8 +67,11 @@ const FixedLengthField = forwardRef((
 
   const focusOnNextField = () => {
     setIsTouched(true);
-    if (value.length < totalLength) inputRef.current[value.length].focus();
-    else inputRef.current[value.length - 1].focus();
+    if (value.length < totalLength && inputRef.current[value.length]) {
+      inputRef.current[value.length].focus();
+    } else if (inputRef.current[value.length - 1]) {
+      inputRef.current[value.length - 1].focus();
+    }
   };
 
   const insertCharIntoValue = (atIndex: number, string: String) => {
