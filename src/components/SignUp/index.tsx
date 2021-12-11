@@ -5,7 +5,7 @@ import {
   Alert, Collapse, Grid,
   IconButton,
 } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 // import { signUpWithValidation } from '../../auth';
 import FixedLengthField from '../FixedLengthField';
@@ -20,7 +20,7 @@ interface Data {
 }
 
 const SignUp = (/* { mobile = false }: SignUpProps */) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { control, register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   // const [errorMessage, setErrorMessage] = useState('');
@@ -111,14 +111,22 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <FixedLengthField
-            {...register('phone', { required: true })}
-            error={!!errors.phone}
-            errorMessage={errors.phone ? getErrorMessage(errors.phone.type, 'phone') : ''}
-            displayedPrefix="04"
-            prefix="+614"
-            maxLength={8}
-            numbersOnly
+
+          <Controller
+            name="phone"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <FixedLengthField
+                {...field}
+                error={!!errors.phone}
+                errorMessage={errors.phone ? getErrorMessage(errors.phone.type, 'phone') : ''}
+                displayedPrefix="04"
+                prefix="+614"
+                maxLength={8}
+                numbersOnly
+              />
+            )}
           />
         </Grid>
       </Grid>
