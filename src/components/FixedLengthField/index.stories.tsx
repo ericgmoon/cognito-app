@@ -18,4 +18,5 @@ PhoneNumber.args = {
   prefix: '+61',
   displayedPrefix: '04',
   maxLength: 8,
+  numbersOnly: true,
 };
