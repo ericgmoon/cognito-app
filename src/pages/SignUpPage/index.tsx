@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid } from '@mui/material';
 
-import Button from '../../components/Button';
+import SignUp from '../../components/SignUp';
 import logo from '../../images/logo.png';
 
 import {
@@ -18,12 +18,12 @@ const SignUpPage = () => (
       }}
       columnSpacing={2}
     >
-      <Grid item xs={12} sm={12} md={4.5}>
+      <Grid item xs={12} sm={12} md={4}>
         <Container>
           <Logo src={logo} alt="logo" />
         </Container>
       </Grid>
-      <Grid item xs={12} sm={12} md={7.5}>
+      <Grid item xs={12} sm={12} md={8}>
         <Container>
           <Title variant="h4">
             Sign Up to Cognito
@@ -31,9 +31,7 @@ const SignUpPage = () => (
         </Container>
       </Grid>
       <Grid item xs={12}>
-        <Container>
-          <Button> Hello! </Button>
-        </Container>
+        <SignUp />
       </Grid>
     </Grid>
   </RootContainer>

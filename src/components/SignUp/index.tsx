@@ -7,7 +7,8 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { signUpWithValidation } from '../../auth';
+// import { signUpWithValidation } from '../../auth';
+import FixedLengthField from '../FixedLengthField';
 
 import {
   StyledButton, StyledSignUp, StyledTextField,
@@ -22,23 +23,24 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  // const [errorMessage, setErrorMessage] = useState('');
 
-  const onSuccess = () => {
-    setLoading(false);
-    setErrorMessage('Success!');
-    setErrorOpen(true);
-  };
+  // const onSuccess = () => {
+  //   setLoading(false);
+  //   setErrorMessage('Success!');
+  //   setErrorOpen(true);
+  // };
 
-  const onFailure = (err: any) => {
-    setLoading(false);
-    setErrorMessage(err.message || 'An error has occurred');
-    setErrorOpen(true);
-  };
+  // const onFailure = (err: any) => {
+  //   setLoading(false);
+  //   setErrorMessage(err.message || 'An error has occurred');
+  //   setErrorOpen(true);
+  // };
 
   const onSubmit = async (data: Data) => {
     setLoading(true);
-    signUpWithValidation(data.email, data.password, onSuccess, onFailure);
+    console.log(data.phone);
+    // signUpWithValidation(data.email, data.password, onSuccess, onFailure);
   };
 
   const getErrorMessage = (type: string, field: string): string => {
@@ -68,11 +70,12 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
             </IconButton>
           )}
         >
-          {errorMessage}
+          {/* errorMessage */ 'Hello'}
         </Alert>
       </Collapse>
       <Grid
         container
+        spacing={4}
       >
         <Grid item xs={6}>
           <StyledTextField
@@ -98,13 +101,25 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
             errorMessage={errors.email ? getErrorMessage(errors.email.type, 'email') : ''}
           />
         </Grid>
-        <Grid item xs={12}><StyledTextField
-          placeholder="Password"
-          type="password"
-          {...register('password', { required: true })}
-          error={!!errors.password}
-          errorMessage={errors.password ? getErrorMessage(errors.password.type, 'password') : ''}
-        />
+        <Grid item xs={12}>
+          <StyledTextField
+            placeholder="Password"
+            type="password"
+            {...register('password', { required: true })}
+            error={!!errors.password}
+            errorMessage={errors.password ? getErrorMessage(errors.password.type, 'password') : ''}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FixedLengthField
+            {...register('phone', { required: true })}
+            error={!!errors.phone}
+            errorMessage={errors.phone ? getErrorMessage(errors.phone.type, 'phone') : ''}
+            displayedPrefix="04"
+            prefix="+614"
+            maxLength={8}
+            numbersOnly
+          />
         </Grid>
       </Grid>
       <StyledButton type="submit" loading={loading}>

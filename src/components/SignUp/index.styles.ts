@@ -10,7 +10,7 @@ const StyledSignUp = styled.form`
 `;
 
 const StyledTextField = styled(TextField)`
-  margin: ${({ theme }) => theme.spacing(2)};
+  //margin: ${({ theme }) => theme.spacing(2)};
 `;
 
 const StyledButton = styled(Button)`

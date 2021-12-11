@@ -4,7 +4,7 @@ import {
 import styled from 'styled-components';
 
 const RootContainer = styled.div`
-  max-width: 1024px;
+  max-width: 560px;
   margin: auto;
   min-height: 80vh;
   display: flex;
@@ -25,10 +25,10 @@ const Title = styled(Typography)`
 
 const Logo = styled.img`
   align-self: end;
-  width: 96px;
+  width: 72px;
   margin: 24px;
   @media (max-width: 899px) {
-    width: 64px;
+    width: 56px;
     align-self: center;
   }
 `;
