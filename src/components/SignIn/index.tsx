@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import CloseIcon from '@mui/icons-material/Close';
+import {
+  Alert, Collapse, IconButton,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 
+import { signIn } from '../../auth';
 import TextField from '../TextField';
 
 import {
@@ -15,7 +20,26 @@ interface Data {
 
 const SignIn = (/* { mobile = false }: SignInProps */) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data: Data) => console.log(data);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onSuccess = () => {
+    setLoading(false);
+    setErrorMessage('Success!');
+    setOpen(true);
+  };
+
+  const onFailure = (err: any) => {
+    setLoading(false);
+    setErrorMessage(err.message || 'An error has occurred');
+    setOpen(true);
+  };
+
+  const onSubmit = async (data: Data) => {
+    setLoading(true);
+    await signIn(data.email, data.password, onSuccess, onFailure);
+  };
 
   const getErrorMessage = (type: string, field: string): string => {
     switch (type) {
@@ -30,6 +54,25 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
 
   return (
     <StyledSignIn onSubmit={handleSubmit(onSubmit)}>
+      <Collapse in={open}>
+        <Alert
+          severity="error"
+          action={(
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          )}
+        >
+          {errorMessage}
+        </Alert>
+      </Collapse>
       <TextFieldContainer>
         <TextField
           placeholder="Email"
@@ -47,7 +90,7 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
           errorMessage={errors.password ? getErrorMessage(errors.password.type, 'password') : ''}
         />
       </TextFieldContainer>
-      <StyledButton type="submit">
+      <StyledButton type="submit" loading={loading}>
         Sign In
       </StyledButton>
     </StyledSignIn>

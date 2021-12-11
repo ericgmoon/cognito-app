@@ -1,8 +1,7 @@
-import { Button } from '@mui/material';
-import { ButtonProps as MUIButtonProps } from '@mui/material/Button';
+import { LoadingButton as Button, LoadingButtonProps } from '@mui/lab';
 import styled from 'styled-components';
 
-interface StyledButtonProps extends MUIButtonProps {
+interface StyledButtonProps extends LoadingButtonProps {
   disableCaps?: boolean,
 }
 

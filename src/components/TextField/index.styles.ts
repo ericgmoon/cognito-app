@@ -12,7 +12,7 @@ const StyledTextField = styled(InputBase)<TextFieldProps>`
   && .MuiInputBase-input {
     background-color: ${({ theme }) => (theme.palette.gray.main)};
     border-radius: 32px;
-    width: 360px;
+    width: 320px;
     padding: 8px 16px;
     border: 1px solid;
     border-color: ${({ error, theme }) => (error ? theme.palette.error.main : 'transparent')};

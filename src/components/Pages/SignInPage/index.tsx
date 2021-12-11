@@ -40,7 +40,7 @@ const SignInPage = () => {
             <Logo src={logo} alt="logo" />
           </Container>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} sm={12} md={5}>
           <Container>
             <Title variant="h6">
               New to the Cognito App?
@@ -50,10 +50,10 @@ const SignInPage = () => {
             </Button>
           </Container>
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} sm={12} md={2}>
           <Divider orientation={getOrientation()} variant={isMd ? 'fullWidth' : 'middle'}> <Bold>OR</Bold> </Divider>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} sm={12} md={5}>
           <SignIn />
         </Grid>
       </Grid>
