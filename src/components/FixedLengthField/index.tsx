@@ -9,14 +9,6 @@ import {
   Container, ErrorText, FieldContainer, ProxyInputField, StyledTextField,
 } from './index.styles';
 
-// interface UnitFieldProps extends InputBaseProps {
-
-// }
-
-const FIXED_LENGTH = 4;
-const EDITABLE_LENGTH = 8;
-const TOTAL_LENGTH = FIXED_LENGTH + EDITABLE_LENGTH;
-
 const UnitField = forwardRef(({ error, ...rest }: InputBaseProps, ref) => (
   <StyledTextField
     error={error}
@@ -26,24 +18,33 @@ const UnitField = forwardRef(({ error, ...rest }: InputBaseProps, ref) => (
   />
 ));
 
-interface PhoneNumberFieldProps {
+interface FixedLengthFieldProps {
   error?: boolean,
   errorMessage?: string,
   autoFocus?: boolean,
+  prefix?: string,
+  maxLength?: number,
+  displayedPrefix?: string,
 }
 
-const PhoneNumberField = forwardRef((
+const FixedLengthField = forwardRef((
   { error,
     errorMessage,
-    autoFocus = false }
-  : PhoneNumberFieldProps, ref: React.Ref<HTMLInputElement>) => {
-  const [value, setValue] = useState('+614');
+    autoFocus = false,
+    prefix = '',
+    maxLength = 4,
+    displayedPrefix = '' }
+  : FixedLengthFieldProps, ref: React.Ref<HTMLInputElement>) => {
+  const [value, setValue] = useState(prefix);
   const [isTouched, setIsTouched] = useState(false);
   const inputRef = useRef<any>([]);
 
+  const prefixLength = prefix.length;
+  const totalLength = prefixLength + maxLength;
+
   const focusOnNextField = () => {
     setIsTouched(true);
-    if (value.length < TOTAL_LENGTH) inputRef.current[value.length].focus();
+    if (value.length < totalLength) inputRef.current[value.length].focus();
     else inputRef.current[value.length - 1].focus();
   };
 
@@ -52,7 +53,7 @@ const PhoneNumberField = forwardRef((
   };
 
   const removeEditableChar = () => {
-    if (value.length > FIXED_LENGTH) setValue(value.slice(0, -1));
+    if (value.length > prefixLength) setValue(value.slice(0, -1));
   };
 
   const isNum = (x: string) => !Number.isNaN(parseInt(x, 10));
@@ -67,20 +68,22 @@ const PhoneNumberField = forwardRef((
         ref={ref}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        maxLength={EDITABLE_LENGTH}
+        maxLength={maxLength}
       />
       <FieldContainer>
-        <UnitField value="0" disabled />
-        <UnitField value="4" disabled />
-        {[...Array(EDITABLE_LENGTH).keys()].map((x) => (
+        {[...displayedPrefix].map((x, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <UnitField key={`${x}_${i}`} value={x} disabled />
+        ))}
+        {[...Array(maxLength).keys()].map((x) => (
           <UnitField
             error={error}
             key={x}
-            value={value.charAt(x + FIXED_LENGTH) || ''}
-            ref={(el) => { inputRef.current[x + FIXED_LENGTH] = el; }}
+            value={value.charAt(prefixLength + x) || ''}
+            ref={(el) => { inputRef.current[prefixLength + x] = el; }}
             onFocus={() => focusOnNextField()}
             onChange={(e) => isNum(e.target.value)
-              && insertCharIntoValue(x + FIXED_LENGTH, e.target.value)}
+              && insertCharIntoValue(prefixLength + x, e.target.value)}
             onKeyDown={(e) => e.key === 'Backspace' && removeEditableChar()}
           />
         ),
@@ -95,4 +98,4 @@ const PhoneNumberField = forwardRef((
   );
 });
 
-export default PhoneNumberField;
+export default FixedLengthField;
