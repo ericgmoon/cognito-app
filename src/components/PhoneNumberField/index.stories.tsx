@@ -12,6 +12,3 @@ export default {
 const Template: ComponentStory<typeof PhoneNumberField> = (args) => <PhoneNumberField {...args} />;
 
 export const Default = Template.bind({});
-// Default.args = {
-//   placeholder: 'Text Field',
-// };
