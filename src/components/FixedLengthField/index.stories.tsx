@@ -15,7 +15,7 @@ export const Default = Template.bind({});
 
 export const PhoneNumber = Template.bind({});
 PhoneNumber.args = {
-  prefix: '+61',
+  prefix: '+614',
   displayedPrefix: '04',
   maxLength: 8,
   numbersOnly: true,
