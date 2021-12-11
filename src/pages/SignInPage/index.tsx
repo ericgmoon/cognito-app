@@ -31,7 +31,7 @@ const SignInPage = () => {
       <Grid
         container
         rowSpacing={{
-          xs: 4, md: 2,
+          xs: 4, sm: 4, md: 2,
         }}
         columnSpacing={2}
       >
