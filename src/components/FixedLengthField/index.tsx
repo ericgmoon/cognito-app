@@ -43,6 +43,10 @@ interface FixedLengthFieldProps {
    * Uneditable text to be appended to the start of the displayed text
    */
   displayedPrefix?: string,
+  /**
+   * Only allows numbers if `true`
+   */
+  numbersOnly?: boolean,
 }
 
 const FixedLengthField = forwardRef((
@@ -51,7 +55,8 @@ const FixedLengthField = forwardRef((
     autoFocus = false,
     prefix = '',
     maxLength = 4,
-    displayedPrefix = '' }
+    displayedPrefix = '',
+    numbersOnly = false }
   : FixedLengthFieldProps, ref: React.Ref<HTMLInputElement>) => {
   const [value, setValue] = useState(prefix);
   const [isTouched, setIsTouched] = useState(false);
@@ -100,7 +105,7 @@ const FixedLengthField = forwardRef((
             value={value.charAt(prefixLength + x) || ''}
             ref={(el) => { inputRef.current[prefixLength + x] = el; }}
             onFocus={() => focusOnNextField()}
-            onChange={(e) => isNum(e.target.value)
+            onChange={(e) => (!numbersOnly || isNum(e.target.value))
               && insertCharIntoValue(prefixLength + x, e.target.value)}
             onKeyDown={(e) => e.key === 'Backspace' && removeEditableChar()}
           />
