@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import Button from '../Button';
+import TextField from '../TextField';
 
 const StyledSignIn = styled.form`
   display: flex;
@@ -8,8 +9,11 @@ const StyledSignIn = styled.form`
   align-items: center;
 `;
 
-const TextFieldContainer = styled.div`
+const StyledTextField = styled(TextField)`
   margin: ${({ theme }) => theme.spacing(2)};
+  && {
+    width: 320px
+  };
 `;
 
 const StyledButton = styled(Button)`
@@ -18,4 +22,4 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export { StyledSignIn, TextFieldContainer, StyledButton };
+export { StyledSignIn, StyledButton, StyledTextField };
