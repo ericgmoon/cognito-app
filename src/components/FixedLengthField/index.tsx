@@ -19,11 +19,29 @@ const UnitField = forwardRef(({ error, ...rest }: InputBaseProps, ref) => (
 ));
 
 interface FixedLengthFieldProps {
+  /**
+   * The field is styled as an error if `true`
+   */
   error?: boolean,
+  /**
+   * Message to be displayed if `error` is `true`
+   */
   errorMessage?: string,
+  /**
+   * The first editable field is highlighted if `true`
+   */
   autoFocus?: boolean,
+  /**
+   * Uneditable text to be appended to the start of the output text
+   */
   prefix?: string,
+  /**
+   * Number of editable slots
+   */
   maxLength?: number,
+  /**
+   * Uneditable text to be appended to the start of the displayed text
+   */
   displayedPrefix?: string,
 }
 
