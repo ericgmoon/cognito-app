@@ -135,7 +135,7 @@ export const signOut = async () => {
  */
 export const globalSignOut = async (
   onSuccess?: () => any,
-  onFailure?: () => any) => {
+  onFailure?: (err? : any) => any) => {
   const username = await getCurrentUsername();
 
   if (username) {
@@ -144,7 +144,7 @@ export const globalSignOut = async (
       onFailure: (err) => {
         // TODO: Throw error in these cases once error handling is implemented
         console.log(getErrorMessage(err));
-        return onFailure && onFailure();
+        return onFailure && onFailure(err);
       },
     });
   } else {
@@ -181,13 +181,13 @@ export const changePassword = async (oldPassword: string, newPassword: string) =
 export const sendPasswordResetCode = (
   username: string | undefined,
   onSuccess?: () => any,
-  onFailure?: () => any) =>
+  onFailure?: (err? : any) => any) =>
   getCognitoUser(username)?.forgotPassword({
     onSuccess: () => onSuccess && onSuccess(),
     onFailure: (err) => {
       // TODO: Throw error in these cases once error handling is implemented
       console.log(getErrorMessage(err));
-      return onFailure && onFailure();
+      return onFailure && onFailure(err);
     },
   });
 
@@ -205,13 +205,13 @@ export const confirmPasswordResetCode = (
   verificationCode: string,
   newPassword: string,
   onSuccess?: () => any,
-  onFailure?: () => any) =>
+  onFailure?: (err? : any) => any) =>
   getCognitoUser(username)?.confirmPassword(verificationCode, newPassword, {
     onSuccess: () => onSuccess && onSuccess(),
     onFailure: (err) => {
       // TODO: Throw error in these cases once error handling is implemented
       console.log(getErrorMessage(err));
-      return onFailure && onFailure();
+      return onFailure && onFailure(err);
     },
   });
 
@@ -241,7 +241,7 @@ export const getUserAttributes = async (
 export const sendEmailConfirmationCode = async (
   username: string | undefined,
   onSuccess?: () => any,
-  onFailure?: () => any) => {
+  onFailure?: (err? : any) => any) => {
   const user = getCognitoUser(username);
   // `getSession` must be called on the same instance of user for this function to work
   await user?.getSession(() =>
@@ -250,7 +250,7 @@ export const sendEmailConfirmationCode = async (
       onFailure: (err) => {
         // TODO: Throw error in these cases once error handling is implemented
         console.log(getErrorMessage(err));
-        return onFailure && onFailure();
+        return onFailure && onFailure(err);
       },
     }),
   );
@@ -267,7 +267,7 @@ export const confirmEmailConfirmationCode = async (
   username: string | undefined,
   verificationCode: string,
   onSuccess?: () => any,
-  onFailure?: () => any) => {
+  onFailure?: (err? : any) => any) => {
   const user = getCognitoUser(username);
   // `getSession` must be called on the same instance of user for this function to work
   await user?.getSession(() =>
@@ -276,7 +276,7 @@ export const confirmEmailConfirmationCode = async (
       onFailure: (err) => {
         // TODO: Throw error in these cases once error handling is implemented
         console.log(getErrorMessage(err));
-        return onFailure && onFailure();
+        return onFailure && onFailure(err);
       },
     }),
   );
