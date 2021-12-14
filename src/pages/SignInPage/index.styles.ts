@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const RootContainer = styled.div`
   max-width: 1024px;
   margin: auto;
-  min-height: 80vh;
+  min-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
