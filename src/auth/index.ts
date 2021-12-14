@@ -13,12 +13,12 @@ type AttributeCallbackFn = NodeCallback<Error, CognitoUserAttribute[]>;
 /**
  * @returns Currently authenticated user object
  */
-export const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
+const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
 
 /**
  * @returns Email (unique username) of `getCurrentUser()`
  */
-export const getCurrentUserEmail = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+const getCurrentUserEmail = () => getCognitoUserPool().getCurrentUser()?.getUsername();
 
 /**
  * Creates an unverified AWS Cognito account
@@ -287,4 +287,24 @@ export const confirmEmailConfirmationCode = async (
     // TODO: Throw error in these cases once error handling is implemented
     console.log('No user is currently authenticated');
   }
+};
+
+/**
+ * Async function returning whether or not a user is currently authenticated
+ * @returns Authentication state
+ */
+export const getIsUserAuthenticated = async () => {
+  const user = getCurrentUser();
+  if (!user) return false;
+
+  const getCurrentSession = () => new Promise((resolve) => {
+    user.getSession((err: any, session: any) => {
+      if (err || !session) resolve(false);
+      if (session) resolve(true);
+    });
+  });
+
+  const isSessionValid = await getCurrentSession();
+  if (isSessionValid) return true;
+  return false;
 };
