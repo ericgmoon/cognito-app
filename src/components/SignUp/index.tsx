@@ -7,8 +7,8 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
+import { signUpWithValidation } from '../../auth';
 import Button from '../Button';
-// import { signUpWithValidation } from '../../auth';
 import FixedLengthField from '../FixedLengthField';
 
 import {
@@ -25,24 +25,26 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // const onSuccess = () => {
-  //   setLoading(false);
-  //   setErrorMessage('Success!');
-  //   setErrorOpen(true);
-  // };
+  const onSuccess = () => {
+    setLoading(false);
+    setErrorMessage('Success!');
+    setErrorOpen(true);
+  };
 
-  // const onFailure = (err: any) => {
-  //   setLoading(false);
-  //   setErrorMessage(err.message || 'An error has occurred');
-  //   setErrorOpen(true);
-  // };
+  const onFailure = (err: string) => {
+    setLoading(false);
+    setErrorMessage(err || 'An error has occurred');
+    setErrorOpen(true);
+  };
 
   const onSubmit = async (data: Data) => {
     setLoading(true);
-    console.log(data.phone);
-    // signUpWithValidation(data.email, data.password, onSuccess, onFailure);
+    const result = await signUpWithValidation(data.email, data.password, data.phone);
+    console.log('result: ', result);
+    if (result) onSuccess();
+    else onFailure('Error');
   };
 
   const getErrorMessage = (type: string, field: string): string => {
@@ -58,27 +60,31 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
 
   return (
     <StyledSignUp onSubmit={handleSubmit(onSubmit)}>
-      <Collapse in={errorOpen}>
-        <Alert
-          severity="error"
-          action={(
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              size="small"
-              onClick={() => setErrorOpen(false)}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          )}
-        >
-          {/* errorMessage */ 'Hello'}
-        </Alert>
-      </Collapse>
       <Grid
         container
         spacing={4}
       >
+        <Grid item xs={12}>
+          <Container>
+            <Collapse in={errorOpen}>
+              <Alert
+                severity="error"
+                action={(
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => setErrorOpen(false)}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                )}
+              >
+                {errorMessage}
+              </Alert>
+            </Collapse>
+          </Container>
+        </Grid>
         <Grid item xs={6}>
           <StyledTextField
             placeholder="First Name"

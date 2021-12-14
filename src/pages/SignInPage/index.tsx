@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/Button';
 import SignIn from '../../components/SignIn';
@@ -16,6 +17,7 @@ import {
 
 const SignInPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -24,6 +26,10 @@ const SignInPage = () => {
       return 'vertical';
     }
     return 'horizontal';
+  };
+
+  const goToSignUp = () => {
+    navigate('/signup');
   };
 
   return (
@@ -45,7 +51,7 @@ const SignInPage = () => {
             <Title variant="h6">
               New to the Cognito App?
             </Title>
-            <Button>
+            <Button onClick={goToSignUp}>
               Sign Up
             </Button>
           </Container>
