@@ -2,7 +2,7 @@ import { CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
 
 export const getCognitoUserPool = () =>
   new CognitoUserPool({
-    UserPoolId: 'ap-southeast-2_gEVRCqM0c',
+    UserPoolId: 'ap-southeast-2_UZHhn9SC9',
     ClientId: '4qn2pq6h5t9eom0fb1p4gnuqti',
   });
 
