@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { SignInPage } from './pages';
+import { HomePage, SignInPage } from './pages';
 import theme from './theme';
 
 const App = () => (
@@ -18,6 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/signin" element={<SignInPage />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </MUIThemeProvider>
