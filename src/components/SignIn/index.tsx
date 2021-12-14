@@ -5,6 +5,7 @@ import {
   Alert, Collapse, IconButton,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { signIn } from '../../auth';
 
@@ -22,10 +23,11 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const onSuccess = () => {
     setLoading(false);
-    setErrorMessage('Success!');
+    navigate('/');
     setErrorOpen(true);
   };
 
