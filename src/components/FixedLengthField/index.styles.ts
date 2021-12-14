@@ -50,7 +50,9 @@ const FieldContainer = styled.div`
 `;
 
 const ProxyInputField = styled.input`
-  display: none;
+  height: 0;
+  opacity: 0;
+  filter:alpha(opacity=0);
 `;
 
 export { StyledTextField, Container, ErrorText, FieldContainer, ProxyInputField };

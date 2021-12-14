@@ -5,22 +5,24 @@ import {
   Alert, Collapse, Grid,
   IconButton,
 } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
+import Button from '../Button';
 // import { signUpWithValidation } from '../../auth';
 import FixedLengthField from '../FixedLengthField';
 
 import {
-  StyledButton, StyledSignUp, StyledTextField,
+  Container, StyledSignUp, StyledTextField,
 } from './index.styles';
 
 interface Data {
   email:string;
   password:string;
+  phone:string;
 }
 
 const SignUp = (/* { mobile = false }: SignUpProps */) => {
-  const { control, register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   // const [errorMessage, setErrorMessage] = useState('');
@@ -111,28 +113,24 @@ const SignUp = (/* { mobile = false }: SignUpProps */) => {
           />
         </Grid>
         <Grid item xs={12}>
-
-          <Controller
-            name="phone"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <FixedLengthField
-                {...field}
-                error={!!errors.phone}
-                errorMessage={errors.phone ? getErrorMessage(errors.phone.type, 'phone') : ''}
-                displayedPrefix="04"
-                prefix="+614"
-                maxLength={8}
-                numbersOnly
-              />
-            )}
+          <FixedLengthField
+            error={!!errors.phone}
+            errorMessage={errors.phone ? getErrorMessage(errors.phone.type, 'phone') : ''}
+            displayedPrefix="04"
+            prefix="+614"
+            maxLength={8}
+            numbersOnly
+            {...register('phone', { required: true, pattern: /^\+614\d{8}/ })}
           />
         </Grid>
+        <Grid item xs={12}>
+          <Container>
+            <Button type="submit" loading={loading}>
+              Sign Up
+            </Button>
+          </Container>
+        </Grid>
       </Grid>
-      <StyledButton type="submit" loading={loading}>
-        Sign Up
-      </StyledButton>
     </StyledSignUp>
   );
 };
