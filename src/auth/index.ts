@@ -221,7 +221,7 @@ export const confirmPasswordResetCode = (
  * @returns `null`
  */
 export const getUserAttributes = async (
-  username: string | undefined | undefined,
+  username: string | undefined,
   callback?: AttributeCallbackFn) => {
   const user = getCognitoUser(username);
   // `getSession` must be called on the same instance of user for this function to work
