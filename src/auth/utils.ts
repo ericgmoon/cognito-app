@@ -14,5 +14,3 @@ export const getCognitoUser = (username: string | undefined) => {
     });
   } return null;
 };
-
-export const getErrorMessage = (err: any) => err.message || JSON.stringify(err);
