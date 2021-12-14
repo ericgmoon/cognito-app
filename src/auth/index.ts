@@ -16,9 +16,9 @@ type AttributeCallbackFn = NodeCallback<Error, CognitoUserAttribute[]>;
 const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
 
 /**
- * @returns Email (unique username) of `getCurrentUser()`
+ * @returns Username of `getCurrentUser()`
  */
-const getCurrentUserEmail = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.getUsername();
 
 /**
  * Creates an unverified AWS Cognito account
@@ -111,10 +111,10 @@ export const signIn = async (
  * Removes the AWS Cognito account from the local storage
  */
 export const signOut = async () => {
-  const email = await getCurrentUserEmail();
+  const username = await getCurrentUsername();
 
-  if (email) {
-    await getCognitoUser(email)?.signOut();
+  if (username) {
+    return getCognitoUser(username)?.signOut();
   }
   throw Error('No user is currently authenticated.');
 };
@@ -125,10 +125,10 @@ export const signOut = async () => {
 export const globalSignOut = async (
   onSuccess?: () => any,
   onFailure?: (err? : any) => any) => {
-  const email = await getCurrentUserEmail();
+  const username = await getCurrentUsername();
 
-  if (email) {
-    await getCognitoUser(email)?.globalSignOut({
+  if (username) {
+    return getCognitoUser(username)?.globalSignOut({
       onSuccess: () => onSuccess && onSuccess(),
       onFailure: (err) => onFailure && onFailure(err),
     });
@@ -142,10 +142,10 @@ export const globalSignOut = async (
  * @param newPassword
  */
 export const changePassword = async (oldPassword: string, newPassword: string) => {
-  const email = await getCurrentUserEmail();
+  const username = await getCurrentUsername();
 
-  if (email) {
-    await getCognitoUser(email)?.changePassword(oldPassword, newPassword, (err) => {
+  if (username) {
+    return getCognitoUser(username)?.changePassword(oldPassword, newPassword, (err) => {
       if (err) throw err;
     });
   }
@@ -197,7 +197,7 @@ export const getCurrentUserAttributes = async (
   const user = getCurrentUser();
   if (user) {
     // `getSession` must be called on the same instance of user for this function to work
-    await user?.getSession(() =>
+    return user?.getSession(() =>
       user.getUserAttributes((err, attributes) => (
         callback && callback(err, attributes)
       )),
@@ -217,7 +217,7 @@ export const sendEmailConfirmationCode = async (
   const user = getCurrentUser();
   // `getSession` must be called on the same instance of user for this function to work
   if (user) {
-    await user?.getSession(() =>
+    return user?.getSession(() =>
       user.getAttributeVerificationCode('email', {
         onSuccess: () => onSuccess && onSuccess(),
         onFailure: (err) => onFailure && onFailure(err),
@@ -240,7 +240,7 @@ export const confirmEmailConfirmationCode = async (
   const user = getCurrentUser();
   if (user) {
     // `getSession` must be called on the same instance of user for this function to work
-    await user?.getSession(() =>
+    return user?.getSession(() =>
       user.verifyAttribute('email', verificationCode, {
         onSuccess: () => onSuccess && onSuccess(),
         onFailure: (err) => onFailure && onFailure(err),

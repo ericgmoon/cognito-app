@@ -5,7 +5,6 @@ import {
   Alert, Collapse, IconButton,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import { signIn } from '../../auth';
 
@@ -14,21 +13,23 @@ import {
 } from './index.styles';
 
 interface Data {
-  email:string;
-  password:string;
+  email: string;
+  password: string;
 }
 
-const SignIn = (/* { mobile = false }: SignInProps */) => {
+interface SignInProps {
+  onAuthenticate: () => void;
+}
+
+const SignIn = ({ onAuthenticate } : SignInProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
 
   const onSuccess = () => {
     setLoading(false);
-    navigate('/');
-    setErrorOpen(true);
+    onAuthenticate();
   };
 
   const onFailure = (err: any) => {
