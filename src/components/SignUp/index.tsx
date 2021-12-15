@@ -10,9 +10,10 @@ import { useForm } from 'react-hook-form';
 import { signUpWithValidation } from '../../auth';
 import Button from '../Button';
 import FixedLengthField from '../FixedLengthField';
+import TextField from '../TextField';
 
 import {
-  Container, StyledSignUp, StyledTextField,
+  Container, StyledSignUp,
 } from './index.styles';
 
 interface Data {
@@ -91,7 +92,7 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
           </Container>
         </Grid>
         <Grid item xs={6}>
-          <StyledTextField
+          <TextField
             placeholder="First Name"
             {...register('firstname', { required: true })}
             error={!!errors.firstname}
@@ -99,7 +100,7 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
           />
         </Grid>
         <Grid item xs={6}>
-          <StyledTextField
+          <TextField
             placeholder="Last Name"
             {...register('lastname', { required: true })}
             error={!!errors.lastname}
@@ -107,7 +108,7 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <StyledTextField
+          <TextField
             placeholder="Email"
             {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
             error={!!errors.email}
@@ -115,7 +116,7 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <StyledTextField
+          <TextField
             placeholder="Password"
             type="password"
             {...register('password', { required: true })}
