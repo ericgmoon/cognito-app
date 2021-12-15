@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
-import { Grid } from '@mui/material';
+import {
+  Grid, Link, Typography,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import SignUp from '../../components/SignUp';
@@ -8,7 +10,7 @@ import VerificationCode from '../../components/VerificationCode';
 import logo from '../../images/logo.png';
 
 import {
-  Container, Logo, RootContainer, Title,
+  Container, HeaderContainer, Logo, RootContainer, Title,
 } from './index.styles';
 
 const SignUpPage = () => {
@@ -26,7 +28,11 @@ const SignUpPage = () => {
   };
 
   const steps = [
-    <SignUp goToVerify={goToVerify} />,
+    <Container>
+      <SignUp goToVerify={goToVerify} />
+      <br />
+      <Typography>Already have an account? <Link href="/signin" underline="always">Sign In</Link></Typography>
+    </Container>,
     <VerificationCode finishSignUp={finishSignUp} email={email} />,
   ];
 
@@ -39,17 +45,13 @@ const SignUpPage = () => {
         }}
         columnSpacing={2}
       >
-        <Grid item xs={12} sm={12} md={4}>
-          <Container>
+        <Grid item xs={12}>
+          <HeaderContainer>
             <Logo src={logo} alt="logo" />
-          </Container>
-        </Grid>
-        <Grid item xs={12} sm={12} md={8}>
-          <Container>
             <Title variant="h4">
               Sign Up to Cognito
             </Title>
-          </Container>
+          </HeaderContainer>
         </Grid>
         <Grid item xs={12}>
           {steps[step]}

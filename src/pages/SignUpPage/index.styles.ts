@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const RootContainer = styled.div`
   max-width: 560px;
   margin: auto;
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +14,6 @@ const RootContainer = styled.div`
 
 const Title = styled(Typography)`
   && {
-    align-self: start;
     color: ${({ theme }) => (theme.palette.secondary.dark)};
     font-weight: bold;
     @media (max-width: 899px) {
@@ -24,26 +23,32 @@ const Title = styled(Typography)`
 `;
 
 const Logo = styled.img`
-  align-self: end;
   width: 72px;
-  margin: 24px;
+  margin: ${({ theme }) => theme.spacing(0, 3)};
   @media (max-width: 899px) {
+    margin: ${({ theme }) => theme.spacing(3, 3)};
     width: 56px;
     align-self: center;
+  }
+`;
+
+const HeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 899px) {
+    flex-direction: column;
   }
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
   align-items: center;
   justify-content: center;
 `;
 
-const Bold = styled.b`
-  color: ${({ theme }) => (theme.palette.darkGray.light)};
-`;
-
-export { Title, Logo, Container, Bold, RootContainer };
+export { Title, Logo, HeaderContainer, RootContainer, Container };
