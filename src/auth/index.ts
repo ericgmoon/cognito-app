@@ -5,7 +5,7 @@ import {
 import { validateNewUser } from '../services/users';
 
 import {
-  getCognitoUser, getCognitoUserPool, getErrorMessage,
+  getCognitoUser, getCognitoUserPool,
 } from './utils';
 
 type AttributeCallbackFn = NodeCallback<Error, CognitoUserAttribute[]>;
@@ -16,9 +16,9 @@ type AttributeCallbackFn = NodeCallback<Error, CognitoUserAttribute[]>;
 const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
 
 /**
- * @returns Email (unique username) of `getCurrentUser()`
+ * @returns Username of `getCurrentUser()`
  */
-const getCurrentUserEmail = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.getUsername();
 
 /**
  * Creates an unverified AWS Cognito account
@@ -30,8 +30,7 @@ const signUp = async (
   email: string | undefined,
   password: string | undefined,
   phoneNumber: string | undefined) => {
-  // TODO: Throw error in these cases once error handling is implemented
-  if (!email || !password || !phoneNumber) return null;
+  if (!email || !password || !phoneNumber) throw Error('Missing required details.');
 
   const emailAttribute = new CognitoUserAttribute({
     Name: 'email',
@@ -46,8 +45,7 @@ const signUp = async (
   const userAttributes = [emailAttribute, phoneNumberAttribute];
 
   return getCognitoUserPool().signUp(email, password, userAttributes, [], (err) => {
-    // TODO: Throw error in these cases once error handling is implemented
-    if (err) console.log(getErrorMessage(err));
+    if (err) throw err;
   });
 };
 
@@ -56,11 +54,12 @@ export const signUpWithValidation = async (
   password: string | undefined,
   phoneNumber: string | undefined) => {
   // Check if the user is validated / whitelisted
-  const response = await validateNewUser(phoneNumber, (err) =>
-    console.log(err?.response?.data?.message));
+  const response = await validateNewUser(phoneNumber, (err) => {
+    if (err?.response?.data?.message) throw Error(err?.response?.data?.message);
+  });
 
   if (response) return signUp(email, password, phoneNumber);
-  return null;
+  throw Error('Unable to verify user.');
 };
 
 /**
@@ -70,7 +69,7 @@ export const signUpWithValidation = async (
  */
 export const confirmSignUp = async (email: string | undefined, verificationCode: string) =>
   getCognitoUser(email)?.confirmRegistration(verificationCode, true, (err) => {
-    if (err) console.log(getErrorMessage(err));
+    if (err) throw err;
   });
 
 /**
@@ -80,7 +79,7 @@ export const confirmSignUp = async (email: string | undefined, verificationCode:
  */
 export const resendConfirmationCode = async (email: string | undefined) =>
   getCognitoUser(email)?.resendConfirmationCode((err) => {
-    if (err) console.log(getErrorMessage(err));
+    if (err) throw err;
   });
 
 /**
@@ -95,8 +94,7 @@ export const signIn = async (
   password: string,
   onSuccess?: () => any,
   onFailure?: (err? : any) => any) => {
-  // TODO: Throw error in these cases once error handling is implemented
-  if (!email || !password) return null;
+  if (!email || !password) throw Error('Missing email or password.');
 
   const authenticationDetails = new AuthenticationDetails({
     Username: email,
@@ -105,11 +103,7 @@ export const signIn = async (
 
   return getCognitoUser(email)?.authenticateUser(authenticationDetails, {
     onSuccess: () => onSuccess && onSuccess(),
-    onFailure: (err) => {
-      // TODO: Throw error in these cases once error handling is implemented
-      console.log(getErrorMessage(err));
-      return onFailure && onFailure(err);
-    },
+    onFailure: (err) => onFailure && onFailure(err),
   });
 };
 
@@ -117,14 +111,12 @@ export const signIn = async (
  * Removes the AWS Cognito account from the local storage
  */
 export const signOut = async () => {
-  const email = await getCurrentUserEmail();
+  const username = await getCurrentUsername();
 
-  if (email) {
-    await getCognitoUser(email)?.signOut();
-  } else {
-    // TODO: Throw error in these cases once error handling is implemented
-    console.log('No user is currently authenticated');
+  if (username) {
+    return getCognitoUser(username)?.signOut();
   }
+  throw Error('No user is currently authenticated.');
 };
 
 /**
@@ -133,21 +125,15 @@ export const signOut = async () => {
 export const globalSignOut = async (
   onSuccess?: () => any,
   onFailure?: (err? : any) => any) => {
-  const email = await getCurrentUserEmail();
+  const username = await getCurrentUsername();
 
-  if (email) {
-    await getCognitoUser(email)?.globalSignOut({
+  if (username) {
+    return getCognitoUser(username)?.globalSignOut({
       onSuccess: () => onSuccess && onSuccess(),
-      onFailure: (err) => {
-        // TODO: Throw error in these cases once error handling is implemented
-        console.log(getErrorMessage(err));
-        return onFailure && onFailure(err);
-      },
+      onFailure: (err) => onFailure && onFailure(err),
     });
-  } else {
-    // TODO: Throw error in these cases once error handling is implemented
-    console.log('No user is currently authenticated');
   }
+  throw Error('No user is currently authenticated.');
 };
 
 /**
@@ -156,17 +142,14 @@ export const globalSignOut = async (
  * @param newPassword
  */
 export const changePassword = async (oldPassword: string, newPassword: string) => {
-  const email = await getCurrentUserEmail();
+  const username = await getCurrentUsername();
 
-  if (email) {
-    await getCognitoUser(email)?.changePassword(oldPassword, newPassword, (err) => {
-      // TODO: Throw error in these cases once error handling is implemented
-      if (err) console.log(getErrorMessage(err));
+  if (username) {
+    return getCognitoUser(username)?.changePassword(oldPassword, newPassword, (err) => {
+      if (err) throw err;
     });
-  } else {
-    // TODO: Throw error in these cases once error handling is implemented
-    console.log('No user is currently authenticated');
   }
+  throw Error('No user is currently authenticated.');
 };
 
 /**
@@ -181,11 +164,7 @@ export const sendPasswordResetCode = (
   onFailure?: (err? : any) => any) =>
   getCognitoUser(email)?.forgotPassword({
     onSuccess: () => onSuccess && onSuccess(),
-    onFailure: (err) => {
-      // TODO: Throw error in these cases once error handling is implemented
-      console.log(getErrorMessage(err));
-      return onFailure && onFailure(err);
-    },
+    onFailure: (err) => onFailure && onFailure(err),
   });
 
 /**
@@ -205,11 +184,7 @@ export const confirmPasswordResetCode = (
   onFailure?: (err? : any) => any) =>
   getCognitoUser(email)?.confirmPassword(verificationCode, newPassword, {
     onSuccess: () => onSuccess && onSuccess(),
-    onFailure: (err) => {
-      // TODO: Throw error in these cases once error handling is implemented
-      console.log(getErrorMessage(err));
-      return onFailure && onFailure(err);
-    },
+    onFailure: (err) => onFailure && onFailure(err),
   });
 
 /**
@@ -222,15 +197,13 @@ export const getCurrentUserAttributes = async (
   const user = getCurrentUser();
   if (user) {
     // `getSession` must be called on the same instance of user for this function to work
-    await user?.getSession(() =>
+    return user?.getSession(() =>
       user.getUserAttributes((err, attributes) => (
         callback && callback(err, attributes)
       )),
     );
-  } else {
-    // TODO: Throw error in these cases once error handling is implemented
-    console.log('No user is currently authenticated');
   }
+  throw Error('No user is currently authenticated.');
 };
 
 /**
@@ -244,20 +217,14 @@ export const sendEmailConfirmationCode = async (
   const user = getCurrentUser();
   // `getSession` must be called on the same instance of user for this function to work
   if (user) {
-    await user?.getSession(() =>
+    return user?.getSession(() =>
       user.getAttributeVerificationCode('email', {
         onSuccess: () => onSuccess && onSuccess(),
-        onFailure: (err) => {
-          // TODO: Throw error in these cases once error handling is implemented
-          console.log(getErrorMessage(err));
-          return onFailure && onFailure(err);
-        },
+        onFailure: (err) => onFailure && onFailure(err),
       }),
     );
-  } else {
-    // TODO: Throw error in these cases once error handling is implemented
-    console.log('No user is currently authenticated');
   }
+  throw Error('No user is currently authenticated.');
 };
 
 /**
@@ -273,20 +240,14 @@ export const confirmEmailConfirmationCode = async (
   const user = getCurrentUser();
   if (user) {
     // `getSession` must be called on the same instance of user for this function to work
-    await user?.getSession(() =>
+    return user?.getSession(() =>
       user.verifyAttribute('email', verificationCode, {
         onSuccess: () => onSuccess && onSuccess(),
-        onFailure: (err) => {
-          // TODO: Throw error in these cases once error handling is implemented
-          console.log(getErrorMessage(err));
-          return onFailure && onFailure(err);
-        },
+        onFailure: (err) => onFailure && onFailure(err),
       }),
     );
-  } else {
-    // TODO: Throw error in these cases once error handling is implemented
-    console.log('No user is currently authenticated');
   }
+  throw Error('No user is currently authenticated.');
 };
 
 /**

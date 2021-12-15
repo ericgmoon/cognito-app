@@ -13,11 +13,15 @@ import {
 } from './index.styles';
 
 interface Data {
-  email:string;
-  password:string;
+  email: string;
+  password: string;
 }
 
-const SignIn = (/* { mobile = false }: SignInProps */) => {
+interface SignInProps {
+  onAuthenticate: () => void;
+}
+
+const SignIn = ({ onAuthenticate } : SignInProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,8 +29,7 @@ const SignIn = (/* { mobile = false }: SignInProps */) => {
 
   const onSuccess = () => {
     setLoading(false);
-    setErrorMessage('Success!');
-    setErrorOpen(true);
+    onAuthenticate();
   };
 
   const onFailure = (err: any) => {

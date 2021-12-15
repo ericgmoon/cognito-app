@@ -12,7 +12,6 @@ export const validateNewUser = async (phoneNumber: string | undefined,
     return axios('http://localhost:3001/v1/users/validate', { params: { phoneNumber } })
       .catch((err) => {
         if (axios.isAxiosError(err) && onError) onError(err);
-        else console.log(err);
       });
   }
   return null;
