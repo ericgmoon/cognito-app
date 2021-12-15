@@ -22,9 +22,6 @@ const SignInPage = () => {
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const getOrientation = () : ('vertical' | 'horizontal' | undefined) =>
-    (isMd ? 'vertical' : 'horizontal');
-
   return (
     <AuthPageLayout>
       <RootContainer>
@@ -51,7 +48,7 @@ const SignInPage = () => {
             </Container>
           </Grid>
           <Grid item xs={12} sm={12} md={2}>
-            <Divider orientation={getOrientation()} variant={isMd ? 'fullWidth' : 'middle'}> <Bold>OR</Bold> </Divider>
+            <Divider orientation={isMd ? 'vertical' : 'horizontal'} variant={isMd ? 'fullWidth' : 'middle'}> <Bold>OR</Bold> </Divider>
           </Grid>
           <Grid item xs={12} sm={12} md={5}>
             <SignIn

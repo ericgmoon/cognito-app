@@ -21,30 +21,35 @@ interface Data {
   phone:string;
 }
 
-const SignUp = (/* { mobile = false }: SignUpProps */) => {
+interface SignUpProps {
+  goToVerify: (email: string) => void;
+}
+
+const SignUp = ({ goToVerify } : SignUpProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onSuccess = () => {
+  const onSuccess = (email: string) => {
     setLoading(false);
-    setErrorMessage('Success!');
-    setErrorOpen(true);
+    goToVerify(email);
   };
 
-  const onFailure = (err: string) => {
+  const onFailure = (error: any) => {
     setLoading(false);
-    setErrorMessage(err || 'An error has occurred');
+    setErrorMessage(error.message || 'An error has occurred');
     setErrorOpen(true);
   };
 
   const onSubmit = async (data: Data) => {
     setLoading(true);
-    const result = await signUpWithValidation(data.email, data.password, data.phone);
-    console.log('result: ', result);
-    if (result) onSuccess();
-    else onFailure('Error');
+    try {
+      await signUpWithValidation(data.email, data.password, data.phone);
+      onSuccess(data.email);
+    } catch (error: any) {
+      onFailure(error);
+    }
   };
 
   const getErrorMessage = (type: string, field: string): string => {

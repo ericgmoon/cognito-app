@@ -16,27 +16,36 @@ interface Data {
   verification:string;
 }
 
-const SignIn = (email: any) => {
+interface VerificationCodeProps {
+  email: string;
+  finishSignUp: () => void;
+}
+
+const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // const onSuccess = () => {
-  //   setLoading(false);
-  //   setErrorMessage('Success!');
-  //   setErrorOpen(true);
-  // };
+  const onSuccess = () => {
+    setLoading(false);
+    finishSignUp();
+  };
 
-  // const onFailure = (err: any) => {
-  //   setLoading(false);
-  //   setErrorMessage(err.message || 'An error has occurred');
-  //   setErrorOpen(true);
-  // };
+  const onFailure = (error: any) => {
+    setLoading(false);
+    setErrorMessage(error.message || 'An error has occurred');
+    setErrorOpen(true);
+  };
 
   const onSubmit = async (data: Data) => {
     setLoading(true);
-    await confirmSignUp(email, data.verification);
+    try {
+      await confirmSignUp(email, data.verification);
+      onSuccess();
+    } catch (error:any) {
+      onFailure(error);
+    }
   };
 
   const getErrorMessage = (type: string, field: string): string => {
@@ -66,7 +75,7 @@ const SignIn = (email: any) => {
             </IconButton>
           )}
         >
-          {/* {errorMessage} */} Error!
+          {errorMessage}
         </Alert>
       </Collapse>
       <StyledField
@@ -83,4 +92,4 @@ const SignIn = (email: any) => {
   );
 };
 
-export default SignIn;
+export default VerificationCode;
