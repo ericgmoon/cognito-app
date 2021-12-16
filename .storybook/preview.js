@@ -3,6 +3,7 @@ import theme from '../src/theme';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from 'styled-components';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import '../src/fonts/fonts.css';
 
 export const parameters = {
@@ -22,7 +23,11 @@ const withThemeProvider = (Story, context) => {
     <ThemeProvider theme={theme}>
       <MUIThemeProvider theme={theme}>
         <CssBaseline />
-        <Story {...context} />
+        <MemoryRouter>
+          <Routes>
+            <Route path="/" element={<Story {...context} />} />
+          </Routes>
+        </MemoryRouter>
       </MUIThemeProvider>
     </ThemeProvider>
   );
