@@ -14,6 +14,20 @@ const LoadingScreen = () => (
   </LoadingContainer>
 );
 
+interface ContentProps {
+  children: React.ReactNode
+  decorate: boolean,
+}
+
+const Content = ({ children, decorate }: ContentProps) => (
+  <>
+    {decorate && (
+      <AppBar />
+    )}
+    {children}
+  </>
+);
+
 interface PageLayoutProps {
   children: React.ReactNode,
   /**
@@ -63,18 +77,11 @@ export const PageLayout = ({
 
   const redirectOnAuthless = !!redirects?.onAuthlessRedirect && isAuthenticated === false;
 
-  const content = (
-    <>
-      {decorate && <AppBar />}
-      {children}
-    </>
-  );
-
   return (
     <>
       {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
       {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
-      {loading ? <LoadingScreen /> : content}
+      {loading ? <LoadingScreen /> : <Content decorate={decorate}>{children}</Content>}
     </>
   );
 };
