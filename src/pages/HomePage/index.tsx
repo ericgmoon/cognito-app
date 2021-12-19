@@ -4,7 +4,7 @@ import { ProtectedPageLayout } from '../../components/PageLayout';
 
 // Stub home page
 const HomePage = () => (
-  <ProtectedPageLayout title="Home - Cognito App">
+  <ProtectedPageLayout title="Home">
     Hello world
   </ProtectedPageLayout>
 );

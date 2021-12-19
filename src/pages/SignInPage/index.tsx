@@ -23,7 +23,7 @@ const SignInPage = () => {
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <AuthPageLayout title="Sign In - Cognito App">
+    <AuthPageLayout title="Sign In">
       <RootContainer>
         <Grid
           container

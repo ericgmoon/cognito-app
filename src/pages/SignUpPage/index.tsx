@@ -37,7 +37,7 @@ const SignUpPage = () => {
   ];
 
   return (
-    <AuthPageLayout title="Sign Up - Cognito App">
+    <AuthPageLayout title="Sign Up">
       <RootContainer>
         <Grid
           container

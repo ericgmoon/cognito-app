@@ -66,7 +66,10 @@ export const PageLayout = ({
 
   // Check the current authentication state
   useEffect(() => {
-    document.title = title;
+    // Update the Browser-recognised page title
+    document.title = `${title} - Cognito App`;
+
+    // Check if the user is authenticated to determine redirects
     const getAuthStatus = async () => {
       const authState = await getIsUserAuthenticated();
       setIsAuthenticated(authState);
