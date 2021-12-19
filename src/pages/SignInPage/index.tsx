@@ -42,7 +42,7 @@ const SignInPage = () => {
               <Title variant="h6">
                 New to the Cognito App?
               </Title>
-              <Button onClick={() => navigate('/signup')}>
+              <Button href="/signup">
                 Sign Up
               </Button>
             </Container>

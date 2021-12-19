@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  Grid, Link, Typography,
+  Grid, Link,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import VerificationCode from '../../components/VerificationCode';
 import logo from '../../images/logo.png';
 
 import {
-  Container, HeaderContainer, Logo, RootContainer, Title,
+  Container, FooterText, HeaderContainer, Logo, RootContainer, Title,
 } from './index.styles';
 
 const SignUpPage = () => {
@@ -30,8 +30,7 @@ const SignUpPage = () => {
   const steps = [
     <Container>
       <SignUp goToVerify={goToVerify} />
-      <br />
-      <Typography>Already have an account? <Link href="/signin" underline="always">Sign In</Link></Typography>
+      <FooterText>Already have an account? <Link href="/signin" underline="always">Sign In</Link></FooterText>
     </Container>,
     <VerificationCode finishSignUp={finishSignUp} email={email} />,
   ];

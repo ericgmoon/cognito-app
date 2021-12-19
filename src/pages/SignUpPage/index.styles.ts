@@ -10,6 +10,7 @@ const RootContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: ${({ theme }) => theme.spacing(3)};
 `;
 
 const Title = styled(Typography)`
@@ -51,4 +52,11 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export { Title, Logo, HeaderContainer, RootContainer, Container };
+const FooterText = styled(Typography)`
+  && {
+    color: ${({ theme }) => (theme.palette.darkGray.main)};
+    margin-top: ${({ theme }) => theme.spacing(3)};
+  }
+`;
+
+export { Title, Logo, HeaderContainer, RootContainer, Container, FooterText };
