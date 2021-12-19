@@ -14,7 +14,6 @@ interface ButtonProps extends LoadingButtonProps {
 const Button = ({ variant = 'contained', color = 'darkPrimary', children, ...rest }: ButtonProps) => (
   <StyledButton
     variant={variant}
-    loadingPosition="end"
     color={color}
     disableRipple
     {...rest}

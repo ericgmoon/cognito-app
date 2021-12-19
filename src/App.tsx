@@ -8,7 +8,9 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { HomePage, SignInPage } from './pages';
+import {
+  HomePage, SignInPage, SignUpPage,
+} from './pages';
 import theme from './theme';
 
 const App = () => (
@@ -18,6 +20,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<HomePage />} />
         </Routes>
       </BrowserRouter>

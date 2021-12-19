@@ -10,6 +10,7 @@ const RootContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: ${({ theme }) => theme.spacing(3)};
 `;
 
 const Title = styled(Typography)`
@@ -22,7 +23,7 @@ const Title = styled(Typography)`
 
 const Logo = styled.img`
   width: 120px;
-  margin: 24px;
+  margin-bottom: ${({ theme }) => theme.spacing(3)};
   @media (max-width: 899px) {
     width: 96px;
   }

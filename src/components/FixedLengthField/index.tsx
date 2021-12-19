@@ -56,11 +56,17 @@ const FixedLengthField = forwardRef((
     prefix = '',
     maxLength = 4,
     displayedPrefix = '',
-    numbersOnly = false }
+    numbersOnly = false,
+    ...rest }
   : FixedLengthFieldProps, ref: React.Ref<HTMLInputElement>) => {
   const [value, setValue] = useState(prefix);
   const [isTouched, setIsTouched] = useState(false);
   const inputRef = useRef<any>([]);
+
+  // Ref to ProxyInputField used to artificially focus on
+  // This is necessary due to the way react-hook-form takes in
+  // the field value
+  const proxyRef = useRef<any | null>(null);
 
   const prefixLength = prefix.length;
   const totalLength = prefixLength + maxLength;
@@ -76,10 +82,12 @@ const FixedLengthField = forwardRef((
 
   const insertCharIntoValue = (atIndex: number, string: String) => {
     setValue(value.slice(0, atIndex) + string + value.slice(atIndex + 1));
+    proxyRef.current.focus();
   };
 
   const removeEditableChar = () => {
     if (value.length > prefixLength) setValue(value.slice(0, -1));
+    proxyRef.current.focus();
   };
 
   const isNum = (x: string) => !Number.isNaN(parseInt(x, 10));
@@ -91,10 +99,15 @@ const FixedLengthField = forwardRef((
   return (
     <Container>
       <ProxyInputField
-        ref={ref}
+        ref={(node) => {
+          // Attach proxyRef to ProxyInputField
+          proxyRef.current = node;
+          if (typeof ref === 'function') ref(node);
+        }}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
         maxLength={maxLength}
+        tabIndex={-1}
+        {...rest}
       />
       <FieldContainer>
         {[...displayedPrefix].map((x, i) => (
