@@ -57,7 +57,7 @@ const ProfilePill = ({ onProfileClick, onSettingsClick, onSignOutClick }: Profil
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={onProfileClick}>
+        <MenuItem onClick={onProfileClick} disableRipple>
           <ListItemIcon>
             <PersonIcon fontSize="small" />
           </ListItemIcon>
@@ -65,7 +65,7 @@ const ProfilePill = ({ onProfileClick, onSettingsClick, onSignOutClick }: Profil
             Profile
           </MenuLabel>
         </MenuItem>
-        <MenuItem onClick={onSettingsClick}>
+        <MenuItem onClick={onSettingsClick} disableRipple>
           <ListItemIcon>
             <SettingsIcon fontSize="small" />
           </ListItemIcon>
@@ -74,7 +74,7 @@ const ProfilePill = ({ onProfileClick, onSettingsClick, onSignOutClick }: Profil
           </MenuLabel>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={onSignOutClick}>
+        <MenuItem onClick={onSignOutClick} disableRipple>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
           </ListItemIcon>
