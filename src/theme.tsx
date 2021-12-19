@@ -40,7 +40,7 @@ const theme = {
       main: '#70d0d1',
       dark: '#32989a',
       light: '#d1eff0',
-      contrastText: '#000',
+      contrastText: '#fff',
     },
     darkPrimary: {
       main: '#32989a',
