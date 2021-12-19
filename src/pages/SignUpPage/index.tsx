@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { AuthPageLayout } from '../../components/PageLayout';
 import SignUp from '../../components/SignUp';
 import VerificationCode from '../../components/VerificationCode';
 import logo from '../../images/logo.png';
@@ -36,27 +37,29 @@ const SignUpPage = () => {
   ];
 
   return (
-    <RootContainer>
-      <Grid
-        container
-        rowSpacing={{
-          xs: 2, sm: 2, md: 4,
-        }}
-        columnSpacing={2}
-      >
-        <Grid item xs={12}>
-          <HeaderContainer>
-            <Logo src={logo} alt="logo" />
-            <Title variant="h4">
-              Sign Up to Cognito
-            </Title>
-          </HeaderContainer>
+    <AuthPageLayout title="Sign Up - Cognito App">
+      <RootContainer>
+        <Grid
+          container
+          rowSpacing={{
+            xs: 2, sm: 2, md: 4,
+          }}
+          columnSpacing={2}
+        >
+          <Grid item xs={12}>
+            <HeaderContainer>
+              <Logo src={logo} alt="logo" />
+              <Title variant="h4">
+                Sign Up to Cognito
+              </Title>
+            </HeaderContainer>
+          </Grid>
+          <Grid item xs={12}>
+            {steps[step]}
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          {steps[step]}
-        </Grid>
-      </Grid>
-    </RootContainer>
+      </RootContainer>
+    </AuthPageLayout>
   );
 };
 

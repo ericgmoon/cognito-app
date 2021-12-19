@@ -31,6 +31,10 @@ const Content = ({ children, decorate }: ContentProps) => (
 interface PageLayoutProps {
   children: React.ReactNode,
   /**
+   * Page title
+   */
+  title: string,
+  /**
    * Redirect paths
    */
   redirects?: {
@@ -55,12 +59,14 @@ export const PageLayout = ({
   redirects,
   loading: isPageLoading = false,
   decorate = false,
+  title,
 }: PageLayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Check the current authentication state
   useEffect(() => {
+    document.title = title;
     const getAuthStatus = async () => {
       const authState = await getIsUserAuthenticated();
       setIsAuthenticated(authState);
@@ -88,20 +94,22 @@ export const PageLayout = ({
 
 interface AuthPageLayoutProps {
   children: React.ReactNode,
+  title: string,
 }
 
-export const AuthPageLayout = ({ children }: AuthPageLayoutProps) => (
-  <PageLayout redirects={{ onAuthRedirect: '/' }}>
+export const AuthPageLayout = ({ children, title }: AuthPageLayoutProps) => (
+  <PageLayout redirects={{ onAuthRedirect: '/' }} title={title}>
     {children}
   </PageLayout>
 );
 
 interface ProtectedPageLayoutProps {
   children: React.ReactNode,
+  title: string,
 }
 
-export const ProtectedPageLayout = ({ children }: ProtectedPageLayoutProps) => (
-  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate>
+export const ProtectedPageLayout = ({ children, title }: ProtectedPageLayoutProps) => (
+  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title}>
     {children}
   </PageLayout>
 );
