@@ -33,10 +33,7 @@ const Content = ({ children, decorate }: ContentProps) => {
   return (decorate ? (
     <ContentContainer>
       <AppBar position="fixed" isMenuOpen={open} onMenuClick={() => setOpen(!open)} />
-      <Nav
-        component="nav"
-        sx={{ width: { sm: theme.shape.drawerWidth }, flexShrink: { sm: 0 } }}
-      >
+      <Nav component="nav">
         <Drawer
           open={open}
           onClose={() => setOpen(false)}

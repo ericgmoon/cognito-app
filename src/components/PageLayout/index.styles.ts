@@ -17,7 +17,7 @@ const MediumMain = styled(Box)<MainProps>`
   width: calc(100% - ${({ theme }) => theme.shape.drawerWidth}px);
   flex-grow: 1;
   margin-top: 48px;
-  margin-left: ${({ open, theme }) => (open ? 0 : `-${theme.shape.drawerWidth}px`)};
+  margin-left: ${({ open, theme }) => (open ? `${theme.shape.drawerWidth}px` : 0)};
   transition: ${({ open, theme }) => (open ?
     theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
