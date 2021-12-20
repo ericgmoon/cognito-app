@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
 import { CircularProgress } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
 
 import { getIsUserAuthenticated } from '../../auth';
 
 import AppBar from './AppBar';
-import { LoadingContainer } from './index.styles';
+import Drawer from './Drawer';
+import {
+  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain,
+} from './index.styles';
 
 const LoadingScreen = () => (
   <LoadingContainer>
@@ -15,21 +20,50 @@ const LoadingScreen = () => (
 );
 
 interface ContentProps {
-  children: React.ReactNode
+  children: React.ReactElement
   decorate: boolean,
 }
 
-const Content = ({ children, decorate }: ContentProps) => (
-  <>
-    {decorate && (
-      <AppBar />
-    )}
-    {children}
-  </>
-);
+const Content = ({ children, decorate }: ContentProps) => {
+  const [open, setOpen] = useState(false);
+  const theme = useTheme();
+
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+
+  return (decorate ? (
+    <ContentContainer>
+      <AppBar position="fixed" isMenuOpen={open} onMenuClick={() => setOpen(!open)} />
+      <Nav
+        component="nav"
+        sx={{ width: { sm: theme.shape.drawerWidth }, flexShrink: { sm: 0 } }}
+      >
+        <Drawer
+          open={open}
+          onClose={() => setOpen(false)}
+          mode={isMd ? 'medium' : 'small'}
+        />
+      </Nav>
+      {isMd ? (
+        <MediumMain
+          component="main"
+          open={open}
+        >
+          {children}
+        </MediumMain>
+      ) : (
+        <SmallMain
+          component="main"
+          open={open}
+        >
+          {children}
+        </SmallMain>
+      )}
+    </ContentContainer>
+  ) : children);
+};
 
 interface PageLayoutProps {
-  children: React.ReactNode,
+  children: React.ReactElement,
   /**
    * Page title
    */
@@ -96,7 +130,7 @@ export const PageLayout = ({
 };
 
 interface AuthPageLayoutProps {
-  children: React.ReactNode,
+  children: React.ReactElement,
   title: string,
 }
 
@@ -107,7 +141,7 @@ export const AuthPageLayout = ({ children, title }: AuthPageLayoutProps) => (
 );
 
 interface ProtectedPageLayoutProps {
-  children: React.ReactNode,
+  children: React.ReactElement,
   title: string,
 }
 

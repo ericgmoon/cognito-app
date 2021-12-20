@@ -17,7 +17,7 @@ import {
 } from './index.styles';
 
 interface MenuOption {
-  icon: React.ReactNode,
+  icon: React.ReactElement,
   name: string,
 }
 
@@ -37,102 +37,6 @@ const studyMenu: MenuOption[] = [
 ];
 
 const toolsMenu: MenuOption[] = [
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
-  {
-    icon: <VideoCameraFrontIcon />,
-    name: 'Tutorials',
-  },
-  {
-    icon: <AvTimerIcon />,
-    name: 'Tracker',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    name: 'Analytics',
-  },
   {
     icon: <VideoCameraFrontIcon />,
     name: 'Tutorials',

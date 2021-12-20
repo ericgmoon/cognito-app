@@ -12,7 +12,7 @@ const StyledDrawer = styled(Drawer)`
   && {
     & .MuiDrawer-paper {
       box-sizing: border-box;
-      width: 240px;
+      width: ${({ theme }) => theme.shape.drawerWidth}px;
     }
   }
 `;
