@@ -1,8 +1,6 @@
-import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
-import App from './App';
-
-export default styled(App)`
+export default createGlobalStyle`
   /* width */
   ::-webkit-scrollbar {
     width: 6px;
