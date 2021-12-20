@@ -9,14 +9,12 @@ import {
   LinkProps as RouterLinkProps,
 } from 'react-router-dom';
 
-const LinkBehavior = forwardRef<
-any,
-Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }
->((props, ref) => {
-  const { href, ...other } = props;
-  // Map href (MUI) -> to (react-router)
-  return <RouterLink ref={ref} to={href} {...other} />;
-});
+const LinkBehavior = forwardRef<any, Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }>(
+  (props, ref) => {
+    const { href, ...other } = props;
+    // Map href (MUI) -> to (react-router)
+    return <RouterLink ref={ref} to={href} {...other} />;
+  });
 
 const theme = {
   components: {
@@ -34,6 +32,8 @@ const theme = {
   spacing: 8,
   shape: {
     borderRadius: 8,
+    drawerWidth: 240,
+    drawerHeight: 48,
   },
   palette: {
     primary: {

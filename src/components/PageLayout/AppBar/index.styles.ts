@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 const Toolbar = styled(MUIToolbar)`
   && {
-    height: 48px;
-    min-height: 48px;
+    height: ${({ theme }) => theme.shape.drawerHeight}px;
+    min-height: ${({ theme }) => theme.shape.drawerHeight}px;
   }
 `;
 
@@ -23,6 +23,8 @@ const Title = styled(Typography)`
 const StyledAppBar = styled(AppBar)`
   && {
     background-color: ${({ theme }) => theme.palette.darkPrimary.main};
+    /* Paint AppBar above navigation drawer */
+    z-index: ${({ theme }) => theme.zIndex.drawer + 1};
   }
 `;
 

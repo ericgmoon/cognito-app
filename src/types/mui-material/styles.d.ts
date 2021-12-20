@@ -1,6 +1,18 @@
 import '@mui/material/styles';
+// Add more properties here as required in theme.tsx
 
-// Add more properties here as required in theme.ts
+declare module '@mui/system' {
+  export interface Shape {
+    drawerWidth: number,
+    drawerHeight: number,
+  }
+
+  export interface ShapeOptions {
+    drawerWidth?: number,
+    drawerHeight?: number,
+  }
+}
+
 declare module '@mui/material/styles' {
   export interface Palette {
     darkPrimary: Palette['primary'],
