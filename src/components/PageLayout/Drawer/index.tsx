@@ -51,6 +51,36 @@ const toolsMenu: MenuOption[] = [
   },
 ];
 
+interface MenuListProps {
+  source: MenuOption[],
+}
+
+const MenuList = ({ source }: MenuListProps) => (
+  <List>
+    {source.map((item) => (
+      <ListItem button key={item.name} disableRipple>
+        <ListItemIcon>
+          {item.icon}
+        </ListItemIcon>
+        <ListItemText
+          primary={item.name}
+          primaryTypographyProps={{ variant: 'body2' }}
+        />
+      </ListItem>
+    ))}
+  </List>
+);
+
+const Menu = () => (
+  <>
+    <MenuList source={[{ icon: <HomeIcon />, name: 'Home' }]} />
+    <Divider />
+    <MenuList source={studyMenu} />
+    <Divider />
+    <MenuList source={toolsMenu} />
+  </>
+);
+
 interface DrawerProps extends MUIDrawerProps {
   mode?: 'small' | 'medium',
   onClose?: () => void,
@@ -70,36 +100,7 @@ const Drawer = ({ mode = 'medium', onClose = () => {}, ...rest }: DrawerProps) =
     <ScrollableContainer
       {...(mode === 'small' ? { onClick: onClose, onKeyDown: onClose } : {})}
     >
-      <List>
-        <ListItem button disableRipple>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        {studyMenu.map((option) => (
-          <ListItem button key={option.name} disableRipple>
-            <ListItemIcon>
-              {option.icon}
-            </ListItemIcon>
-            <ListItemText primary={option.name} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {toolsMenu.map((option) => (
-          <ListItem button key={option.name} disableRipple>
-            <ListItemIcon>
-              {option.icon}
-            </ListItemIcon>
-            <ListItemText primary={option.name} />
-          </ListItem>
-        ))}
-      </List>
+      <Menu />
     </ScrollableContainer>
   </StyledDrawer>
 );
