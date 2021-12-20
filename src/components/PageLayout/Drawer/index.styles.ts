@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const ToolbarOffset = styled(Toolbar)`
   && {
-    height: 48px;
-    min-height: 48px;
+    height: ${({ theme }) => theme.shape.drawerHeight}px;
+    min-height: ${({ theme }) => theme.shape.drawerHeight}px;
   }
 `;
 

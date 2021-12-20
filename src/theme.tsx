@@ -33,6 +33,7 @@ const theme = {
   shape: {
     borderRadius: 8,
     drawerWidth: 240,
+    drawerHeight: 48,
   },
   palette: {
     primary: {

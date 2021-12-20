@@ -15,11 +15,11 @@ import {
 } from './index.styles';
 
 interface AppBarProps extends MUIAppBarProps {
-  isMenuOpen?: boolean,
-  onMenuClick: () => void
+  isDrawerOpen?: boolean,
+  onDrawerButtonClick: () => void
 }
 
-const AppBar = ({ isMenuOpen = false, onMenuClick, ...rest }: AppBarProps) => {
+const AppBar = ({ isDrawerOpen = false, onDrawerButtonClick, ...rest }: AppBarProps) => {
   const navigate = useNavigate();
 
   return (
@@ -31,9 +31,9 @@ const AppBar = ({ isMenuOpen = false, onMenuClick, ...rest }: AppBarProps) => {
           color="inherit"
           aria-label="menu"
           disableRipple
-          onClick={onMenuClick}
+          onClick={onDrawerButtonClick}
         >
-          {isMenuOpen ? <ArrowBackIosNewIcon /> : <MenuIcon />}
+          {isDrawerOpen ? <ArrowBackIosNewIcon /> : <MenuIcon />}
         </IconButton>
         <Title variant="h6">
           Cognito App

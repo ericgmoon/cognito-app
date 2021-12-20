@@ -4,10 +4,12 @@ import '@mui/material/styles';
 declare module '@mui/system' {
   export interface Shape {
     drawerWidth: number,
+    drawerHeight: number,
   }
 
   export interface ShapeOptions {
     drawerWidth?: number,
+    drawerHeight?: number,
   }
 }
 
