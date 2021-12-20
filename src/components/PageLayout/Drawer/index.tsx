@@ -52,20 +52,24 @@ const toolsMenu: MenuOption[] = [
 ];
 
 interface DrawerProps extends MUIDrawerProps {
-  mode?: 'small' | 'medium'
+  mode?: 'small' | 'medium',
+  onClose?: () => void,
 }
 
-const Drawer = ({ mode = 'medium', ...rest }: DrawerProps) => (
+const Drawer = ({ mode = 'medium', onClose = () => {}, ...rest }: DrawerProps) => (
   <StyledDrawer
     ModalProps={{
       // Keep Drawer mounted on mobile
       keepMounted: mode === 'small',
     }}
     variant={mode === 'small' ? 'temporary' : 'persistent'}
+    onClose={onClose}
     {...rest}
   >
     <ToolbarOffset />
-    <ScrollableContainer>
+    <ScrollableContainer
+      {...(mode === 'small' ? { onClick: onClose, onKeyDown: onClose } : {})}
+    >
       <List>
         <ListItem button disableRipple>
           <ListItemIcon>
