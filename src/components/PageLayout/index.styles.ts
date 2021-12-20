@@ -26,11 +26,12 @@ const MediumMain = styled(Box)<MainProps>`
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }))};
+  padding: ${({ theme }) => theme.spacing(3)};
 `;
 
 const SmallMain = styled(Box)<MainProps>`
   margin-top: 48px;
-  margin-left: ${({ theme }) => `-${theme.shape.drawerWidth}px`};
+  padding: ${({ theme }) => theme.spacing(2)};
 `;
 
 const ContentContainer = styled.div`
