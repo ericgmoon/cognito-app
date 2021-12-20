@@ -32,7 +32,7 @@ const Content = ({ children, decorate }: ContentProps) => {
 
   return (decorate ? (
     <ContentContainer>
-      <AppBar position="fixed" isMenuOpen={open} onMenuClick={() => setOpen(!open)} />
+      <AppBar position="fixed" isDrawerOpen={open} onDrawerButtonClick={() => setOpen(!open)} />
       <Nav component="nav">
         <Drawer
           open={open}
