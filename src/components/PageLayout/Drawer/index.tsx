@@ -8,9 +8,10 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import {
-  List, ListItem, ListItemIcon, ListItemText,
+  List, ListItem, ListItemButton, ListItemIcon, ListItemText,
 } from '@mui/material';
 import { DrawerProps as MUIDrawerProps } from '@mui/material/Drawer';
+import { useLocation } from 'react-router-dom';
 
 import {
   ListHeaderText, ScrollableContainer, StyledDrawer, ToolbarOffset,
@@ -19,20 +20,32 @@ import {
 interface MenuOption {
   icon: React.ReactElement,
   name: string,
+  href: string,
 }
+
+const homeMenu: MenuOption[] = [
+  {
+    icon: <HomeIcon />,
+    name: 'Home',
+    href: '/',
+  },
+];
 
 const studyMenu: MenuOption[] = [
   {
     icon: <CollectionsBookmarkIcon />,
     name: 'Notes',
+    href: '/notes',
   },
   {
     icon: <VideoLibraryIcon />,
     name: 'Videos',
+    href: '/videos',
   },
   {
     icon: <QuizIcon />,
     name: 'Quizzes',
+    href: '/quizzes',
   },
 ];
 
@@ -40,23 +53,27 @@ const toolsMenu: MenuOption[] = [
   {
     icon: <VideoCameraFrontIcon />,
     name: 'Tutorials',
+    href: '/tutorials',
   },
   {
     icon: <AvTimerIcon />,
     name: 'Tracker',
+    href: '/tracker',
   },
   {
     icon: <AnalyticsIcon />,
     name: 'Analytics',
+    href: '/analytics',
   },
 ];
 
 interface MenuListProps {
   source: MenuOption[],
   header?: string | undefined,
+  currentPath?: string | undefined,
 }
 
-const MenuList = ({ header, source }: MenuListProps) => (
+const MenuList = ({ header, source, currentPath }: MenuListProps) => (
   <List>
     {header && (
       <ListItem>
@@ -67,7 +84,11 @@ const MenuList = ({ header, source }: MenuListProps) => (
       </ListItem>
     )}
     {source.map((item) => (
-      <ListItem button key={item.name} disableRipple>
+      <ListItemButton
+        selected={item.href === currentPath}
+        key={item.name}
+        disableRipple
+      >
         <ListItemIcon>
           {item.icon}
         </ListItemIcon>
@@ -75,18 +96,26 @@ const MenuList = ({ header, source }: MenuListProps) => (
           primary={item.name}
           primaryTypographyProps={{ variant: 'body2' }}
         />
-      </ListItem>
+      </ListItemButton>
     ))}
   </List>
 );
 
-const Menu = () => (
-  <>
-    <MenuList source={[{ icon: <HomeIcon />, name: 'Home' }]} />
-    <MenuList header="Study" source={studyMenu} />
-    <MenuList header="Tools" source={toolsMenu} />
-  </>
-);
+interface MenuProps {
+  currentPath?: string | undefined,
+}
+
+const Menu = ({ currentPath }: MenuProps) => {
+  const { pathname } = useLocation();
+
+  return (
+    <>
+      <MenuList source={homeMenu} currentPath={currentPath || pathname} />
+      <MenuList header="Study" source={studyMenu} currentPath={currentPath || pathname} />
+      <MenuList header="Tools" source={toolsMenu} currentPath={currentPath || pathname} />
+    </>
+  );
+};
 
 interface DrawerProps extends MUIDrawerProps {
   mode?: 'small' | 'medium',
