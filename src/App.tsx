@@ -9,7 +9,15 @@ import {
 import { ThemeProvider } from 'styled-components';
 
 import {
-  HomePage, SignInPage, SignUpPage,
+  AnalyticsPage,
+  HomePage,
+  NotesPage,
+  QuizzesPage,
+  SignInPage,
+  SignUpPage,
+  TrackerPage,
+  TutorialsPage,
+  VideosPage,
 } from './pages';
 import theme from './theme';
 
@@ -22,7 +30,12 @@ const App = () => (
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/notes" element={<HomePage />} />
+          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/videos" element={<VideosPage />} />
+          <Route path="/quizzes" element={<QuizzesPage />} />
+          <Route path="/tutorials" element={<TutorialsPage />} />
+          <Route path="/tracker" element={<TrackerPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
         </Routes>
       </BrowserRouter>
     </MUIThemeProvider>
