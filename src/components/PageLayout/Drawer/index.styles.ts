@@ -16,6 +16,7 @@ const StyledDrawer = styled(Drawer)`
     & .MuiDrawer-paper {
       box-sizing: border-box;
       width: ${({ theme }) => theme.shape.drawerWidth}px;
+      background-color: ${({ theme }) => theme.palette.gray.light};
     }
   }
 `;
