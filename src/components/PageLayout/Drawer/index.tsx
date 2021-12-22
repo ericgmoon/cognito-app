@@ -11,7 +11,7 @@ import {
   List, ListItem, ListItemButton, ListItemIcon, ListItemText,
 } from '@mui/material';
 import { DrawerProps as MUIDrawerProps } from '@mui/material/Drawer';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
   ListHeaderText, ScrollableContainer, StyledDrawer, ToolbarOffset,
@@ -73,33 +73,38 @@ interface MenuListProps {
   currentPath?: string | undefined,
 }
 
-const MenuList = ({ header, source, currentPath }: MenuListProps) => (
-  <List>
-    {header && (
-      <ListItem>
-        <ListHeaderText
-          primary={header}
-          primaryTypographyProps={{ variant: 'overline' }}
-        />
-      </ListItem>
-    )}
-    {source.map((item) => (
-      <ListItemButton
-        selected={item.href === currentPath}
-        key={item.name}
-        disableRipple
-      >
-        <ListItemIcon>
-          {item.icon}
-        </ListItemIcon>
-        <ListItemText
-          primary={item.name}
-          primaryTypographyProps={{ variant: 'body2' }}
-        />
-      </ListItemButton>
-    ))}
-  </List>
-);
+const MenuList = ({ header, source, currentPath }: MenuListProps) => {
+  const navigate = useNavigate();
+
+  return (
+    <List>
+      {header && (
+        <ListItem>
+          <ListHeaderText
+            primary={header}
+            primaryTypographyProps={{ variant: 'overline' }}
+          />
+        </ListItem>
+      )}
+      {source.map((item) => (
+        <ListItemButton
+          selected={item.href === currentPath}
+          key={item.name}
+          onClick={() => navigate(item.href)}
+          disableRipple
+        >
+          <ListItemIcon>
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText
+            primary={item.name}
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </ListItemButton>
+      ))}
+    </List>
+  );
+};
 
 interface MenuProps {
   currentPath?: string | undefined,
