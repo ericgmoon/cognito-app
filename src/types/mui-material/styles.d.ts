@@ -16,12 +16,14 @@ declare module '@mui/system' {
 declare module '@mui/material/styles' {
   export interface Palette {
     darkPrimary: Palette['primary'],
+    highlight: Palette['primary'],
     gray: Palette['primary'],
     darkGray: Palette['primary'],
   }
 
   export interface PaletteOptions{
     darkPrimary?: PaletteOptions['primary'],
+    highlight?: PaletteOptions['primary'],
     darkGray: PaletteOptions['primary'],
     gray: PaletteOptions['primary'],
   }

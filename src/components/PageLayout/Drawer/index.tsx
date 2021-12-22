@@ -8,12 +8,12 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import {
-  Divider, List, ListItem, ListItemIcon, ListItemText,
+  List, ListItem, ListItemIcon, ListItemText,
 } from '@mui/material';
 import { DrawerProps as MUIDrawerProps } from '@mui/material/Drawer';
 
 import {
-  ScrollableContainer, StyledDrawer, ToolbarOffset,
+  ListHeaderText, ScrollableContainer, StyledDrawer, ToolbarOffset,
 } from './index.styles';
 
 interface MenuOption {
@@ -53,10 +53,19 @@ const toolsMenu: MenuOption[] = [
 
 interface MenuListProps {
   source: MenuOption[],
+  header?: string | undefined,
 }
 
-const MenuList = ({ source }: MenuListProps) => (
+const MenuList = ({ header, source }: MenuListProps) => (
   <List>
+    {header && (
+      <ListItem>
+        <ListHeaderText
+          primary={header}
+          primaryTypographyProps={{ variant: 'overline' }}
+        />
+      </ListItem>
+    )}
     {source.map((item) => (
       <ListItem button key={item.name} disableRipple>
         <ListItemIcon>
@@ -74,10 +83,8 @@ const MenuList = ({ source }: MenuListProps) => (
 const Menu = () => (
   <>
     <MenuList source={[{ icon: <HomeIcon />, name: 'Home' }]} />
-    <Divider />
-    <MenuList source={studyMenu} />
-    <Divider />
-    <MenuList source={toolsMenu} />
+    <MenuList header="Study" source={studyMenu} />
+    <MenuList header="Tools" source={toolsMenu} />
   </>
 );
 

@@ -1,4 +1,6 @@
-import { Drawer, Toolbar } from '@mui/material';
+import {
+  Drawer, ListItemText, Toolbar,
+} from '@mui/material';
 import styled from 'styled-components';
 
 const ToolbarOffset = styled(Toolbar)`
@@ -21,4 +23,13 @@ const ScrollableContainer = styled.div`
   overflow: auto;
 `;
 
-export { StyledDrawer, ToolbarOffset, ScrollableContainer };
+const ListHeaderText = styled(ListItemText)`
+  && {
+    & .MuiListItemText-primary {
+      font-weight: bold;
+      color: ${({ theme }) => theme.palette.highlight.main}
+    }
+  }
+`;
+
+export { StyledDrawer, ToolbarOffset, ScrollableContainer, ListHeaderText };

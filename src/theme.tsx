@@ -54,6 +54,12 @@ const theme = {
       light: '#5982c5',
       contrastText: '#fff',
     },
+    highlight: {
+      main: '#ed6d64',
+      light: '#e89f99',
+      dark: '#b5423a',
+      contrastText: '#fff',
+    },
     gray: {
       main: '#EFEFEF',
       dark: '#D8D8D8',
