@@ -22,6 +22,7 @@ const App = () => (
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/notes" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </MUIThemeProvider>

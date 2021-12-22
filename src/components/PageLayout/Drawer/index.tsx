@@ -8,14 +8,28 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import {
-  List, ListItem, ListItemButton, ListItemIcon, ListItemText,
+  ListItem, ListItemIcon,
 } from '@mui/material';
 import { DrawerProps as MUIDrawerProps } from '@mui/material/Drawer';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
-  ListHeaderText, ScrollableContainer, StyledDrawer, ToolbarOffset,
+  ListHeaderText,
+  ListItemButton,
+  ListItemText,
+  ScrollableContainer,
+  StyledDrawer,
+  StyledList,
+  ToolbarOffset,
 } from './index.styles';
+
+interface MenuOptionIconProps {
+  selected: boolean,
+  children: React.ReactElement,
+}
+
+const MenuOptionIcon = ({ children, selected }: MenuOptionIconProps) =>
+  React.cloneElement(children, { color: (selected ? 'darkPrimary' : '') });
 
 interface MenuOption {
   icon: React.ReactElement,
@@ -77,7 +91,7 @@ const MenuList = ({ header, source, currentPath }: MenuListProps) => {
   const navigate = useNavigate();
 
   return (
-    <List>
+    <StyledList>
       {header && (
         <ListItem>
           <ListHeaderText
@@ -94,15 +108,18 @@ const MenuList = ({ header, source, currentPath }: MenuListProps) => {
           disableRipple
         >
           <ListItemIcon>
-            {item.icon}
+            <MenuOptionIcon selected={item.href === currentPath}>
+              {item.icon}
+            </MenuOptionIcon>
           </ListItemIcon>
           <ListItemText
             primary={item.name}
             primaryTypographyProps={{ variant: 'body2' }}
+            selected={item.href === currentPath}
           />
         </ListItemButton>
       ))}
-    </List>
+    </StyledList>
   );
 };
 
