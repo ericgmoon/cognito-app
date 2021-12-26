@@ -6,9 +6,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
 
 import { getIsUserAuthenticated } from '../../auth';
+import { useDispatch, useSelector } from '../../redux/hooks';
 
 import AppBar from './AppBar';
 import Drawer from './Drawer';
+import {
+  close, toggle,
+} from './drawerOpenSlice';
 import {
   ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain,
 } from './index.styles';
@@ -32,18 +36,19 @@ interface ContentProps {
 }
 
 const Content = ({ children, decorate, loading }: ContentProps) => {
-  const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const open: boolean = useSelector((state) => state.drawerOpen.value);
+  const dispatch = useDispatch();
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (decorate ? (
     <ContentContainer>
-      <AppBar position="fixed" isDrawerOpen={open} onDrawerButtonClick={() => setOpen(!open)} />
+      <AppBar position="fixed" isDrawerOpen={open} onDrawerButtonClick={() => dispatch(toggle())} />
       <Nav component="nav">
         <Drawer
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={() => dispatch(close())}
           mode={isMd ? 'medium' : 'small'}
         />
       </Nav>

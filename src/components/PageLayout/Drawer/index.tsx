@@ -150,6 +150,9 @@ const Drawer = ({ mode = 'medium', onClose = () => {}, ...rest }: DrawerProps) =
       // Keep Drawer mounted on mobile
       keepMounted: mode === 'small',
     }}
+    SlideProps={{
+      appear: false,
+    }}
     variant={mode === 'small' ? 'temporary' : 'persistent'}
     onClose={onClose}
     {...rest}

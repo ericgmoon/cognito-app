@@ -63,7 +63,7 @@ const StyledList = styled(List)`
 const ListItemButton = styled(MUIListItemButton)`
   && {
     &:hover {
-      background-color: ${({ theme }) => theme.palette.primary.light};
+      background-color: ${({ theme }) => theme.palette.primary.light}b3;
       border-right: 4px solid ${({ theme }) => theme.palette.primary.dark}66;
     }
   }
