@@ -15,11 +15,12 @@ import {
 
 interface LoadingWrapperProps {
   children: React.ReactElement,
+  decorate: boolean,
   loading: boolean,
 }
 
-const LoadingWrapper = ({ children, loading }: LoadingWrapperProps) => (loading ? (
-  <LoadingContainer>
+const LoadingWrapper = ({ children, loading, decorate }: LoadingWrapperProps) => (loading ? (
+  <LoadingContainer decorate={decorate}>
     <CircularProgress />
   </LoadingContainer>
 ) : children);
@@ -51,7 +52,7 @@ const Content = ({ children, decorate, loading }: ContentProps) => {
           component="main"
           open={open}
         >
-          <LoadingWrapper loading={loading}>
+          <LoadingWrapper loading={loading} decorate={decorate}>
             {children}
           </LoadingWrapper>
         </MediumMain>
@@ -60,14 +61,14 @@ const Content = ({ children, decorate, loading }: ContentProps) => {
           component="main"
           open={open}
         >
-          <LoadingWrapper loading={loading}>
+          <LoadingWrapper loading={loading} decorate={decorate}>
             {children}
           </LoadingWrapper>
         </SmallMain>
       )}
     </ContentContainer>
   ) : (
-    <LoadingWrapper loading={loading}>
+    <LoadingWrapper loading={loading} decorate={decorate}>
       {children}
     </LoadingWrapper>
   ));

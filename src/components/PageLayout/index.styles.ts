@@ -1,8 +1,12 @@
 import { Box } from '@mui/material';
 import styled from 'styled-components';
 
-const LoadingContainer = styled.div`
-  height: 100vh;
+interface LoadingContainerProps {
+  decorate: boolean,
+}
+
+const LoadingContainer = styled.div<LoadingContainerProps>`
+  height: ${({ decorate, theme }) => (decorate ? `calc(100vh - ${theme.shape.appbarHeight * 2}px)` : '100vh')};
   width: 100%;
   display: flex;
   align-items: center;
@@ -16,7 +20,7 @@ interface MainProps {
 const MediumMain = styled(Box)<MainProps>`
   width: calc(100% - ${({ theme }) => theme.shape.drawerWidth}px);
   flex-grow: 1;
-  margin-top: ${({ theme }) => theme.shape.drawerHeight}px;
+  margin-top: ${({ theme }) => theme.shape.appbarHeight}px;
   margin-left: ${({ open, theme }) => (open ? `${theme.shape.drawerWidth}px` : 0)};
   transition: ${({ open, theme }) => (open ?
     theme.transitions.create('margin', {
@@ -31,7 +35,7 @@ const MediumMain = styled(Box)<MainProps>`
 
 const SmallMain = styled(Box)<MainProps>`
   width: 100%;
-  margin-top: ${({ theme }) => theme.shape.drawerHeight}px;
+  margin-top: ${({ theme }) => theme.shape.appbarHeight}px;
   padding: ${({ theme }) => theme.spacing(2)};
 `;
 
