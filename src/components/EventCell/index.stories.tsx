@@ -34,7 +34,7 @@ TutorialBook.args = {
 };
 
 export const TutorialCancel = Template.bind({});
-TutorialBook.args = {
+TutorialCancel.args = {
   startDatetime: new Date().getTime(),
   duration: 30,
   color: 'chemistry',
