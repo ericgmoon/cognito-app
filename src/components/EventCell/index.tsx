@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Content, ContentText, Header, HeaderText, RootContainer,
+  ActionButton, ButtonContainer, Content, ContentText, Header, HeaderText, RootContainer,
 } from './index.styles';
 import { stringifyDatetime } from './utils';
 
@@ -11,14 +11,19 @@ interface EventCellProps {
   color?: 'primary' | 'chemistry' | 'physics',
   title?: string,
   subtitle?: string,
+  actionButton?: {
+    text: string,
+    onClick: () => void,
+    color?: 'primary' | 'secondary' | 'error' | undefined,
+  }
 }
 
-const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '' }: EventCellProps) => {
+const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton }: EventCellProps) => {
   const startTime = stringifyDatetime(startDatetime);
   const endTime = stringifyDatetime(startDatetime + duration * 60000);
 
   return (
-    <RootContainer>
+    <RootContainer long={!!actionButton}>
       <Header color={color}>
         <HeaderText variant="subtitle2">
           {startTime} - {endTime}
@@ -32,6 +37,17 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
           {subtitle}
         </ContentText>
       </Content>
+      {actionButton && (
+        <ButtonContainer>
+          <ActionButton
+            onClick={actionButton.onClick}
+            color={actionButton.color || color}
+            disableRipple
+          >
+            {actionButton.text}
+          </ActionButton>
+        </ButtonContainer>
+      )}
     </RootContainer>
   );
 };

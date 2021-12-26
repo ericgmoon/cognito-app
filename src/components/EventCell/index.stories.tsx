@@ -11,10 +11,24 @@ export default {
 
 const Template: ComponentStory<typeof EventCell> = (args) => <EventCell {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+export const Tutorial = Template.bind({});
+Tutorial.args = {
   startDatetime: new Date().getTime(),
   duration: 30,
+  color: 'chemistry',
   title: 'Chemistry',
   subtitle: 'Tutorial',
+};
+
+export const TutorialBook = Template.bind({});
+TutorialBook.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+  actionButton: {
+    text: 'Book',
+    onClick: () => {},
+  },
 };

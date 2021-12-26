@@ -1,13 +1,17 @@
-import { Typography } from '@mui/material';
+import { ButtonBase, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 interface ColorProps {
-  color: 'primary' | 'chemistry' | 'physics';
+  color: 'primary' | 'chemistry' | 'physics' | 'secondary' | 'error';
 }
 
-const RootContainer = styled.div`
+interface LongProps {
+  long: boolean,
+}
+
+const RootContainer = styled.div<LongProps>`
   width: 156px;
-  height: 96px;
+  height: ${({ long }) => (long ? 128 : 96)}px;
   background-color: ${({ theme }) => theme.palette.gray.main};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   cursor: pointer;
@@ -52,4 +56,26 @@ const ContentText = styled(Typography)`
   }
 `;
 
-export { RootContainer, Header, HeaderText, Content, ContentText };
+const ButtonContainer = styled.div`
+  height: 32px;
+  display: flex;
+  justify-content: center;
+`;
+
+const ActionButton = styled(ButtonBase)<ColorProps>`
+  && {
+    text-transform: uppercase;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 8px;
+    width: 96px;
+    height: 24px;
+    font-weight: 600;
+    color: ${({ theme, color }) => theme.palette[color].dark};
+    &:hover {
+      background-color: ${({ theme, color }) => theme.palette[color].light}4d;
+    }
+  }
+`;
+
+export { RootContainer, Header, HeaderText, Content, ContentText, ActionButton, ButtonContainer };
