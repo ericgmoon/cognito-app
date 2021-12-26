@@ -13,18 +13,24 @@ import {
   ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain,
 } from './index.styles';
 
-const LoadingScreen = () => (
+interface LoadingWrapperProps {
+  children: React.ReactElement,
+  loading: boolean,
+}
+
+const LoadingWrapper = ({ children, loading }: LoadingWrapperProps) => (loading ? (
   <LoadingContainer>
     <CircularProgress />
   </LoadingContainer>
-);
+) : children);
 
 interface ContentProps {
   children: React.ReactElement
   decorate: boolean,
+  loading: boolean,
 }
 
-const Content = ({ children, decorate }: ContentProps) => {
+const Content = ({ children, decorate, loading }: ContentProps) => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
 
@@ -45,18 +51,26 @@ const Content = ({ children, decorate }: ContentProps) => {
           component="main"
           open={open}
         >
-          {children}
+          <LoadingWrapper loading={loading}>
+            {children}
+          </LoadingWrapper>
         </MediumMain>
       ) : (
         <SmallMain
           component="main"
           open={open}
         >
-          {children}
+          <LoadingWrapper loading={loading}>
+            {children}
+          </LoadingWrapper>
         </SmallMain>
       )}
     </ContentContainer>
-  ) : children);
+  ) : (
+    <LoadingWrapper loading={loading}>
+      {children}
+    </LoadingWrapper>
+  ));
 };
 
 interface PageLayoutProps {
@@ -121,7 +135,7 @@ export const PageLayout = ({
     <>
       {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
       {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
-      {loading ? <LoadingScreen /> : <Content decorate={decorate}>{children}</Content>}
+      <Content decorate={decorate} loading={!loading}>{children}</Content>
     </>
   );
 };

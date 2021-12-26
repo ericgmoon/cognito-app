@@ -30,6 +30,7 @@ const MediumMain = styled(Box)<MainProps>`
 `;
 
 const SmallMain = styled(Box)<MainProps>`
+  width: 100%;
   margin-top: ${({ theme }) => theme.shape.drawerHeight}px;
   padding: ${({ theme }) => theme.spacing(2)};
 `;
