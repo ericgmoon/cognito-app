@@ -1,3 +1,9 @@
 export { default as SignInPage } from './SignInPage';
 export { default as SignUpPage } from './SignUpPage';
 export { default as HomePage } from './HomePage';
+export { default as NotesPage } from './NotesPage';
+export { default as VideosPage } from './VideosPage';
+export { default as QuizzesPage } from './QuizzesPage';
+export { default as TutorialsPage } from './TutorialsPage';
+export { default as TrackerPage } from './TrackerPage';
+export { default as AnalyticsPage } from './AnalyticsPage';

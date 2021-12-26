@@ -2,9 +2,9 @@ import React from 'react';
 
 import { ProtectedPageLayout } from '../../components/PageLayout';
 
-const HomePage = () => (
-  <ProtectedPageLayout title="Home">
-    <p>This is the home page</p>
+const NotesPage = () => (
+  <ProtectedPageLayout title="Notes">
+    <p>This is the notes page</p>
   </ProtectedPageLayout>
 );
-export default HomePage;
+export default NotesPage;

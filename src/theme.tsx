@@ -33,7 +33,7 @@ const theme = {
   shape: {
     borderRadius: 8,
     drawerWidth: 240,
-    drawerHeight: 48,
+    appbarHeight: 48,
   },
   palette: {
     primary: {
@@ -52,6 +52,12 @@ const theme = {
       main: '#345995',
       dark: '#20365b',
       light: '#5982c5',
+      contrastText: '#fff',
+    },
+    highlight: {
+      main: '#ed6d64',
+      light: '#e89f99',
+      dark: '#b5423a',
       contrastText: '#fff',
     },
     gray: {

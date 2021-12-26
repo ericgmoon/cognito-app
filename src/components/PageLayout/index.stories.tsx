@@ -27,3 +27,10 @@ Loading.args = {
   loading: true,
   children: <>(Insert content here)</>,
 };
+
+export const DecoratedLoading = Template.bind({});
+Decorated.args = {
+  decorate: true,
+  loading: true,
+  children: <>(Insert content here)</>,
+};
