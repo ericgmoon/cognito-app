@@ -80,6 +80,7 @@ const commonRules = {
     },
   ],
   'react/require-default-props': 'off',
+  'no-param-reassign': ['error', { props: false }],
 };
 
 const commonExtensions = [
