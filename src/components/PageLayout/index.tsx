@@ -136,7 +136,7 @@ export const PageLayout = ({
     <>
       {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
       {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
-      <Content decorate={decorate} loading={!loading}>{children}</Content>
+      <Content decorate={decorate} loading={loading}>{children}</Content>
     </>
   );
 };
