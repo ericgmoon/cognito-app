@@ -32,3 +32,17 @@ TutorialBook.args = {
     onClick: () => {},
   },
 };
+
+export const TutorialCancel = Template.bind({});
+TutorialBook.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+  actionButton: {
+    text: 'Cancel',
+    onClick: () => {},
+    color: 'error',
+  },
+};
