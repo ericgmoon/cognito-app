@@ -4,7 +4,7 @@ import {
 import styled from 'styled-components';
 
 interface ColorProps {
-  color: 'primary' | 'chemistry' | 'physics' | 'secondary' | 'error';
+  color: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | 'chemistry' | 'physics';
 }
 
 interface LongProps {
@@ -12,13 +12,15 @@ interface LongProps {
 }
 
 const Card = styled(MUICard)<LongProps>`
-  width: 156px;
-  height: ${({ long }) => (long ? 128 : 96)}px;
-  background-color: ${({ theme }) => theme.palette.gray.main};
-  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
+  && {
+    width: 156px;
+    height: ${({ long }) => (long ? 128 : 96)}px;
+    background-color: ${({ theme }) => theme.palette.gray.main};
+    border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const CardContent = styled(MUICardContent)`
@@ -80,6 +82,7 @@ const ActionButton = styled(ButtonBase)<ColorProps>`
     height: 24px;
     font-weight: 600;
     color: ${({ theme, color }) => theme.palette[color].dark};
+    background-color: ${({ theme, disabled }) => disabled && theme.palette.gray.main};
     &:hover {
       background-color: ${({ theme, color }) => theme.palette[color].light}4d;
     }

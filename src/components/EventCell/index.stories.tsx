@@ -46,3 +46,17 @@ TutorialCancel.args = {
     color: 'error',
   },
 };
+
+export const TutorialFull = Template.bind({});
+TutorialFull.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+  actionButton: {
+    text: 'Full',
+    onClick: () => {},
+  },
+  disabled: true,
+};

@@ -14,23 +14,24 @@ interface EventCellProps {
   actionButton?: {
     text: string,
     onClick: () => void,
-    color?: 'primary' | 'secondary' | 'error' | undefined,
-  }
+    color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | undefined,
+  },
+  disabled?: boolean,
 }
 
-const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton }: EventCellProps) => {
+const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false }: EventCellProps) => {
   const startTime = stringifyDatetime(startDatetime);
   const endTime = stringifyDatetime(startDatetime + duration * 60000);
 
   return (
     <Card long={!!actionButton}>
       <CardContent>
-        <Header color={color}>
+        <Header color={disabled ? 'darkGray' : color}>
           <HeaderText variant="subtitle2">
             {startTime} - {endTime}
           </HeaderText>
         </Header>
-        <Content color={color}>
+        <Content color={disabled ? 'darkGray' : color}>
           <ContentText variant="subtitle2">
             {title}
           </ContentText>
@@ -42,8 +43,9 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
           <ButtonContainer>
             <ActionButton
               onClick={actionButton.onClick}
-              color={actionButton.color || color}
+              color={disabled ? 'gray' : (actionButton.color || color)}
               disableRipple
+              disabled={disabled}
             >
               {actionButton.text}
             </ActionButton>
