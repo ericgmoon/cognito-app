@@ -43,9 +43,9 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
           <ButtonContainer>
             <ActionButton
               onClick={actionButton.onClick}
-              color={disabled ? 'gray' : (actionButton.color || color)}
+              color={disabled ? 'darkGray' : (actionButton.color || color)}
               disableRipple
-              disabled={disabled}
+              blockPointer={disabled}
             >
               {actionButton.text}
             </ActionButton>

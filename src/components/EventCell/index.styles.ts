@@ -72,7 +72,11 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-const ActionButton = styled(ButtonBase)<ColorProps>`
+interface ActionButtonProps extends ColorProps {
+  blockPointer: boolean,
+}
+
+const ActionButton = styled(ButtonBase)<ActionButtonProps>`
   && {
     text-transform: uppercase;
     border-style: solid;
@@ -84,6 +88,7 @@ const ActionButton = styled(ButtonBase)<ColorProps>`
     color: ${({ theme, color }) => theme.palette[color].dark};
     background-color: ${({ theme, disabled }) => disabled && theme.palette.gray.main};
     &:hover {
+      cursor: ${({ blockPointer }) => (blockPointer ? 'not-allowed' : 'pointer')};
       background-color: ${({ theme, color }) => theme.palette[color].light}4d;
     }
   }
