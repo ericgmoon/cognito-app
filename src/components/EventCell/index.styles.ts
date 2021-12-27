@@ -1,4 +1,6 @@
-import { ButtonBase, Typography } from '@mui/material';
+import {
+  ButtonBase, Card as MUICard, CardContent as MUICardContent, Typography,
+} from '@mui/material';
 import styled from 'styled-components';
 
 interface ColorProps {
@@ -9,7 +11,7 @@ interface LongProps {
   long: boolean,
 }
 
-const RootContainer = styled.div<LongProps>`
+const Card = styled(MUICard)<LongProps>`
   width: 156px;
   height: ${({ long }) => (long ? 128 : 96)}px;
   background-color: ${({ theme }) => theme.palette.gray.main};
@@ -17,6 +19,12 @@ const RootContainer = styled.div<LongProps>`
   cursor: pointer;
   display: flex;
   flex-direction: column;
+`;
+
+const CardContent = styled(MUICardContent)`
+  && {
+    padding: 0;
+  }
 `;
 
 const Header = styled.div<ColorProps>`
@@ -78,4 +86,11 @@ const ActionButton = styled(ButtonBase)<ColorProps>`
   }
 `;
 
-export { RootContainer, Header, HeaderText, Content, ContentText, ActionButton, ButtonContainer };
+export { Card,
+  CardContent,
+  Header,
+  HeaderText,
+  Content,
+  ContentText,
+  ActionButton,
+  ButtonContainer };

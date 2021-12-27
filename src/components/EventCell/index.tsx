@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  ActionButton, ButtonContainer, Content, ContentText, Header, HeaderText, RootContainer,
+  ActionButton, ButtonContainer, Card, CardContent, Content, ContentText, Header, HeaderText,
 } from './index.styles';
 import { stringifyDatetime } from './utils';
 
@@ -23,32 +23,34 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
   const endTime = stringifyDatetime(startDatetime + duration * 60000);
 
   return (
-    <RootContainer long={!!actionButton}>
-      <Header color={color}>
-        <HeaderText variant="subtitle2">
-          {startTime} - {endTime}
-        </HeaderText>
-      </Header>
-      <Content color={color}>
-        <ContentText variant="subtitle2">
-          {title}
-        </ContentText>
-        <ContentText variant="subtitle2">
-          {subtitle}
-        </ContentText>
-      </Content>
-      {actionButton && (
-        <ButtonContainer>
-          <ActionButton
-            onClick={actionButton.onClick}
-            color={actionButton.color || color}
-            disableRipple
-          >
-            {actionButton.text}
-          </ActionButton>
-        </ButtonContainer>
-      )}
-    </RootContainer>
+    <Card long={!!actionButton}>
+      <CardContent>
+        <Header color={color}>
+          <HeaderText variant="subtitle2">
+            {startTime} - {endTime}
+          </HeaderText>
+        </Header>
+        <Content color={color}>
+          <ContentText variant="subtitle2">
+            {title}
+          </ContentText>
+          <ContentText variant="subtitle2">
+            {subtitle}
+          </ContentText>
+        </Content>
+        {actionButton && (
+          <ButtonContainer>
+            <ActionButton
+              onClick={actionButton.onClick}
+              color={actionButton.color || color}
+              disableRipple
+            >
+              {actionButton.text}
+            </ActionButton>
+          </ButtonContainer>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
