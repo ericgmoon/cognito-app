@@ -1,5 +1,5 @@
 import {
-  ButtonBase, Card as MUICard, CardContent as MUICardContent, Typography,
+  Badge, ButtonBase, Card as MUICard, CardContent as MUICardContent, Typography,
 } from '@mui/material';
 import styled from 'styled-components';
 
@@ -94,6 +94,16 @@ const ActionButton = styled(ButtonBase)<ActionButtonProps>`
   }
 `;
 
+const OnlineCircle = styled(Badge)`
+  & .MuiBadge-badge {
+    min-width: 12px;
+    min-height: 12px;
+    border-radius: 6px;
+    margin-top: 2px;
+    margin-right: 2px;
+  }
+`;
+
 export { Card,
   CardContent,
   Header,
@@ -101,4 +111,5 @@ export { Card,
   Content,
   ContentText,
   ActionButton,
-  ButtonContainer };
+  ButtonContainer,
+  OnlineCircle };

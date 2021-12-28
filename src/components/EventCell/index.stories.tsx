@@ -20,17 +20,18 @@ Tutorial.args = {
   subtitle: 'Tutorial',
 };
 
-export const TutorialBook = Template.bind({});
-TutorialBook.args = {
+export const TutorialJoin = Template.bind({});
+TutorialJoin.args = {
   startDatetime: new Date().getTime(),
   duration: 30,
   color: 'chemistry',
   title: 'Chemistry',
   subtitle: 'Tutorial',
   actionButton: {
-    text: 'Book',
+    text: 'Join',
     onClick: () => {},
   },
+  online: true,
 };
 
 export const TutorialCancel = Template.bind({});

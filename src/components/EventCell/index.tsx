@@ -1,9 +1,25 @@
 import React from 'react';
 
 import {
-  ActionButton, ButtonContainer, Card, CardContent, Content, ContentText, Header, HeaderText,
+  ActionButton,
+  ButtonContainer,
+  Card,
+  CardContent,
+  Content,
+  ContentText,
+  Header,
+  HeaderText,
+  OnlineCircle,
 } from './index.styles';
 import { stringifyDatetime } from './utils';
+
+interface OnlineIndicatorProps {
+  online?: boolean,
+  children: React.ReactElement,
+}
+
+const OnlineIndicator = ({ online = false, children }: OnlineIndicatorProps) =>
+  (online ? <OnlineCircle variant="dot" color="success">{children}</OnlineCircle> : children);
 
 interface EventCellProps {
   startDatetime: number,
@@ -17,9 +33,10 @@ interface EventCellProps {
     color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | undefined,
   },
   disabled?: boolean,
+  online?: boolean,
 }
 
-const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false }: EventCellProps) => {
+const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false, online }: EventCellProps) => {
   const startTime = stringifyDatetime(startDatetime);
   const endTime = stringifyDatetime(startDatetime + duration * 60000);
 
@@ -41,14 +58,16 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
         </Content>
         {actionButton && (
           <ButtonContainer>
-            <ActionButton
-              onClick={disabled ? () => {} : actionButton.onClick}
-              color={disabled ? 'darkGray' : (actionButton.color || color)}
-              disableRipple
-              blockPointer={disabled}
-            >
-              {actionButton.text}
-            </ActionButton>
+            <OnlineIndicator online={online}>
+              <ActionButton
+                onClick={disabled ? () => {} : actionButton.onClick}
+                color={disabled ? 'darkGray' : (actionButton.color || color)}
+                disableRipple
+                blockPointer={disabled}
+              >
+                {actionButton.text}
+              </ActionButton>
+            </OnlineIndicator>
           </ButtonContainer>
         )}
       </CardContent>
