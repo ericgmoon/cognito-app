@@ -19,12 +19,16 @@ declare module '@mui/material/styles' {
     highlight: Palette['primary'],
     gray: Palette['primary'],
     darkGray: Palette['primary'],
+    chemistry: Palette['primary'],
+    physics: Palette['primary'],
   }
 
   export interface PaletteOptions{
     darkPrimary?: PaletteOptions['primary'],
     highlight?: PaletteOptions['primary'],
-    darkGray: PaletteOptions['primary'],
-    gray: PaletteOptions['primary'],
+    darkGray?: PaletteOptions['primary'],
+    gray?: PaletteOptions['primary'],
+    chemistry?: PaletteOptions['primary'],
+    physics?: PaletteOptions['primary'],
   }
 }

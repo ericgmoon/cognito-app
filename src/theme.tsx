@@ -60,6 +60,18 @@ const theme = {
       dark: '#b5423a',
       contrastText: '#fff',
     },
+    chemistry: {
+      main: '#749cd2',
+      light: '#b2c9e6',
+      dark: '#3c72b9',
+      contrastText: '#fff',
+    },
+    physics: {
+      main: '#93c47d',
+      light: '#c5dfb9',
+      dark: '#69a94c',
+      contrastText: '#fff',
+    },
     gray: {
       main: '#EFEFEF',
       dark: '#D8D8D8',
