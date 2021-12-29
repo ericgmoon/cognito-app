@@ -20,3 +20,8 @@ PhoneNumber.args = {
   maxLength: 8,
   numbersOnly: true,
 };
+
+export const Small = Template.bind({});
+Small.args = {
+  size: 'small',
+};

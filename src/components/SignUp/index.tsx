@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  Alert, Collapse, Grid,
+  Alert,
+  Collapse,
+  Grid,
   IconButton,
+  Typography,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useForm } from 'react-hook-form';
 
 import { signUpWithValidation } from '../../auth';
@@ -13,7 +18,7 @@ import FixedLengthField from '../FixedLengthField';
 import TextField from '../TextField';
 
 import {
-  Container, StyledSignUp,
+  Container, PhoneNumberLabel, StyledSignUp,
 } from './index.styles';
 
 interface Data {
@@ -31,6 +36,9 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   const onSuccess = (email: string) => {
     setLoading(false);
@@ -125,6 +133,9 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
           />
         </Grid>
         <Grid item xs={12}>
+          <PhoneNumberLabel>
+            <Typography variant="subtitle1">Phone Number</Typography>
+          </PhoneNumberLabel>
           <FixedLengthField
             error={!!errors.phone}
             errorMessage={errors.phone ? getErrorMessage(errors.phone.type, 'phone') : ''}
@@ -132,6 +143,7 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
             prefix="+614"
             maxLength={8}
             numbersOnly
+            size={isMd ? 'medium' : 'small'}
             {...register('phone', { required: true, pattern: /^\+614\d{8}/ })}
           />
         </Grid>

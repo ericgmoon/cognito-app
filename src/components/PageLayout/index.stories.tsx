@@ -29,7 +29,7 @@ Loading.args = {
 };
 
 export const DecoratedLoading = Template.bind({});
-Decorated.args = {
+DecoratedLoading.args = {
   decorate: true,
   loading: true,
   children: <>(Insert content here)</>,
