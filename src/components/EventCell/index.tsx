@@ -60,6 +60,7 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
           <ButtonContainer>
             <OnlineIndicator online={online}>
               <ActionButton
+                variant="outlined"
                 onClick={disabled ? () => {} : actionButton.onClick}
                 color={disabled ? 'darkGray' : (actionButton.color || color)}
                 disableRipple

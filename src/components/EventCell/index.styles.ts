@@ -1,7 +1,9 @@
 import {
-  Badge, ButtonBase, Card as MUICard, CardContent as MUICardContent, Typography,
+  Badge, Card as MUICard, CardContent as MUICardContent, Typography,
 } from '@mui/material';
 import styled from 'styled-components';
+
+import Button from '../Button';
 
 interface ColorProps {
   color: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | 'chemistry' | 'physics';
@@ -13,7 +15,8 @@ interface LongProps {
 
 const Card = styled(MUICard)<LongProps>`
   && {
-    width: 156px;
+    width: 100%;
+    max-width: 156px;
     height: ${({ long }) => (long ? 128 : 96)}px;
     background-color: ${({ theme }) => theme.palette.gray.main};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
@@ -76,20 +79,18 @@ interface ActionButtonProps extends ColorProps {
   blockPointer: boolean,
 }
 
-const ActionButton = styled(ButtonBase)<ActionButtonProps>`
+const ActionButton = styled(Button)<ActionButtonProps>`
   && {
-    text-transform: uppercase;
-    border-style: solid;
     border-width: 2px;
-    border-radius: 8px;
     width: 96px;
     height: 24px;
-    font-weight: 600;
-    color: ${({ theme, color }) => theme.palette[color].dark};
-    background-color: ${({ theme, disabled }) => disabled && theme.palette.gray.main};
+    padding-left: ${({ theme }) => theme.spacing(2)};
+    padding-right: ${({ theme }) => theme.spacing(2)};
+    padding-top: ${({ theme }) => theme.spacing(1)};
+    padding-bottom: ${({ theme }) => theme.spacing(1)};
     &:hover {
+      border-width: 2px;
       cursor: ${({ blockPointer }) => (blockPointer ? 'not-allowed' : 'pointer')};
-      background-color: ${({ theme, color }) => theme.palette[color].light}4d;
     }
   }
 `;
