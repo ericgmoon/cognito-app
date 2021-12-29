@@ -26,9 +26,9 @@ declare module '@mui/material/styles' {
   export interface PaletteOptions{
     darkPrimary?: PaletteOptions['primary'],
     highlight?: PaletteOptions['primary'],
-    darkGray: PaletteOptions['primary'],
-    gray: PaletteOptions['primary'],
-    chemistry: Palette['primary'],
-    physics: Palette['primary'],
+    darkGray?: PaletteOptions['primary'],
+    gray?: PaletteOptions['primary'],
+    chemistry?: PaletteOptions['primary'],
+    physics?: PaletteOptions['primary'],
   }
 }
