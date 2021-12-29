@@ -9,6 +9,6 @@ export default {
   component: VerificationCode,
 } as ComponentMeta<typeof VerificationCode>;
 
-const Template: ComponentStory<typeof VerificationCode> = () => <VerificationCode />;
+const Template: ComponentStory<typeof VerificationCode> = (args) => <VerificationCode {...args} />;
 
 export const Default = Template.bind({});
