@@ -12,4 +12,10 @@ const Container = styled.div`
   align-items: center;
 `;
 
-export { StyledSignUp, Container };
+const PhoneNumberLabel = styled.div`
+  margin-left: ${({ theme }) => theme.spacing(2)};
+  margin-bottom: ${({ theme }) => theme.spacing(1)};
+  color: ${({ theme }) => theme.palette.darkGray.main};
+`;
+
+export { StyledSignUp, Container, PhoneNumberLabel };

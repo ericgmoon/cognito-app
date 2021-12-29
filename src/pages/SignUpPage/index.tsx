@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  Grid, Link,
+  Grid, Link, Typography,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -28,36 +28,65 @@ const SignUpPage = () => {
     navigate('/');
   };
 
+  const SignUpStep = (
+    <Grid
+      container
+      rowSpacing={{
+        xs: 2, sm: 2, md: 4,
+      }}
+      columnSpacing={2}
+    >
+      <Grid item xs={12}>
+        <HeaderContainer>
+          <Logo src={logo} alt="logo" />
+          <Title variant="h4">
+            Sign Up to Cognito
+          </Title>
+        </HeaderContainer>
+      </Grid>
+      <Grid item xs={12}>
+        <Container>
+          <SignUp goToVerify={goToVerify} />
+          <FooterText>Already have an account? <Link href="/signin" underline="always">Sign In</Link></FooterText>
+        </Container>
+      </Grid>
+    </Grid>
+  );
+
+  const VerificationStep = (
+    <Grid
+      container
+      rowSpacing={{
+        xs: 2, sm: 2, md: 4,
+      }}
+      columnSpacing={2}
+    >
+      <Grid item xs={12}>
+        <HeaderContainer>
+          <Title variant="h4">
+            Verify Your Account
+          </Title>
+        </HeaderContainer>
+      </Grid>
+      <Grid item xs={12}>
+        <Container>
+          <Typography variant="h6">Please enter the verification code</Typography>
+          <Typography variant="h6">sent to your mobile device.</Typography>
+          <VerificationCode finishSignUp={finishSignUp} email={email} />,
+        </Container>
+      </Grid>
+    </Grid>
+  );
+
   const steps = [
-    <Container>
-      <SignUp goToVerify={goToVerify} />
-      <FooterText>Already have an account? <Link href="/signin" underline="always">Sign In</Link></FooterText>
-    </Container>,
-    <VerificationCode finishSignUp={finishSignUp} email={email} />,
+    SignUpStep,
+    VerificationStep,
   ];
 
   return (
     <AuthPageLayout title="Sign Up">
       <RootContainer>
-        <Grid
-          container
-          rowSpacing={{
-            xs: 2, sm: 2, md: 4,
-          }}
-          columnSpacing={2}
-        >
-          <Grid item xs={12}>
-            <HeaderContainer>
-              <Logo src={logo} alt="logo" />
-              <Title variant="h4">
-                Sign Up to Cognito
-              </Title>
-            </HeaderContainer>
-          </Grid>
-          <Grid item xs={12}>
-            {steps[step]}
-          </Grid>
-        </Grid>
+        {steps[step]}
       </RootContainer>
     </AuthPageLayout>
   );

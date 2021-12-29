@@ -9,6 +9,6 @@ export default {
   component: SignIn,
 } as ComponentMeta<typeof SignIn>;
 
-const Template: ComponentStory<typeof SignIn> = () => <SignIn />;
+const Template: ComponentStory<typeof SignIn> = (args) => <SignIn {...args} />;
 
 export const Default = Template.bind({});
