@@ -9,11 +9,12 @@ import {
   Container, ErrorText, FieldContainer, ProxyInputField, StyledTextField,
 } from './index.styles';
 
-const UnitField = forwardRef(({ error, ...rest }: InputBaseProps, ref) => (
+const UnitField = forwardRef(({ error, size = 'medium', ...rest }: InputBaseProps, ref) => (
   <StyledTextField
     error={error}
     inputRef={ref}
     inputProps={{ maxLength: 1 }}
+    size={size}
     {...rest}
   />
 ));
@@ -47,6 +48,10 @@ interface FixedLengthFieldProps {
    * Only allows numbers if `true`
    */
   numbersOnly?: boolean,
+  /**
+   * Multiplier for the size of the field
+   */
+  size?: 'small' | 'medium',
 }
 
 const FixedLengthField = forwardRef((
@@ -57,6 +62,7 @@ const FixedLengthField = forwardRef((
     maxLength = 4,
     displayedPrefix = '',
     numbersOnly = false,
+    size,
     ...rest }
   : FixedLengthFieldProps, ref: React.Ref<HTMLInputElement>) => {
   const [value, setValue] = useState(prefix);
@@ -109,10 +115,10 @@ const FixedLengthField = forwardRef((
         tabIndex={-1}
         {...rest}
       />
-      <FieldContainer>
+      <FieldContainer size={size}>
         {[...displayedPrefix].map((x, i) => (
           // eslint-disable-next-line react/no-array-index-key
-          <UnitField key={`${x}_${i}`} value={x} disabled />
+          <UnitField key={`${x}_${i}`} value={x} disabled size={size} />
         ))}
         {[...Array(maxLength).keys()].map((x) => (
           <UnitField
@@ -124,6 +130,7 @@ const FixedLengthField = forwardRef((
             onChange={(e) => (!numbersOnly || isNum(e.target.value))
               && insertCharIntoValue(prefixLength + x, e.target.value)}
             onKeyDown={(e) => e.key === 'Backspace' && removeEditableChar()}
+            size={size}
           />
         ),
         )}
