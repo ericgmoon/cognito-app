@@ -11,7 +11,7 @@ import {
   HeaderText,
   OnlineCircle,
 } from './index.styles';
-import { stringifyDatetime } from './utils';
+import { stringifyTime } from './utils';
 
 interface OnlineIndicatorProps {
   online?: boolean,
@@ -37,8 +37,8 @@ interface EventCellProps {
 }
 
 const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false, online }: EventCellProps) => {
-  const startTime = stringifyDatetime(startDatetime);
-  const endTime = stringifyDatetime(startDatetime + duration * 60000);
+  const startTime = stringifyTime(startDatetime);
+  const endTime = stringifyTime(startDatetime + duration * 60000);
 
   return (
     <Card long={!!actionButton}>
