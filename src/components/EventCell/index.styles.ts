@@ -10,7 +10,7 @@ interface ColorProps {
 }
 
 interface LongProps {
-  long: boolean,
+  long: boolean | undefined,
 }
 
 const Card = styled(MUICard)<LongProps>`
@@ -84,10 +84,7 @@ const ActionButton = styled(Button)<ActionButtonProps>`
     border-width: 2px;
     width: 96px;
     height: 24px;
-    padding-left: ${({ theme }) => theme.spacing(2)};
-    padding-right: ${({ theme }) => theme.spacing(2)};
-    padding-top: ${({ theme }) => theme.spacing(1)};
-    padding-bottom: ${({ theme }) => theme.spacing(1)};
+    padding: ${({ theme }) => theme.spacing(1, 2)};
     &:hover {
       border-width: 2px;
       cursor: ${({ blockPointer }) => (blockPointer ? 'not-allowed' : 'pointer')};

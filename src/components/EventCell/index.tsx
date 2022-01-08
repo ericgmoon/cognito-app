@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import {
   ActionButton,
   ButtonContainer,
@@ -11,7 +14,7 @@ import {
   HeaderText,
   OnlineCircle,
 } from './index.styles';
-import { stringifyDatetime } from './utils';
+import { stringifyTime } from './utils';
 
 interface OnlineIndicatorProps {
   online?: boolean,
@@ -37,15 +40,18 @@ interface EventCellProps {
 }
 
 const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false, online }: EventCellProps) => {
-  const startTime = stringifyDatetime(startDatetime);
-  const endTime = stringifyDatetime(startDatetime + duration * 60000);
+  const startTime = stringifyTime(startDatetime);
+  const endTime = stringifyTime(startDatetime + duration * 60000);
+
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Card long={!!actionButton}>
       <CardContent>
         <Header color={disabled ? 'darkGray' : color}>
           <HeaderText variant="subtitle2">
-            {startTime} - {endTime}
+            {isMd ? `${startTime} - ${endTime}` : startTime}
           </HeaderText>
         </Header>
         <Content color={disabled ? 'darkGray' : color}>
