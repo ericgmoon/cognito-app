@@ -1,10 +1,13 @@
 import React from 'react';
 
-import { ProtectedPageLayout } from '../../components/PageLayout';
+import { ProtectedPageLayout, TitleWrapper } from '../../components/PageLayout';
+import WeekCalendar from '../../components/WeekCalendar';
 
 const HomePage = () => (
   <ProtectedPageLayout title="Home">
-    <p>This is the home page</p>
+    <TitleWrapper title="Next 7 Days">
+      <WeekCalendar startDatetime={new Date().getTime()} />
+    </TitleWrapper>
   </ProtectedPageLayout>
 );
 export default HomePage;
