@@ -102,51 +102,51 @@ describe('splitEntriesByDay', () => {
         subtitle: 'Tutorial',
       },
     ])).toStrictEqual({
-      1643029200000: [
+      1640350800000: [
         {
-          startDatetime: (new Date(2021, 12, 25, 10, 30)).getTime(),
+          startDatetime: (new Date(2021, 11, 25, 10, 30)).getTime(),
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: (new Date(2021, 12, 25, 11, 30)).getTime(),
+          startDatetime: (new Date(2021, 11, 25, 11, 30)).getTime(),
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: (new Date(2021, 12, 25, 23, 59)).getTime(),
+          startDatetime: (new Date(2021, 11, 25, 23, 59)).getTime(),
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
       ],
-      1643115600000: [
+      1640437200000: [
         {
-          startDatetime: (new Date(2021, 12, 26, 0, 1)).getTime(),
+          startDatetime: (new Date(2021, 11, 26, 0, 1)).getTime(),
           duration: 30,
           title: 'Biology',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: (new Date(2021, 12, 26, 23, 59)).getTime(),
+          startDatetime: (new Date(2021, 11, 26, 23, 59)).getTime(),
           duration: 30,
           title: 'Physics',
           subtitle: 'Tutorial',
         },
       ],
-      1643202000000: [
+      1640523600000: [
         {
-          startDatetime: (new Date(2021, 12, 27, 0, 1)).getTime(),
+          startDatetime: (new Date(2021, 11, 27, 0, 1)).getTime(),
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
       ],
-      1643461200000: [
+      1640782800000: [
         {
-          startDatetime: (new Date(2021, 12, 30, 0, 1)).getTime(),
+          startDatetime: (new Date(2021, 11, 30, 0, 1)).getTime(),
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
