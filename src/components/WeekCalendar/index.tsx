@@ -52,6 +52,7 @@ const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColu
           text: 'JOIN',
           onClick: () => {},
           color: 'success',
+          online: true,
         };
       case 'CANCEL':
         return {
@@ -86,6 +87,7 @@ const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColu
             subtitle={entry.subtitle}
             color={entry.color}
             actionButton={getActionButton(entry.action)}
+            disabled={entry.action === 'FULL'}
           />
         </CellContainer>
       ))}

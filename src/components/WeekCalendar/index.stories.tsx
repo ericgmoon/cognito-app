@@ -29,7 +29,7 @@ Default.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
-      action: 'BOOK',
+      action: 'FULL',
     },
     {
       startDatetime: (new Date(2021, 11, 25, 19, 30)).getTime(),
@@ -91,6 +91,7 @@ Today.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'BOOK',
     },
   ],
 };
