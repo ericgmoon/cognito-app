@@ -41,7 +41,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "lint": "eslint",
-    "test": "TZ=Australia/Sydney && ./node_modules/.bin/jest",
+    "test": "./node_modules/.bin/jest",
     "lint:backend": "cd backend && yarn lint .",
     "test:backend": "cd backend && yarn test ."
   },

@@ -111,13 +111,13 @@ describe('splitEntriesByDay', () => {
     ])).toStrictEqual({
       1640350800000: [
         {
-          startDatetime: 1640392200000,
+          startDatetime: 1640388600000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: 1640388600000,
+          startDatetime: 1640392200000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
