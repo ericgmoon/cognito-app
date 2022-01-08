@@ -34,12 +34,12 @@ interface EventCellProps {
     text: string,
     onClick: () => void,
     color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | undefined,
+    online?: boolean,
   },
   disabled?: boolean,
-  online?: boolean,
 }
 
-const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false, online }: EventCellProps) => {
+const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false }: EventCellProps) => {
   const startTime = stringifyTime(startDatetime);
   const endTime = stringifyTime(startDatetime + duration * 60000);
 
@@ -64,7 +64,7 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
         </Content>
         {actionButton && (
           <ButtonContainer>
-            <OnlineIndicator online={online}>
+            <OnlineIndicator online={actionButton.online}>
               <ActionButton
                 variant="outlined"
                 onClick={disabled ? () => {} : actionButton.onClick}
