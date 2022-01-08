@@ -21,6 +21,7 @@ Default.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'JOIN',
     },
     {
       startDatetime: (new Date(2021, 11, 25, 18, 30)).getTime(),
@@ -28,6 +29,7 @@ Default.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'BOOK',
     },
     {
       startDatetime: (new Date(2021, 11, 25, 19, 30)).getTime(),
@@ -35,12 +37,14 @@ Default.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'BOOK',
     },
     {
       startDatetime: (new Date(2021, 11, 26, 16, 0)).getTime(),
       duration: 30,
       title: 'Biology',
       subtitle: 'Tutorial',
+      action: 'BOOK',
     },
     {
       startDatetime: (new Date(2021, 11, 26, 16, 0)).getTime(),
@@ -48,6 +52,7 @@ Default.args = {
       title: 'Physics',
       subtitle: 'Tutorial',
       color: 'physics',
+      action: 'CANCEL',
     },
     {
       startDatetime: (new Date(2021, 11, 27, 20, 0)).getTime(),
@@ -55,6 +60,7 @@ Default.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'BOOK',
     },
     {
       startDatetime: (new Date(2021, 11, 30, 12, 0)).getTime(),
@@ -62,6 +68,7 @@ Default.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'CANCEL',
     },
   ],
 };
@@ -76,6 +83,7 @@ Today.args = {
       title: 'Chemistry',
       subtitle: 'Tutorial',
       color: 'chemistry',
+      action: 'JOIN',
     },
     {
       startDatetime: (new Date()).getTime(),

@@ -34,6 +34,41 @@ const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColu
   const date = new Date(datetime);
   const today = isToday(datetime);
 
+  const getActionButton = (action: string | undefined) : {
+    text: string,
+    onClick: () => void,
+    color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | undefined,
+    online?: boolean,
+  } | undefined => {
+    switch (action) {
+      case 'BOOK':
+        return {
+          text: 'BOOK',
+          onClick: () => {},
+          color: 'secondary',
+        };
+      case 'JOIN':
+        return {
+          text: 'JOIN',
+          onClick: () => {},
+          color: 'success',
+        };
+      case 'CANCEL':
+        return {
+          text: 'CANCEL',
+          onClick: () => {},
+          color: 'error',
+        };
+      case 'FULL':
+        return {
+          text: 'FULL',
+          onClick: () => {},
+        };
+      default:
+        return undefined;
+    }
+  };
+
   return (
     <CalendarEntryContainer countOnScreen={countOnScreen} isToday={today}>
       <DateHeader>
@@ -50,6 +85,7 @@ const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColu
             title={entry.title}
             subtitle={entry.subtitle}
             color={entry.color}
+            actionButton={getActionButton(entry.action)}
           />
         </CellContainer>
       ))}
