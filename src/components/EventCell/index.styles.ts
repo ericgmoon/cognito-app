@@ -10,7 +10,7 @@ interface ColorProps {
 }
 
 interface LongProps {
-  long: boolean,
+  long: boolean | undefined,
 }
 
 const Card = styled(MUICard)<LongProps>`
