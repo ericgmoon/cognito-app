@@ -60,43 +60,50 @@ describe('splitEntriesByDay', () => {
   test('should split entries by day', () => {
     expect(splitEntriesByDay([
       {
-        startDatetime: (new Date(2021, 11, 25, 11, 30)).getTime(),
+        // 25th of December 11.30 AM
+        startDatetime: 1640392200000,
         duration: 30,
         title: 'Chemistry',
         subtitle: 'Tutorial',
       },
       {
-        startDatetime: (new Date(2021, 11, 25, 10, 30)).getTime(),
+        // 25th of December 10.30 AM
+        startDatetime: 1640388600000,
         duration: 30,
         title: 'Chemistry',
         subtitle: 'Tutorial',
       },
       {
-        startDatetime: (new Date(2021, 11, 25, 23, 59)).getTime(),
+        // 25th of December 11.59 PM
+        startDatetime: 1640437140000,
         duration: 30,
         title: 'Chemistry',
         subtitle: 'Tutorial',
       },
       {
-        startDatetime: (new Date(2021, 11, 26, 0, 1)).getTime(),
+        // 26th of December 12.01 AM
+        startDatetime: 1640437260000,
         duration: 30,
         title: 'Biology',
         subtitle: 'Tutorial',
       },
       {
-        startDatetime: (new Date(2021, 11, 26, 23, 59)).getTime(),
+        // 26th of December 11.59 PM
+        startDatetime: 1640523540000,
         duration: 30,
         title: 'Physics',
         subtitle: 'Tutorial',
       },
       {
-        startDatetime: (new Date(2021, 11, 27, 0, 1)).getTime(),
+        // 27th of December 12.01 AM
+        startDatetime: 1640523660000,
         duration: 30,
         title: 'Chemistry',
         subtitle: 'Tutorial',
       },
       {
-        startDatetime: (new Date(2021, 11, 30, 0, 1)).getTime(),
+        // 30th of December 12.01 AM
+        startDatetime: 1640782860000,
         duration: 30,
         title: 'Chemistry',
         subtitle: 'Tutorial',
@@ -104,19 +111,19 @@ describe('splitEntriesByDay', () => {
     ])).toStrictEqual({
       1640350800000: [
         {
-          startDatetime: (new Date(2021, 11, 25, 10, 30)).getTime(),
+          startDatetime: 1640392200000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: (new Date(2021, 11, 25, 11, 30)).getTime(),
+          startDatetime: 1640388600000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: (new Date(2021, 11, 25, 23, 59)).getTime(),
+          startDatetime: 1640437140000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
@@ -124,13 +131,13 @@ describe('splitEntriesByDay', () => {
       ],
       1640437200000: [
         {
-          startDatetime: (new Date(2021, 11, 26, 0, 1)).getTime(),
+          startDatetime: 1640437260000,
           duration: 30,
           title: 'Biology',
           subtitle: 'Tutorial',
         },
         {
-          startDatetime: (new Date(2021, 11, 26, 23, 59)).getTime(),
+          startDatetime: 1640523540000,
           duration: 30,
           title: 'Physics',
           subtitle: 'Tutorial',
@@ -138,7 +145,7 @@ describe('splitEntriesByDay', () => {
       ],
       1640523600000: [
         {
-          startDatetime: (new Date(2021, 11, 27, 0, 1)).getTime(),
+          startDatetime: 1640523660000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
@@ -146,7 +153,7 @@ describe('splitEntriesByDay', () => {
       ],
       1640782800000: [
         {
-          startDatetime: (new Date(2021, 11, 30, 0, 1)).getTime(),
+          startDatetime: 1640782860000,
           duration: 30,
           title: 'Chemistry',
           subtitle: 'Tutorial',
