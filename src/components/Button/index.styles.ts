@@ -12,6 +12,7 @@ const StyledButton = styled(Button)<StyledButtonProps>`
     padding-right: ${({ theme }) => theme.spacing(8)};
     padding-top: ${({ theme }) => theme.spacing(2)};
     padding-bottom: ${({ theme }) => theme.spacing(2)};
+    border-width: 2px;
   }
 `;
 
