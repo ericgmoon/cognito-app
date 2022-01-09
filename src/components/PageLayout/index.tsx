@@ -6,37 +6,49 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
 
 import { getIsUserAuthenticated } from '../../auth';
+import { useDispatch, useSelector } from '../../redux/hooks';
 
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 import {
+  close, toggle,
+} from './drawerOpenSlice';
+import {
   ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain,
 } from './index.styles';
 
-const LoadingScreen = () => (
-  <LoadingContainer>
+interface LoadingWrapperProps {
+  children: React.ReactElement,
+  decorate: boolean,
+  loading: boolean,
+}
+
+const LoadingWrapper = ({ children, loading, decorate }: LoadingWrapperProps) => (loading ? (
+  <LoadingContainer decorate={decorate}>
     <CircularProgress />
   </LoadingContainer>
-);
+) : children);
 
 interface ContentProps {
   children: React.ReactElement
   decorate: boolean,
+  loading: boolean,
 }
 
-const Content = ({ children, decorate }: ContentProps) => {
-  const [open, setOpen] = useState(false);
+const Content = ({ children, decorate, loading }: ContentProps) => {
   const theme = useTheme();
+  const open: boolean = useSelector((state) => state.drawerOpen.value);
+  const dispatch = useDispatch();
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (decorate ? (
     <ContentContainer>
-      <AppBar position="fixed" isDrawerOpen={open} onDrawerButtonClick={() => setOpen(!open)} />
+      <AppBar position="fixed" isDrawerOpen={open} onDrawerButtonClick={() => dispatch(toggle())} />
       <Nav component="nav">
         <Drawer
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={() => dispatch(close())}
           mode={isMd ? 'medium' : 'small'}
         />
       </Nav>
@@ -45,18 +57,26 @@ const Content = ({ children, decorate }: ContentProps) => {
           component="main"
           open={open}
         >
-          {children}
+          <LoadingWrapper loading={loading} decorate={decorate}>
+            {children}
+          </LoadingWrapper>
         </MediumMain>
       ) : (
         <SmallMain
           component="main"
           open={open}
         >
-          {children}
+          <LoadingWrapper loading={loading} decorate={decorate}>
+            {children}
+          </LoadingWrapper>
         </SmallMain>
       )}
     </ContentContainer>
-  ) : children);
+  ) : (
+    <LoadingWrapper loading={loading} decorate={decorate}>
+      {children}
+    </LoadingWrapper>
+  ));
 };
 
 interface PageLayoutProps {
@@ -121,7 +141,7 @@ export const PageLayout = ({
     <>
       {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
       {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
-      {loading ? <LoadingScreen /> : <Content decorate={decorate}>{children}</Content>}
+      <Content decorate={decorate} loading={loading}>{children}</Content>
     </>
   );
 };

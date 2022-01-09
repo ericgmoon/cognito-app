@@ -8,9 +8,10 @@ const StyledTextField = styled(InputBase)<InputBaseProps>`
   && .MuiInputBase-input {
     background-color: ${({ theme }) => theme.palette.gray.light};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-    width: 12px;
+    width: ${({ size }) => (size === 'small' ? '8px' : '12px')};
+    font-size: ${({ size }) => (size === 'small' ? '0.75rem' : '1rem')};
     padding:  ${({ theme }) => theme.spacing(1)};
-    border: 2px solid;
+    border: ${({ size }) => (size === 'small' ? '1px' : '2px')} solid;
     border-color: ${({ error, theme }) => (error ? theme.palette.error.main : theme.palette.gray.dark)};
     box-shadow: ${({ error, theme }) => (error ? `${alpha(theme.palette.error.main, 0.25)} 0 0 0 0.1rem` : 'none')};
     text-align: center;
@@ -43,10 +44,14 @@ const ErrorText = styled(Typography)`
   }
 `;
 
-const FieldContainer = styled.div`
+interface FieldContainerProps {
+  size?: 'small' | 'medium';
+}
+
+const FieldContainer = styled.div<FieldContainerProps>`
   display: flex;
   flex-direction: row;
-  gap: ${({ theme }) => (theme.spacing(1))};
+  gap: ${({ theme, size }) => (size === 'small' ? theme.spacing(0.5) : theme.spacing(1))};
 `;
 
 const ProxyInputField = styled.input`

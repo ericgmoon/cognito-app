@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import styled from 'styled-components';
 
 import Button from '../Button';
@@ -19,4 +20,11 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export { StyledVerification, StyledButton, StyledField };
+const FooterText = styled(Typography)`
+  && {
+    color: ${({ theme }) => (theme.palette.darkGray.main)};
+    margin-top: ${({ theme }) => theme.spacing(6)};
+  }
+`;
+
+export { StyledVerification, StyledButton, StyledField, FooterText };

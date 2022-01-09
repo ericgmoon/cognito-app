@@ -180,7 +180,7 @@ jobs:
         run: yarn install --prefer-offline
       # Runs unit tests
       - name: Run unit tests
-        run: yarn test ./src/*
+        run: TZ=Australia/Sydney yarn test ./src/*
   unit-tests-backend:
     name: Run unit tests for backend
     runs-on: ubuntu-latest
@@ -218,4 +218,4 @@ jobs:
         run: yarn install --prefer-offline
       # Run unit tests
       - name: Run unit tests
-        run: yarn test
+        run: TZ=Australia/Sydney yarn test

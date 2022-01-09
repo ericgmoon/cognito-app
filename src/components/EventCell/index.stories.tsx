@@ -1,0 +1,63 @@
+import React from 'react';
+
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import EventCell from '.';
+
+export default {
+  title: 'Components/EventCell',
+  component: EventCell,
+} as ComponentMeta<typeof EventCell>;
+
+const Template: ComponentStory<typeof EventCell> = (args) => <EventCell {...args} />;
+
+export const Tutorial = Template.bind({});
+Tutorial.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+};
+
+export const TutorialJoin = Template.bind({});
+TutorialJoin.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+  actionButton: {
+    text: 'Join',
+    onClick: () => {},
+  },
+  online: true,
+};
+
+export const TutorialCancel = Template.bind({});
+TutorialCancel.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+  actionButton: {
+    text: 'Cancel',
+    onClick: () => {},
+    color: 'error',
+  },
+};
+
+export const TutorialFull = Template.bind({});
+TutorialFull.args = {
+  startDatetime: new Date().getTime(),
+  duration: 30,
+  color: 'chemistry',
+  title: 'Chemistry',
+  subtitle: 'Tutorial',
+  actionButton: {
+    text: 'Full',
+    onClick: () => {},
+  },
+  disabled: true,
+};

@@ -1,15 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  Alert, Collapse, IconButton,
+  Alert, Collapse, IconButton, Link,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { confirmSignUp } from '../../auth';
+import { confirmSignUp, resendConfirmationCode } from '../../auth';
 
 import {
-  StyledButton, StyledField, StyledVerification,
+  FooterText, StyledButton, StyledField, StyledVerification,
 } from './index.styles';
 
 interface Data {
@@ -43,7 +44,17 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
     try {
       await confirmSignUp(email, data.verification);
       onSuccess();
-    } catch (error:any) {
+    } catch (error: any) {
+      onFailure(error);
+    }
+  };
+
+  const onResendCode = async () => {
+    setLoading(true);
+    try {
+      await resendConfirmationCode(email);
+      setLoading(false);
+    } catch (error: any) {
       onFailure(error);
     }
   };
@@ -85,6 +96,17 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
         numbersOnly
         {...register('verification', { required: true, pattern: /\d{6}/ })}
       />
+      <FooterText>Can't find the code?&nbsp;
+        <Link
+          component="button"
+          variant="body1"
+          onClick={onResendCode}
+          underline="always"
+          type="button"
+        >
+          Resend Code
+        </Link>
+      </FooterText>
       <StyledButton type="submit" loading={loading}>
         Verify
       </StyledButton>

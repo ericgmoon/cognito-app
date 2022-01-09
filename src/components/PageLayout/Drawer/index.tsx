@@ -8,31 +8,58 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import {
-  Divider, List, ListItem, ListItemIcon, ListItemText,
+  ListItem, ListItemIcon,
 } from '@mui/material';
 import { DrawerProps as MUIDrawerProps } from '@mui/material/Drawer';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import {
-  ScrollableContainer, StyledDrawer, ToolbarOffset,
+  ListHeaderText,
+  ListItemButton,
+  ListItemText,
+  ScrollableContainer,
+  StyledDrawer,
+  StyledList,
+  ToolbarOffset,
 } from './index.styles';
+
+interface MenuOptionIconProps {
+  selected: boolean,
+  children: React.ReactElement,
+}
+
+const MenuOptionIcon = ({ children, selected }: MenuOptionIconProps) =>
+  React.cloneElement(children, { color: (selected ? 'darkPrimary' : '') });
 
 interface MenuOption {
   icon: React.ReactElement,
   name: string,
+  href: string,
 }
+
+const homeMenu: MenuOption[] = [
+  {
+    icon: <HomeIcon />,
+    name: 'Home',
+    href: '/',
+  },
+];
 
 const studyMenu: MenuOption[] = [
   {
     icon: <CollectionsBookmarkIcon />,
     name: 'Notes',
+    href: '/notes',
   },
   {
     icon: <VideoLibraryIcon />,
     name: 'Videos',
+    href: '/videos',
   },
   {
     icon: <QuizIcon />,
     name: 'Quizzes',
+    href: '/quizzes',
   },
 ];
 
@@ -40,16 +67,77 @@ const toolsMenu: MenuOption[] = [
   {
     icon: <VideoCameraFrontIcon />,
     name: 'Tutorials',
+    href: '/tutorials',
   },
   {
     icon: <AvTimerIcon />,
     name: 'Tracker',
+    href: '/tracker',
   },
   {
     icon: <AnalyticsIcon />,
     name: 'Analytics',
+    href: '/analytics',
   },
 ];
+
+interface MenuListProps {
+  source: MenuOption[],
+  header?: string | undefined,
+  currentPath?: string | undefined,
+}
+
+const MenuList = ({ header, source, currentPath }: MenuListProps) => {
+  const navigate = useNavigate();
+
+  return (
+    <StyledList>
+      {header && (
+        <ListItem>
+          <ListHeaderText
+            primary={header}
+            primaryTypographyProps={{ variant: 'overline' }}
+          />
+        </ListItem>
+      )}
+      {source.map((item) => (
+        <ListItemButton
+          selected={item.href === currentPath}
+          key={item.name}
+          onClick={() => navigate(item.href)}
+          disableRipple
+        >
+          <ListItemIcon>
+            <MenuOptionIcon selected={item.href === currentPath}>
+              {item.icon}
+            </MenuOptionIcon>
+          </ListItemIcon>
+          <ListItemText
+            primary={item.name}
+            primaryTypographyProps={{ variant: 'body2' }}
+            selected={item.href === currentPath}
+          />
+        </ListItemButton>
+      ))}
+    </StyledList>
+  );
+};
+
+interface MenuProps {
+  currentPath?: string | undefined,
+}
+
+const Menu = ({ currentPath }: MenuProps) => {
+  const { pathname } = useLocation();
+
+  return (
+    <>
+      <MenuList source={homeMenu} currentPath={currentPath || pathname} />
+      <MenuList header="Study" source={studyMenu} currentPath={currentPath || pathname} />
+      <MenuList header="Tools" source={toolsMenu} currentPath={currentPath || pathname} />
+    </>
+  );
+};
 
 interface DrawerProps extends MUIDrawerProps {
   mode?: 'small' | 'medium',
@@ -62,6 +150,9 @@ const Drawer = ({ mode = 'medium', onClose = () => {}, ...rest }: DrawerProps) =
       // Keep Drawer mounted on mobile
       keepMounted: mode === 'small',
     }}
+    SlideProps={{
+      appear: false,
+    }}
     variant={mode === 'small' ? 'temporary' : 'persistent'}
     onClose={onClose}
     {...rest}
@@ -70,36 +161,7 @@ const Drawer = ({ mode = 'medium', onClose = () => {}, ...rest }: DrawerProps) =
     <ScrollableContainer
       {...(mode === 'small' ? { onClick: onClose, onKeyDown: onClose } : {})}
     >
-      <List>
-        <ListItem button disableRipple>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItem>
-      </List>
-      <Divider />
-      <List>
-        {studyMenu.map((option) => (
-          <ListItem button key={option.name} disableRipple>
-            <ListItemIcon>
-              {option.icon}
-            </ListItemIcon>
-            <ListItemText primary={option.name} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {toolsMenu.map((option) => (
-          <ListItem button key={option.name} disableRipple>
-            <ListItemIcon>
-              {option.icon}
-            </ListItemIcon>
-            <ListItemText primary={option.name} />
-          </ListItem>
-        ))}
-      </List>
+      <Menu />
     </ScrollableContainer>
   </StyledDrawer>
 );
