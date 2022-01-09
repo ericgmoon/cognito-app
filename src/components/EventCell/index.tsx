@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useDimensions from '../../utils/react/hooks/useDimensions';
 
 import {
   ActionButton,
@@ -43,15 +42,15 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
   const startTime = stringifyTime(startDatetime);
   const endTime = stringifyTime(startDatetime + duration * 60000);
 
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const ref = useRef<HTMLDivElement>();
+  const { width } = useDimensions(ref);
 
   return (
-    <Card long={!!actionButton}>
+    <Card ref={ref as React.RefObject<HTMLDivElement>} long={!!actionButton}>
       <CardContent>
         <Header color={disabled ? 'darkGray' : color}>
           <HeaderText variant="subtitle2">
-            {isMd ? `${startTime} - ${endTime}` : startTime}
+            {width > 144 ? `${startTime} - ${endTime}` : startTime}
           </HeaderText>
         </Header>
         <Content color={disabled ? 'darkGray' : color}>

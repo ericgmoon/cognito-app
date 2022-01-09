@@ -8,12 +8,12 @@ const RootContainer = styled.div`
 `;
 
 interface CalendarEntryContainerProps {
-  countOnScreen: number,
+  columnCount: number,
   isToday: boolean | undefined,
 }
 
 const CalendarEntryContainer = styled.div<CalendarEntryContainerProps>`
-  width: calc(100% / ${({ countOnScreen }) => countOnScreen});
+  width: calc(100% / ${({ columnCount }) => columnCount});
   background-color: ${({ isToday, theme }) => (isToday ? theme.palette.gray.main : 'transparent')};
   display: flex;
   flex-direction: column;

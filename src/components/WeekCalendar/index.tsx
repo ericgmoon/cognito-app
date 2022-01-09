@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
+import useDimensions from '../../utils/react/hooks/useDimensions';
 import EventCell from '../EventCell';
 
 import {
@@ -27,10 +26,10 @@ const MS_IN_DAY = 1000 * 60 * 60 * 24;
 interface CalendarColumnProps {
   datetime: number,
   contents?: CalendarEntry[],
-  countOnScreen: number,
+  columnCount: number,
 }
 
-const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColumnProps) => {
+const CalendarColumn = ({ datetime, contents = [], columnCount }: CalendarColumnProps) => {
   const date = new Date(datetime);
   const today = isToday(datetime);
 
@@ -71,7 +70,7 @@ const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColu
   };
 
   return (
-    <CalendarEntryContainer countOnScreen={countOnScreen} isToday={today}>
+    <CalendarEntryContainer columnCount={columnCount} isToday={today}>
       <DateHeader>
         <Typography variant="overline">{date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}/{MONTHS[date.getMonth()]}</Typography>
         <Subtitle variant="subtitle2" isToday={today}>
@@ -104,21 +103,22 @@ const WeekCalendar = ({ startDatetime = new Date().getTime(), data = [] }: WeekC
   const startDayDatetime = new Date(startDatetime);
   startDayDatetime.setHours(0, 0, 0, 0);
 
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const ref = useRef<HTMLDivElement>();
+  const { width } = useDimensions(ref);
+  const columnCount = width > 960 ? 7 : Math.ceil(width / 144);
 
-  const displayedDays = Array.from(Array(isMd ? 7 : 3).keys()).map(
+  const displayedDays = Array.from(Array(columnCount).keys()).map(
     (x) => startDayDatetime.getTime() + MS_IN_DAY * x,
   );
 
   return (
-    <RootContainer>
+    <RootContainer ref={ref as React.RefObject<HTMLDivElement>}>
       {displayedDays.map((dayDatetime) => (
         <CalendarColumn
           key={dayDatetime}
           datetime={Number(dayDatetime)}
           contents={splitEntriesByDay(data)[Number(dayDatetime)]}
-          countOnScreen={isMd ? 7 : 3}
+          columnCount={columnCount}
         />
       ))}
     </RootContainer>
