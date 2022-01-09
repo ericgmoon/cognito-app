@@ -9,6 +9,7 @@ import {
   CalendarEntryContainer,
   CellContainer,
   DateHeader,
+  NoDataContainer,
   RootContainer,
   Subtitle,
 } from './index.styles';
@@ -107,20 +108,35 @@ const WeekCalendar = ({ startDatetime = new Date().getTime(), data = [] }: WeekC
   const { width } = useDimensions(ref);
   const columnCount = width > 960 ? 7 : Math.ceil(width / 144);
 
+  const dataByDay = splitEntriesByDay(data);
+
   const displayedDays = Array.from(Array(columnCount).keys()).map(
     (x) => startDayDatetime.getTime() + MS_IN_DAY * x,
   );
 
+  const getDisplayedCellCount = () => {
+    let count = 0;
+    displayedDays.forEach((datetime) => {
+      if (dataByDay[Number(datetime)]) count += dataByDay[Number(datetime)].length;
+    });
+    return count;
+  };
+
   return (
     <RootContainer ref={ref as React.RefObject<HTMLDivElement>}>
-      {displayedDays.map((dayDatetime) => (
+      {displayedDays.map((datetime) => (
         <CalendarColumn
-          key={dayDatetime}
-          datetime={Number(dayDatetime)}
-          contents={splitEntriesByDay(data)[Number(dayDatetime)]}
+          key={datetime}
+          datetime={Number(datetime)}
+          contents={dataByDay[Number(datetime)]}
           columnCount={columnCount}
         />
       ))}
+      {getDisplayedCellCount() === 0 && (
+        <NoDataContainer>
+          Nothing to display
+        </NoDataContainer>
+      )}
     </RootContainer>
   );
 };

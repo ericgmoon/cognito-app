@@ -74,11 +74,14 @@ Default.args = {
 };
 
 export const Today = Template.bind({});
+const today = new Date();
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
 Today.args = {
   startDatetime: new Date().getTime(),
   data: [
     {
-      startDatetime: (new Date()).getTime(),
+      startDatetime: today.getTime(),
       duration: 30,
       title: 'Chemistry',
       subtitle: 'Tutorial',
@@ -86,7 +89,15 @@ Today.args = {
       action: 'JOIN',
     },
     {
-      startDatetime: (new Date()).getTime(),
+      startDatetime: tomorrow.getTime(),
+      duration: 30,
+      title: 'Chemistry',
+      subtitle: 'Tutorial',
+      color: 'chemistry',
+      action: 'BOOK',
+    },
+    {
+      startDatetime: tomorrow.getTime(),
       duration: 30,
       title: 'Chemistry',
       subtitle: 'Tutorial',
@@ -94,4 +105,9 @@ Today.args = {
       action: 'BOOK',
     },
   ],
+};
+
+export const Empty = Template.bind({});
+Empty.args = {
+  startDatetime: new Date().getTime(),
 };

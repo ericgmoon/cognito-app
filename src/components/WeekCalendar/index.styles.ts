@@ -15,6 +15,7 @@ interface CalendarEntryContainerProps {
 const CalendarEntryContainer = styled.div<CalendarEntryContainerProps>`
   width: calc(100% / ${({ columnCount }) => columnCount});
   background-color: ${({ isToday, theme }) => (isToday ? theme.palette.gray.main : 'transparent')};
+  min-height: 196px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,4 +51,19 @@ const Subtitle = styled(Typography)<TextProps>`
   }
 `;
 
-export { RootContainer, CalendarEntryContainer, DateHeader, CellContainer, Subtitle };
+const NoDataContainer = styled(Typography)`
+  && {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    margin-top: 120px;
+    user-select: none;
+  }
+`;
+
+export { RootContainer,
+  CalendarEntryContainer,
+  DateHeader,
+  CellContainer,
+  Subtitle,
+  NoDataContainer };
