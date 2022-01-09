@@ -21,7 +21,7 @@ interface OnlineIndicatorProps {
 }
 
 const OnlineIndicator = ({ online = false, children }: OnlineIndicatorProps) =>
-  (online ? <OnlineCircle variant="dot" color="success">{children}</OnlineCircle> : children);
+  (online ? <OnlineCircle variant="dot" color="online">{children}</OnlineCircle> : children);
 
 interface EventCellProps {
   startDatetime: number,
