@@ -1,4 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, {
+  useEffect, useRef, useState,
+} from 'react';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -108,11 +110,16 @@ const CalendarColumn = (
 interface WeekCalendarProps {
   startDatetime?: number,
   data?: CalendarEntry[],
+  onNavigate?: (number) => void,
 }
 
 const WeekCalendar = ({ startDatetime: initStartDatetime = new Date().getTime(),
-  data = [] }: WeekCalendarProps) => {
+  data = [], onNavigate = () => {} }: WeekCalendarProps) => {
+  // Handle changes in the start datetime
   const [startDatetime, setStartDatetime] = useState(initStartDatetime);
+  useEffect(() => {
+    onNavigate(startDatetime.getTime());
+  }, [startDatetime]);
 
   // Get datetime of the start date at 00:00 time
   const startDayDatetime = new Date(startDatetime);
