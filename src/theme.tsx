@@ -108,6 +108,12 @@ const theme = {
       dark: '#388e3c',
       contrastText: 'rgba(0,0,0,0.87)',
     },
+    online: {
+      main: '#81c784',
+      light: '#a8e3aa',
+      dark: '#4caf50',
+      contrastText: 'rgba(0,0,0,0.87)',
+    },
     divider: 'rgba(0,0,0,0.12)',
   },
   typography: {

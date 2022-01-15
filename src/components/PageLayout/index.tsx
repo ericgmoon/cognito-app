@@ -14,11 +14,11 @@ import {
   close, toggle,
 } from './drawerOpenSlice';
 import {
-  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain,
+  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain, Title,
 } from './index.styles';
 
 interface LoadingWrapperProps {
-  children: React.ReactElement,
+  children: React.ReactElement | React.ReactElement[],
   decorate: boolean,
   loading: boolean,
 }
@@ -27,10 +27,17 @@ const LoadingWrapper = ({ children, loading, decorate }: LoadingWrapperProps) =>
   <LoadingContainer decorate={decorate}>
     <CircularProgress />
   </LoadingContainer>
-) : children);
+) : (
+  // react/jsx-no-useless-fragment is disabled here as LoadingWrapper must return a single element
+  // and `children` may be an array of elements
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  <>
+    {children}
+  </>
+));
 
 interface ContentProps {
-  children: React.ReactElement
+  children: React.ReactElement | React.ReactElement[],
   decorate: boolean,
   loading: boolean,
 }
@@ -80,7 +87,7 @@ const Content = ({ children, decorate, loading }: ContentProps) => {
 };
 
 interface PageLayoutProps {
-  children: React.ReactElement,
+  children: React.ReactElement | React.ReactElement[],
   /**
    * Page title
    */
@@ -147,7 +154,7 @@ export const PageLayout = ({
 };
 
 interface AuthPageLayoutProps {
-  children: React.ReactElement,
+  children: React.ReactElement | React.ReactElement[],
   title: string,
 }
 
@@ -158,7 +165,7 @@ export const AuthPageLayout = ({ children, title }: AuthPageLayoutProps) => (
 );
 
 interface ProtectedPageLayoutProps {
-  children: React.ReactElement,
+  children: React.ReactElement | React.ReactElement[],
   title: string,
 }
 
@@ -166,4 +173,16 @@ export const ProtectedPageLayout = ({ children, title }: ProtectedPageLayoutProp
   <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title}>
     {children}
   </PageLayout>
+);
+
+interface TitleWrapperProps {
+  children: React.ReactElement | React.ReactElement[],
+  title: string,
+}
+
+export const TitleWrapper = ({ children, title }: TitleWrapperProps) => (
+  <>
+    <Title variant="h6">{title}</Title>
+    {children}
+  </>
 );

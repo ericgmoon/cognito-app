@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
+import useDimensions from '../../utils/react/hooks/useDimensions';
 import EventCell from '../EventCell';
 
 import {
   CalendarEntryContainer,
   CellContainer,
+  ColumnContainer,
   DateHeader,
+  NoDataContainer,
   RootContainer,
   Subtitle,
 } from './index.styles';
@@ -27,18 +28,57 @@ const MS_IN_DAY = 1000 * 60 * 60 * 24;
 interface CalendarColumnProps {
   datetime: number,
   contents?: CalendarEntry[],
-  countOnScreen: number,
+  columnCount: number,
+  highlightToday?: boolean,
 }
 
-const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColumnProps) => {
+const CalendarColumn = (
+  { datetime, contents = [], columnCount, highlightToday = true }: CalendarColumnProps,
+) => {
   const date = new Date(datetime);
   const today = isToday(datetime);
 
+  const getActionButton = (action: string | undefined) : {
+    text: string,
+    onClick: () => void,
+    color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | undefined,
+    online?: boolean,
+  } | undefined => {
+    switch (action) {
+      case 'BOOK':
+        return {
+          text: 'BOOK',
+          onClick: () => {},
+          color: 'secondary',
+        };
+      case 'JOIN':
+        return {
+          text: 'JOIN',
+          onClick: () => {},
+          color: 'success',
+          online: true,
+        };
+      case 'CANCEL':
+        return {
+          text: 'CANCEL',
+          onClick: () => {},
+          color: 'error',
+        };
+      case 'FULL':
+        return {
+          text: 'FULL',
+          onClick: () => {},
+        };
+      default:
+        return undefined;
+    }
+  };
+
   return (
-    <CalendarEntryContainer countOnScreen={countOnScreen} isToday={today}>
+    <CalendarEntryContainer columnCount={columnCount} isToday={today && highlightToday}>
       <DateHeader>
         <Typography variant="overline">{date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}/{MONTHS[date.getMonth()]}</Typography>
-        <Subtitle variant="subtitle2" isToday={today}>
+        <Subtitle variant="subtitle2" isToday={today && highlightToday}>
           {today ? TODAY : DAYS[date.getDay()]}
         </Subtitle>
       </DateHeader>
@@ -50,6 +90,8 @@ const CalendarColumn = ({ datetime, contents = [], countOnScreen }: CalendarColu
             title={entry.title}
             subtitle={entry.subtitle}
             color={entry.color}
+            actionButton={getActionButton(entry.action)}
+            disabled={entry.action === 'FULL'}
           />
         </CellContainer>
       ))}
@@ -66,23 +108,42 @@ const WeekCalendar = ({ startDatetime = new Date().getTime(), data = [] }: WeekC
   const startDayDatetime = new Date(startDatetime);
   startDayDatetime.setHours(0, 0, 0, 0);
 
-  const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const ref = useRef<HTMLDivElement>();
+  const { width } = useDimensions(ref);
+  const columnCount = width > 960 ? 7 : Math.ceil(width / 144);
 
-  const displayedDays = Array.from(Array(isMd ? 7 : 3).keys()).map(
+  const dataByDay = splitEntriesByDay(data);
+
+  const displayedDays = Array.from(Array(columnCount).keys()).map(
     (x) => startDayDatetime.getTime() + MS_IN_DAY * x,
   );
 
+  const getDisplayedCellCount = () => {
+    let count = 0;
+    displayedDays.forEach((datetime) => {
+      if (dataByDay[Number(datetime)]) count += dataByDay[Number(datetime)].length;
+    });
+    return count;
+  };
+
   return (
-    <RootContainer>
-      {displayedDays.map((dayDatetime) => (
-        <CalendarColumn
-          key={dayDatetime}
-          datetime={Number(dayDatetime)}
-          contents={splitEntriesByDay(data)[Number(dayDatetime)]}
-          countOnScreen={isMd ? 7 : 3}
-        />
-      ))}
+    <RootContainer ref={ref as React.RefObject<HTMLDivElement>}>
+      <ColumnContainer>
+        {displayedDays.map((datetime) => (
+          <CalendarColumn
+            key={datetime}
+            highlightToday={getDisplayedCellCount() > 0}
+            datetime={Number(datetime)}
+            contents={dataByDay[Number(datetime)]}
+            columnCount={columnCount}
+          />
+        ))}
+      </ColumnContainer>
+      {getDisplayedCellCount() === 0 && (
+        <NoDataContainer variant="body1">
+          Nothing to display
+        </NoDataContainer>
+      )}
     </RootContainer>
   );
 };
