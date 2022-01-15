@@ -1,18 +1,24 @@
 import React, { useRef } from 'react';
 
-import { Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {
+  IconButton, Typography,
+} from '@mui/material';
 
 import useDimensions from '../../utils/react/hooks/useDimensions';
 import EventCell from '../EventCell';
 
 import {
   CalendarEntryContainer,
+  CalendarToolbar,
   CellContainer,
   ColumnContainer,
   DateHeader,
   NoDataContainer,
   RootContainer,
   Subtitle,
+  TodayButton,
 } from './index.styles';
 import { CalendarEntry } from './types';
 import { isToday, splitEntriesByDay } from './utils';
@@ -128,6 +134,22 @@ const WeekCalendar = ({ startDatetime = new Date().getTime(), data = [] }: WeekC
 
   return (
     <RootContainer ref={ref as React.RefObject<HTMLDivElement>}>
+      <CalendarToolbar>
+        <TodayButton
+          variant="outlined"
+          onClick={() => {}}
+          color="darkGray"
+          disableRipple
+        >
+          TODAY
+        </TodayButton>
+        <IconButton>
+          <ChevronLeftIcon />
+        </IconButton>
+        <IconButton>
+          <ChevronRightIcon />
+        </IconButton>
+      </CalendarToolbar>
       <ColumnContainer>
         {displayedDays.map((datetime) => (
           <CalendarColumn

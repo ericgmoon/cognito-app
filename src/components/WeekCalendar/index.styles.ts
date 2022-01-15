@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const RootContainer = styled.div`
@@ -63,10 +63,28 @@ const NoDataContainer = styled(Typography)`
   }
 `;
 
+const CalendarToolbar = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacing(1, 2)};
+`;
+
+const TodayButton = styled(Button)`
+  && {
+    height: 36px;
+    margin-left: ${({ theme }) => theme.spacing(1)};
+    margin-right: ${({ theme }) => theme.spacing(1)};
+  }
+`;
+
 export { RootContainer,
   ColumnContainer,
   CalendarEntryContainer,
   DateHeader,
   CellContainer,
+  CalendarToolbar,
   Subtitle,
+  TodayButton,
   NoDataContainer };
