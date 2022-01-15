@@ -110,7 +110,7 @@ const CalendarColumn = (
 interface WeekCalendarProps {
   startDatetime?: number,
   data?: CalendarEntry[],
-  onNavigate?: (number) => void,
+  onNavigate?: (startDatetime: number) => void,
 }
 
 const WeekCalendar = ({ startDatetime: initStartDatetime = new Date().getTime(),
@@ -118,7 +118,8 @@ const WeekCalendar = ({ startDatetime: initStartDatetime = new Date().getTime(),
   // Handle changes in the start datetime
   const [startDatetime, setStartDatetime] = useState(initStartDatetime);
   useEffect(() => {
-    onNavigate(startDatetime.getTime());
+    // Use onNavigate to request new data from APIs
+    onNavigate(startDatetime);
   }, [startDatetime]);
 
   // Get datetime of the start date at 00:00 time
