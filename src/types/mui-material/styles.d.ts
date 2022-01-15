@@ -21,6 +21,7 @@ declare module '@mui/material/styles' {
     darkGray: Palette['primary'],
     chemistry: Palette['primary'],
     physics: Palette['primary'],
+    online: Palette['primary'],
   }
 
   export interface PaletteOptions{
@@ -30,5 +31,6 @@ declare module '@mui/material/styles' {
     gray?: PaletteOptions['primary'],
     chemistry?: PaletteOptions['primary'],
     physics?: PaletteOptions['primary'],
+    online?: PaletteOptions['primary'],
   }
 }

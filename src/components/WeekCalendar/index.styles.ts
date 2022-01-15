@@ -3,17 +3,21 @@ import styled from 'styled-components';
 
 const RootContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-orientation: row;
+`;
+
+const ColumnContainer = styled.div`
+width: 100%;
+display: flex;
+flex-orientation: row;
 `;
 
 interface CalendarEntryContainerProps {
-  countOnScreen: number,
+  columnCount: number,
   isToday: boolean | undefined,
 }
 
 const CalendarEntryContainer = styled.div<CalendarEntryContainerProps>`
-  width: calc(100% / ${({ countOnScreen }) => countOnScreen});
+  width: calc(100% / ${({ columnCount }) => columnCount});
   background-color: ${({ isToday, theme }) => (isToday ? theme.palette.gray.main : 'transparent')};
   display: flex;
   flex-direction: column;
@@ -50,4 +54,19 @@ const Subtitle = styled(Typography)<TextProps>`
   }
 `;
 
-export { RootContainer, CalendarEntryContainer, DateHeader, CellContainer, Subtitle };
+const NoDataContainer = styled(Typography)`
+  && {
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+    user-select: none;
+  }
+`;
+
+export { RootContainer,
+  ColumnContainer,
+  CalendarEntryContainer,
+  DateHeader,
+  CellContainer,
+  Subtitle,
+  NoDataContainer };

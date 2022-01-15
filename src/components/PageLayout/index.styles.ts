@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 interface LoadingContainerProps {
@@ -30,7 +30,7 @@ const MediumMain = styled(Box)<MainProps>`
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }))};
-  padding: ${({ theme }) => theme.spacing(3)};
+  padding: ${({ theme }) => theme.spacing(4)};
 `;
 
 const SmallMain = styled(Box)<MainProps>`
@@ -45,4 +45,12 @@ const ContentContainer = styled.div`
 
 const Nav = styled(Box)``;
 
-export { LoadingContainer, SmallMain, MediumMain, ContentContainer, Nav };
+const Title = styled(Typography)`
+  && {
+    color: ${({ theme }) => theme.palette.secondary.main};
+    margin-bottom: ${({ theme }) => theme.spacing(4)};
+    font-weight: bold;
+  }
+`;
+
+export { LoadingContainer, SmallMain, MediumMain, ContentContainer, Nav, Title };

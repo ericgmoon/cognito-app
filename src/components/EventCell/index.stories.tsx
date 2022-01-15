@@ -30,8 +30,8 @@ TutorialJoin.args = {
   actionButton: {
     text: 'Join',
     onClick: () => {},
+    online: true,
   },
-  online: true,
 };
 
 export const TutorialCancel = Template.bind({});
