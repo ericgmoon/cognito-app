@@ -8,7 +8,7 @@ const TutorialsPage = () => (
     <TitleWrapper title="Your Tutorials">
       <WeekCalendar startDatetime={new Date().getTime()} />
     </TitleWrapper>
-    <TitleWrapper title="Book Tutorials">
+    <TitleWrapper title="All Tutorials">
       <WeekCalendar startDatetime={new Date().getTime()} />
     </TitleWrapper>
   </ProtectedPageLayout>
