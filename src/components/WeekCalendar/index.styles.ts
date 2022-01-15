@@ -3,8 +3,12 @@ import styled from 'styled-components';
 
 const RootContainer = styled.div`
   width: 100%;
-  display: flex;
-  flex-orientation: row;
+`;
+
+const ColumnContainer = styled.div`
+width: 100%;
+display: flex;
+flex-orientation: row;
 `;
 
 interface CalendarEntryContainerProps {
@@ -15,7 +19,6 @@ interface CalendarEntryContainerProps {
 const CalendarEntryContainer = styled.div<CalendarEntryContainerProps>`
   width: calc(100% / ${({ columnCount }) => columnCount});
   background-color: ${({ isToday, theme }) => (isToday ? theme.palette.gray.main : 'transparent')};
-  min-height: 196px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,15 +56,15 @@ const Subtitle = styled(Typography)<TextProps>`
 
 const NoDataContainer = styled(Typography)`
   && {
-    position: absolute;
-    width: 100%;
     text-align: center;
-    margin-top: 120px;
+    margin-top: 48px;
+    margin-bottom: 48px;
     user-select: none;
   }
 `;
 
 export { RootContainer,
+  ColumnContainer,
   CalendarEntryContainer,
   DateHeader,
   CellContainer,

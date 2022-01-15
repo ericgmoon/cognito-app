@@ -8,6 +8,7 @@ import EventCell from '../EventCell';
 import {
   CalendarEntryContainer,
   CellContainer,
+  ColumnContainer,
   DateHeader,
   NoDataContainer,
   RootContainer,
@@ -28,9 +29,12 @@ interface CalendarColumnProps {
   datetime: number,
   contents?: CalendarEntry[],
   columnCount: number,
+  highlightToday?: boolean,
 }
 
-const CalendarColumn = ({ datetime, contents = [], columnCount }: CalendarColumnProps) => {
+const CalendarColumn = (
+  { datetime, contents = [], columnCount, highlightToday = true }: CalendarColumnProps,
+) => {
   const date = new Date(datetime);
   const today = isToday(datetime);
 
@@ -71,10 +75,10 @@ const CalendarColumn = ({ datetime, contents = [], columnCount }: CalendarColumn
   };
 
   return (
-    <CalendarEntryContainer columnCount={columnCount} isToday={today}>
+    <CalendarEntryContainer columnCount={columnCount} isToday={today && highlightToday}>
       <DateHeader>
         <Typography variant="overline">{date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}/{MONTHS[date.getMonth()]}</Typography>
-        <Subtitle variant="subtitle2" isToday={today}>
+        <Subtitle variant="subtitle2" isToday={today && highlightToday}>
           {today ? TODAY : DAYS[date.getDay()]}
         </Subtitle>
       </DateHeader>
@@ -124,16 +128,19 @@ const WeekCalendar = ({ startDatetime = new Date().getTime(), data = [] }: WeekC
 
   return (
     <RootContainer ref={ref as React.RefObject<HTMLDivElement>}>
-      {displayedDays.map((datetime) => (
-        <CalendarColumn
-          key={datetime}
-          datetime={Number(datetime)}
-          contents={dataByDay[Number(datetime)]}
-          columnCount={columnCount}
-        />
-      ))}
+      <ColumnContainer>
+        {displayedDays.map((datetime) => (
+          <CalendarColumn
+            key={datetime}
+            highlightToday={getDisplayedCellCount() > 0}
+            datetime={Number(datetime)}
+            contents={dataByDay[Number(datetime)]}
+            columnCount={columnCount}
+          />
+        ))}
+      </ColumnContainer>
       {getDisplayedCellCount() === 0 && (
-        <NoDataContainer>
+        <NoDataContainer variant="body1">
           Nothing to display
         </NoDataContainer>
       )}
