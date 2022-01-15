@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -110,58 +110,75 @@ interface WeekCalendarProps {
   data?: CalendarEntry[],
 }
 
-const WeekCalendar = ({ startDatetime = new Date().getTime(), data = [] }: WeekCalendarProps) => {
+const WeekCalendar = ({ startDatetime: initStartDatetime = new Date().getTime(),
+  data = [] }: WeekCalendarProps) => {
+  const [startDatetime, setStartDatetime] = useState(initStartDatetime);
+
+  // Get datetime of the start date at 00:00 time
   const startDayDatetime = new Date(startDatetime);
   startDayDatetime.setHours(0, 0, 0, 0);
 
+  // Handle window resizing
   const ref = useRef<HTMLDivElement>();
   const { width } = useDimensions(ref);
   const columnCount = width > 960 ? 7 : Math.ceil(width / 144);
 
+  // Reformat the data into per-day basis
   const dataByDay = splitEntriesByDay(data);
 
-  const displayedDays = Array.from(Array(columnCount).keys()).map(
+  // Get a subset of the data based on the currently visible columns
+  const visibleDays = Array.from(Array(columnCount).keys()).map(
     (x) => startDayDatetime.getTime() + MS_IN_DAY * x,
   );
 
-  const getDisplayedCellCount = () => {
+  // Returns the number of events currently visible
+  const getVisibleCellCount = () => {
     let count = 0;
-    displayedDays.forEach((datetime) => {
+    visibleDays.forEach((datetime) => {
       if (dataByDay[Number(datetime)]) count += dataByDay[Number(datetime)].length;
     });
     return count;
   };
+
+  // Pushes the calendar range forward by the number of visible columns
+  const incrementStart = () => setStartDatetime(startDatetime + (columnCount * MS_IN_DAY));
+
+  // Pushes the calendar range backward by the number of visible columns
+  const decrementStart = () => setStartDatetime(startDatetime - (columnCount * MS_IN_DAY));
+
+  // Reset the calendar range to begin from the current day
+  const resetStartToToday = () => setStartDatetime(new Date().getTime());
 
   return (
     <RootContainer ref={ref as React.RefObject<HTMLDivElement>}>
       <CalendarToolbar>
         <TodayButton
           variant="outlined"
-          onClick={() => {}}
+          onClick={resetStartToToday}
           color="darkGray"
           disableRipple
         >
           TODAY
         </TodayButton>
-        <IconButton>
+        <IconButton onClick={decrementStart}>
           <ChevronLeftIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={incrementStart}>
           <ChevronRightIcon />
         </IconButton>
       </CalendarToolbar>
       <ColumnContainer>
-        {displayedDays.map((datetime) => (
+        {visibleDays.map((datetime) => (
           <CalendarColumn
             key={datetime}
-            highlightToday={getDisplayedCellCount() > 0}
+            highlightToday={getVisibleCellCount() > 0}
             datetime={Number(datetime)}
             contents={dataByDay[Number(datetime)]}
             columnCount={columnCount}
           />
         ))}
       </ColumnContainer>
-      {getDisplayedCellCount() === 0 && (
+      {getVisibleCellCount() === 0 && (
         <NoDataContainer variant="body1">
           Nothing to display
         </NoDataContainer>
