@@ -70,16 +70,42 @@ Default.args = {
       color: 'chemistry',
       action: 'CANCEL',
     },
+    {
+      startDatetime: (new Date(2022, 0, 3, 12, 0)).getTime(),
+      duration: 30,
+      title: 'Chemistry',
+      subtitle: 'Tutorial',
+      color: 'chemistry',
+      action: 'CANCEL',
+    },
+    {
+      startDatetime: (new Date(2022, 0, 5, 16, 30)).getTime(),
+      duration: 30,
+      title: 'Physics',
+      subtitle: 'Tutorial',
+      color: 'physics',
+      action: 'BOOK',
+    },
   ],
 };
 
 export const Today = Template.bind({});
 const today = new Date();
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 Today.args = {
   startDatetime: new Date().getTime(),
   data: [
+    {
+      startDatetime: yesterday.getTime(),
+      duration: 30,
+      title: 'Physics',
+      subtitle: 'Tutorial',
+      color: 'physics',
+      action: 'BOOK',
+    },
     {
       startDatetime: today.getTime(),
       duration: 30,
