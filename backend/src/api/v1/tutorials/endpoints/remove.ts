@@ -25,7 +25,7 @@ export default async (req: Request, res: Response) => {
       }
       return res.status(400).json({ message: 'No tutorial found' });
     }
-    return res.status(400).json({ message: 'Course and startDatetimeIdentifier were not provided' });
+    return res.status(400).json({ message: 'Parameters not provided' });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: 'Tutorial could not be deleted' });

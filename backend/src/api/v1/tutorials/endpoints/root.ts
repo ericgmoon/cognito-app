@@ -31,7 +31,7 @@ export default async (req: Request, res: Response) => {
       if (data) return res.status(200).json(data);
       return res.status(400).json({ message: 'Something went wrong' });
     }
-    return res.status(400).json({ message: 'Date and course were not provided' });
+    return res.status(400).json({ message: 'Parameters not provided' });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: 'Tutorials could not be retrieved' });
