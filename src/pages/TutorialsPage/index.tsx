@@ -1,10 +1,16 @@
 import React from 'react';
 
-import { ProtectedPageLayout } from '../../components/PageLayout';
+import { ProtectedPageLayout, TitleWrapper } from '../../components/PageLayout';
+import WeekCalendar from '../../components/WeekCalendar';
 
 const TutorialsPage = () => (
   <ProtectedPageLayout title="Tutorials">
-    <p>This is the tutorials page</p>
+    <TitleWrapper title="Your Tutorials">
+      <WeekCalendar startDatetime={new Date().getTime()} />
+    </TitleWrapper>
+    <TitleWrapper title="Book Tutorials">
+      <WeekCalendar startDatetime={new Date().getTime()} />
+    </TitleWrapper>
   </ProtectedPageLayout>
 );
 export default TutorialsPage;
