@@ -84,7 +84,7 @@ const ActionButton = styled(Button)<ActionButtonProps>`
     border-width: 2px;
     width: 96px;
     height: 24px;
-    padding: ${({ theme }) => theme.spacing(1, 2)};
+    padding: ${({ theme }) => theme.spacing(0)};
     &:hover {
       border-width: 2px;
       cursor: ${({ blockPointer }) => (blockPointer ? 'not-allowed' : 'pointer')};

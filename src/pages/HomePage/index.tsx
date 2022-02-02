@@ -5,7 +5,7 @@ import WeekCalendar from '../../components/WeekCalendar';
 
 const HomePage = () => (
   <ProtectedPageLayout title="Home">
-    <TitleWrapper title="Next 7 Days">
+    <TitleWrapper title="Your Schedule">
       <WeekCalendar startDatetime={new Date().getTime()} />
     </TitleWrapper>
   </ProtectedPageLayout>
