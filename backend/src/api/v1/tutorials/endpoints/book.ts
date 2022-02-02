@@ -9,25 +9,25 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default async (req: Request, res: Response) => {
   try {
-    const { body: { course, startDatetimeIdentifier, gradYear, studentId,
-      studentFirstName, studentLastName } } = req;
+    const { body: { course, startDatetimeIdentifier, gradYear, studentId } } = req;
 
     if (course && startDatetimeIdentifier && gradYear &&
-      studentId && studentFirstName && studentLastName) {
+      studentId) {
       // Checks that student exists
-      await getStudent(gradYear, studentId);
+      const studentData = await getStudent(gradYear, studentId);
       // Checks that tutorial exists
       const tutorialData = await getTutorial(course, startDatetimeIdentifier);
       // Checks that student hasn't already booked
-      if (tutorialData.Item && tutorialData.Item.attendees.filter((student:any) =>
-        student.id === studentId).length > 0) {
+      if (tutorialData.Item && tutorialData.Item.attendees &&
+        tutorialData.Item.attendees.filter((student:any) =>
+          student.id === studentId).length > 0) {
         return res.status(400).json({ message: 'Student already booked' });
       }
 
       const attendee = {
         id: studentId,
-        firstName: studentFirstName,
-        lastName: studentLastName,
+        firstName: studentData?.Item?.firstName,
+        lastName: studentData?.Item?.lastName,
       };
 
       const tutorial = {

@@ -5,6 +5,9 @@ import { Request, Response } from 'express';
 AWS.config.update({ region: 'ap-southeast-2' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
+// Represents smallest possible id
+const MIN_ID = '000000';
+
 // Represents largest possible id
 const MAX_ID = 'zzzzzz';
 
@@ -16,13 +19,10 @@ export default async (req: Request, res: Response) => {
       const params = {
         TableName: 'tutorials',
         KeyConditionExpression: 'course = :course AND startDatetimeIdentifier BETWEEN :start AND :end',
-        ExpressionAttributeNames: {
-          '#range': 'startDatetime#id',
-        },
         ExpressionAttributeValues: {
           ':course': course,
-          ':start': startDatetime,
-          ':end': endDatetime + MAX_ID,
+          ':start': `${startDatetime}#${MIN_ID}`,
+          ':end': `${endDatetime}#${MAX_ID}`,
         },
       };
 

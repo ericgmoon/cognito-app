@@ -16,6 +16,7 @@ export default async (req: Request, res: Response) => {
           course,
           startDatetimeIdentifier,
         },
+        ReturnValues: 'ALL_OLD',
       };
 
       const data = await docClient.delete(params).promise();

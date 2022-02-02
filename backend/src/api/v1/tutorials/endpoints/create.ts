@@ -9,7 +9,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default async (req: Request, res: Response) => {
   try {
-    const { body: { course, startDatetime, host } } = req;
+    const { body: { course, startDatetime, host, description, capacity = 3, duration = 30 } } = req;
 
     const id = makeId();
 
@@ -19,7 +19,10 @@ export default async (req: Request, res: Response) => {
         Item: {
           course,
           startDatetimeIdentifier: `${startDatetime}#${id}`,
+          description,
           host,
+          capacity,
+          duration,
           attendees: [],
         },
       };
