@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { confirmSignUp, resendConfirmationCode } from '../../auth';
 import { AuthPageLayout } from '../../components/PageLayout';
 import SignUp from '../../components/SignUp';
 import VerificationCode from '../../components/VerificationCode';
@@ -72,7 +73,11 @@ const SignUpPage = () => {
         <Container>
           <Typography variant="h6">Please enter the verification code</Typography>
           <Typography variant="h6">sent to your mobile device.</Typography>
-          <VerificationCode finishSignUp={finishSignUp} email={email} />,
+          <VerificationCode
+            confirm={async ({ verification }) => confirmSignUp(email, verification)}
+            resend={async () => resendConfirmationCode(email)}
+            onConfirm={finishSignUp}
+          />,
         </Container>
       </Grid>
     </Grid>

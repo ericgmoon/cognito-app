@@ -3,7 +3,7 @@
 import React from 'react';
 
 import {
-  Divider, Grid, Link, Typography,
+  Divider, Grid, Link,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -57,12 +57,16 @@ const SignInPage = () => {
               <SignIn
                 onAuthenticate={() => navigate('/')}
               />
-              <FooterText>{'Forgot password? '}
+
+              <FooterText>Forgot password?&nbsp;
                 <Link
                   component="button"
+                  variant="body1"
                   onClick={() => { console.log('hello world'); }}
+                  underline="always"
+                  type="button"
                 >
-                  <Typography>Reset Password</Typography>
+                  Reset Password
                 </Link>
               </FooterText>
             </Container>
