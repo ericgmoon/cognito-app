@@ -42,10 +42,4 @@ const Bold = styled.b`
   color: ${({ theme }) => (theme.palette.darkGray.light)};
 `;
 
-const FooterText = styled(Typography)`
-  && {
-    color: ${({ theme }) => (theme.palette.darkGray.main)};
-  }
-`;
-
-export { Title, Logo, Container, Bold, RootContainer, FooterText };
+export { Title, Logo, Container, Bold, RootContainer };

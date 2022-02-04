@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import Button from '../Button';
-
 const StyledSignUp = styled.form`
   display: flex;
   flex-direction: column;
@@ -20,10 +18,4 @@ const PhoneNumberLabel = styled.div`
   color: ${({ theme }) => theme.palette.darkGray.main};
 `;
 
-const StyledButton = styled(Button)`
-  && {
-    margin: ${({ theme }) => theme.spacing(2)};
-  }
-`;
-
-export { StyledSignUp, Container, PhoneNumberLabel, StyledButton };
+export { StyledSignUp, Container, PhoneNumberLabel };

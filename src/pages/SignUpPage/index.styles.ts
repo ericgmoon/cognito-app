@@ -55,6 +55,7 @@ const Container = styled.div`
 const FooterText = styled(Typography)`
   && {
     color: ${({ theme }) => (theme.palette.darkGray.main)};
+    margin-top: ${({ theme }) => theme.spacing(3)};
   }
 `;
 

@@ -13,11 +13,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useForm } from 'react-hook-form';
 
 import { signUpWithValidation } from '../../auth';
+import Button from '../Button';
 import FixedLengthField from '../FixedLengthField';
 import TextField from '../TextField';
 
 import {
-  Container, PhoneNumberLabel, StyledButton, StyledSignUp,
+  Container, PhoneNumberLabel, StyledSignUp,
 } from './index.styles';
 
 interface Data {
@@ -148,9 +149,9 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
         </Grid>
         <Grid item xs={12}>
           <Container>
-            <StyledButton type="submit" loading={loading}>
+            <Button type="submit" loading={loading}>
               Sign Up
-            </StyledButton>
+            </Button>
           </Container>
         </Grid>
       </Grid>
