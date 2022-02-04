@@ -7,22 +7,21 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { confirmSignUp, resendConfirmationCode } from '../../auth';
-
 import {
   FooterText, StyledButton, StyledField, StyledVerification,
 } from './index.styles';
 
 interface Data {
-  verification:string;
+  verification: string;
 }
 
 interface VerificationCodeProps {
-  email: string;
-  finishSignUp: () => void;
+  confirm: (data: Data) => void;
+  resend: () => void;
+  onConfirm: () => void;
 }
 
-const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
+const VerificationCode = ({ confirm, resend, onConfirm } : VerificationCodeProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,7 +29,7 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
 
   const onSuccess = () => {
     setLoading(false);
-    finishSignUp();
+    onConfirm();
   };
 
   const onFailure = (error: any) => {
@@ -42,7 +41,7 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
   const onSubmit = async (data: Data) => {
     setLoading(true);
     try {
-      await confirmSignUp(email, data.verification);
+      await confirm(data);
       onSuccess();
     } catch (error: any) {
       onFailure(error);
@@ -52,21 +51,10 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
   const onResendCode = async () => {
     setLoading(true);
     try {
-      await resendConfirmationCode(email);
+      await resend();
       setLoading(false);
     } catch (error: any) {
       onFailure(error);
-    }
-  };
-
-  const getErrorMessage = (type: string, field: string): string => {
-    switch (type) {
-      case 'pattern':
-        return `Please enter a valid ${field}`;
-      case 'required':
-        return `Please enter your ${field}`;
-      default:
-        return `Error: ${type}`;
     }
   };
 
@@ -91,11 +79,14 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
       </Collapse>
       <StyledField
         error={!!errors.verification}
-        errorMessage={errors.verification ? getErrorMessage(errors.verification.type, 'verification') : ''}
+        errorMessage=""
         maxLength={6}
         numbersOnly
         {...register('verification', { required: true, pattern: /\d{6}/ })}
       />
+      <StyledButton type="submit" loading={loading}>
+        Verify
+      </StyledButton>
       <FooterText>Can't find the code?&nbsp;
         <Link
           component="button"
@@ -107,9 +98,6 @@ const VerificationCode = ({ email, finishSignUp } : VerificationCodeProps) => {
           Resend Code
         </Link>
       </FooterText>
-      <StyledButton type="submit" loading={loading}>
-        Verify
-      </StyledButton>
     </StyledVerification>
   );
 };
