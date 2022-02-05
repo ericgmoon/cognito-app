@@ -29,12 +29,12 @@ export default async (req: Request, res: Response) => {
 
       const data = await docClient.put(params).promise();
 
-      if (data) return res.status(201).json(`Created ${params.Item.startDatetimeIdentifier}`);
-      return res.status(400).json({ message: 'Tutorial was not created' });
+      if (data) return res.status(201).json(`Created tutorial at ${startDatetime}`);
+      return res.status(400).json({ message: 'Tutorial could not be created' });
     }
-    return res.status(400).json({ message: 'Parameters not provided' });
+    return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ message: 'Tutorial was not created' });
+    return res.status(400).json({ message: 'Tutorial could not be created' });
   }
 };
