@@ -58,7 +58,7 @@ export const signUpWithValidation = async (
     if (err?.response?.data?.message) throw Error(err?.response?.data?.message);
   });
 
-  if (response) return signUp(email, password, phoneNumber);
+  if (response?.data?.data) return signUp(email, password, phoneNumber);
   throw Error('Unable to verify user.');
 };
 

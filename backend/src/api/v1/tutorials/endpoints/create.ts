@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-import { makeId } from '../../utils';
+import { makeId } from '../utils';
 
 // Set up DocClient
 AWS.config.update({ region: 'ap-southeast-2' });
@@ -29,12 +29,25 @@ export default async (req: Request, res: Response) => {
 
       const data = await docClient.put(params).promise();
 
-      if (data) return res.status(201).json(`Created ${params.Item.startDatetimeIdentifier}`);
-      return res.status(400).json({ message: 'Tutorial was not created' });
+      if (data) {
+        return res.status(201).json({
+          message: `Created tutorial at ${startDatetime}`,
+          data: {
+            course,
+            startDatetimeIdentifier: `${startDatetime}#${id}`,
+            description,
+            host,
+            capacity,
+            duration,
+            attendees: [],
+          },
+        });
+      }
+      return res.status(400).json({ message: 'Tutorial could not be created' });
     }
-    return res.status(400).json({ message: 'Parameters not provided' });
+    return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ message: 'Tutorial was not created' });
+    return res.status(400).json({ message: 'Tutorial could not be created' });
   }
 };

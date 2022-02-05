@@ -18,7 +18,7 @@ export default async (req: Request, res: Response) => {
 
       const data = await docClient.get(params).promise();
 
-      if (data.Item) return res.status(200).json(data.Item);
+      if (data.Item) return res.status(200).json({ data: data.Item });
       return res.status(400).json({ message: 'Phone number is not validated' });
     }
 

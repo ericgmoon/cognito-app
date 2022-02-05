@@ -1,7 +1,8 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-import { getStudent, getTutorial } from '../../utils';
+import { getStudent } from '../../users/utils';
+import { getTutorial } from '../utils';
 
 // Set up DocClient
 AWS.config.update({ region: 'ap-southeast-2' });
@@ -13,15 +14,16 @@ export default async (req: Request, res: Response) => {
 
     if (course && startDatetimeIdentifier && gradYear &&
       studentId) {
-      // Checks that student exists
       const studentData = await getStudent(gradYear, studentId);
-      // Checks that tutorial exists
       const tutorialData = await getTutorial(course, startDatetimeIdentifier);
+
+      if (!studentData) throw Error('Student not found');
+      if (!tutorialData) throw Error('Tutorial not found');
+
       // Checks that student hasn't already booked
-      if (tutorialData.Item && tutorialData.Item.attendees &&
-        tutorialData.Item.attendees.filter((student:any) =>
-          student.id === studentId).length > 0) {
-        return res.status(400).json({ message: 'Student already booked' });
+      if (tutorialData.Item?.attendees?.filter((student:any) =>
+        student.id === studentId).length > 0) {
+        return res.status(400).json({ message: 'Already booked by student' });
       }
 
       const attendee = {
@@ -59,27 +61,24 @@ export default async (req: Request, res: Response) => {
         },
       };
 
-      const tutorialBookedData = await docClient.update(tutorialParams).promise();
+      // This database operation should be atomic, but DynamoDB does not provide an atomic
+      // 'update' operation currently. Should update this if that feature is ever released.
+      const updateOutput =
+      await Promise.all([
+        docClient.update(tutorialParams).promise(),
+        docClient.update(studentParams).promise(),
+      ]);
 
-      if (tutorialBookedData) {
-        const studentBookedData = await docClient.update(studentParams).promise();
-        if (studentBookedData) return res.status(201).json('Tutorial booked');
-      }
-      return res.status(400).json({ message: 'Tutorial was not found' });
+      if (updateOutput) return res.status(200).json({ message: 'Tutorial booked' });
+
+      return res.status(400).json({ message: 'Tutorial could not be booked' });
     }
-    return res.status(400).json({ message: 'Parameters not provided' });
+    return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
     console.log(err);
     if (err instanceof Error) {
-      switch (err.message) {
-        case 'no tutorial':
-          return res.status(400).json({ message: 'No tutorial found' });
-        case 'no student':
-          return res.status(400).json({ message: 'No student found' });
-        default:
-          return res.status(400).json({ message: 'An error occurred' });
-      }
+      return res.status(400).json({ message: err.message });
     }
-    return res.status(400).json({ message: 'Tutorial was not booked' });
+    return res.status(400).json({ message: 'Tutorial could not be booked' });
   }
 };
