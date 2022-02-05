@@ -31,19 +31,3 @@ export const getTutorial = async (course: any, startDatetimeIdentifier: any) => 
 
   return null;
 };
-
-export const getStudent = async (gradYear: any, studentId: any) => {
-  const params = {
-    TableName: 'students',
-    Key: {
-      gradYear: parseInt(String(gradYear), 10),
-      studentId,
-    },
-  };
-
-  const data = await docClient.get(params).promise();
-
-  if (data?.Item) return data;
-
-  return null;
-};

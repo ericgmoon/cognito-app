@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { getTutorial } from '../../utils';
+import { getTutorial } from '../utils';
 
 export default async (req: Request, res: Response) => {
   try {

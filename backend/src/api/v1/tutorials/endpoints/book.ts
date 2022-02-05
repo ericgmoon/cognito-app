@@ -1,7 +1,8 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-import { getStudent, getTutorial } from '../../utils';
+import { getStudent } from '../../users/utils';
+import { getTutorial } from '../utils';
 
 // Set up DocClient
 AWS.config.update({ region: 'ap-southeast-2' });

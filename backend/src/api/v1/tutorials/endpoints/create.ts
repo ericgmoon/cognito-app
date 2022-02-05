@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-import { makeId } from '../../utils';
+import { makeId } from '../utils';
 
 // Set up DocClient
 AWS.config.update({ region: 'ap-southeast-2' });
