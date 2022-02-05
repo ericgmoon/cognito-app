@@ -8,7 +8,10 @@ export default async (req: Request, res: Response) => {
 
     if (course && startDatetimeIdentifier) {
       const data = await getTutorial(course, startDatetimeIdentifier);
-      return res.status(200).json(data);
+      return res.status(200).json({
+        message: 'Tutorial retrieved',
+        item: data,
+      });
     }
 
     return res.status(400).json({ message: 'Insufficient information provided' });

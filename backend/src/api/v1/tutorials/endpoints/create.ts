@@ -29,7 +29,20 @@ export default async (req: Request, res: Response) => {
 
       const data = await docClient.put(params).promise();
 
-      if (data) return res.status(201).json(`Created tutorial at ${startDatetime}`);
+      if (data) {
+        return res.status(201).json({
+          message: `Created tutorial at ${startDatetime}`,
+          item: {
+            course,
+            startDatetimeIdentifier: `${startDatetime}#${id}`,
+            description,
+            host,
+            capacity,
+            duration,
+            attendees: [],
+          },
+        });
+      }
       return res.status(400).json({ message: 'Tutorial could not be created' });
     }
     return res.status(400).json({ message: 'Insufficient information provided' });

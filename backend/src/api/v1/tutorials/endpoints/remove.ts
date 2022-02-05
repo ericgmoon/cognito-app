@@ -22,7 +22,7 @@ export default async (req: Request, res: Response) => {
       const data = await docClient.delete(params).promise();
 
       if (data?.Attributes) {
-        return res.status(200).json('Tutorial deleted');
+        return res.status(200).json({ message: 'Tutorial deleted' });
       }
       return res.status(400).json({ message: 'Tutorial could not be found' });
     }

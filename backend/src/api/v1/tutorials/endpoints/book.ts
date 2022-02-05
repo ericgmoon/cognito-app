@@ -69,7 +69,7 @@ export default async (req: Request, res: Response) => {
         docClient.update(studentParams).promise(),
       ]);
 
-      if (updateOutput) return res.status(200).json('Tutorial booked');
+      if (updateOutput) return res.status(200).json({ message: 'Tutorial booked' });
 
       return res.status(400).json({ message: 'Tutorial could not be booked' });
     }
