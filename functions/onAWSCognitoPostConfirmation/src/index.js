@@ -37,11 +37,14 @@ const createStudentEntry = async (studentItem) => {
 };
 
 exports.handler = async (event, _context, callback) => {
-  const studentId = event.request.userAttributes.sub;
-  const phoneNumber = event.request.userAttributes.phone_number;
-
   try {
-    if (studentId && phoneNumber) {
+    const studentId = event.request.userAttributes.sub;
+    const phoneNumber = event.request.userAttributes.phone_number;
+
+    // Only run this trigger for post-confirmation of sign ups
+    const isFromSignUp = event.triggerSource === 'PostConfirmation_ConfirmSignUp';
+
+    if (isFromSignUp && studentId && phoneNumber) {
       // Get the student details
       const studentDetails = await getStudentDetailsFromPhoneNumber(phoneNumber);
       if (!studentDetails) return { statusCode: 400 };

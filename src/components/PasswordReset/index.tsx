@@ -6,30 +6,34 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { signIn } from '../../auth';
+import {
+  confirmPasswordResetCode,
+  sendPasswordResetCode,
+} from '../../auth';
+import VerificationCode from '../VerificationCode';
 
 import {
-  StyledButton, StyledSignIn, StyledTextField,
+  FormContainer, RootContainer, StyledButton, StyledTextField,
 } from './index.styles';
 
 interface Data {
   email: string;
-  password: string;
+  password: string,
 }
 
-interface SignInProps {
-  onAuthenticate: () => void;
+interface NewPasswordFormProps {
+  onComplete: (data: Data) => void;
 }
 
-const SignIn = ({ onAuthenticate } : SignInProps) => {
+const NewPasswordForm = ({ onComplete } : NewPasswordFormProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onSuccess = () => {
+  const onSuccess = (data: Data) => {
     setLoading(false);
-    onAuthenticate();
+    onComplete(data);
   };
 
   const onFailure = (err: any) => {
@@ -41,8 +45,8 @@ const SignIn = ({ onAuthenticate } : SignInProps) => {
   const onSubmit = async (data: Data) => {
     setLoading(true);
     try {
-      await signIn(data.email, data.password);
-      onSuccess();
+      await sendPasswordResetCode(data.email);
+      onSuccess(data);
     } catch (err) {
       onFailure(err);
     }
@@ -60,7 +64,7 @@ const SignIn = ({ onAuthenticate } : SignInProps) => {
   };
 
   return (
-    <StyledSignIn onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <Collapse in={errorOpen}>
         <Alert
           severity="error"
@@ -85,17 +89,59 @@ const SignIn = ({ onAuthenticate } : SignInProps) => {
         errorMessage={errors.email ? getErrorMessage(errors.email.type, 'email') : ''}
       />
       <StyledTextField
-        placeholder="Password"
+        placeholder="New Password"
         type="password"
         {...register('password', { required: true })}
         error={!!errors.password}
-        errorMessage={errors.password ? getErrorMessage(errors.password.type, 'password') : ''}
+        errorMessage={errors.password ? getErrorMessage(errors.password.type, 'new password') : ''}
       />
       <StyledButton type="submit" loading={loading}>
-        Sign In
+        Reset Password
       </StyledButton>
-    </StyledSignIn>
+    </FormContainer>
   );
 };
 
-export default SignIn;
+interface PasswordResetCodeEntryProps {
+  email: string,
+  newPassword: string,
+  onConfirm: () => void,
+}
+
+const PasswordResetCodeEntry = ({ email, newPassword, onConfirm }: PasswordResetCodeEntryProps) => (
+  <VerificationCode
+    confirm={async ({ verification }) =>
+      confirmPasswordResetCode(email, verification, newPassword)}
+    resend={async () => sendPasswordResetCode(email)}
+    onConfirm={onConfirm}
+  />
+);
+
+interface PasswordResetProps {
+  onComplete: () => void;
+}
+
+const PasswordReset = ({ onComplete }: PasswordResetProps) => {
+  const [isCodeSent, setIsCodeSent] = useState(false);
+  const [userData, setUserData] = useState<Data>({ email: '', password: '' });
+
+  return (
+    <RootContainer>
+      {(isCodeSent ? (
+        <PasswordResetCodeEntry
+          email={userData.email}
+          newPassword={userData.password}
+          onConfirm={onComplete}
+        />
+      ) : (
+        <NewPasswordForm onComplete={(data: Data) => {
+          setIsCodeSent(true);
+          setUserData(data);
+        }}
+        />
+      ))}
+    </RootContainer>
+  );
+};
+
+export default PasswordReset;
