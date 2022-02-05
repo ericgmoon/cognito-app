@@ -24,9 +24,9 @@ export default async (req: Request, res: Response) => {
       if (data?.Attributes) {
         return res.status(200).json('Tutorial deleted');
       }
-      return res.status(400).json({ message: 'No tutorial found' });
+      return res.status(400).json({ message: 'Tutorial could not be found' });
     }
-    return res.status(400).json({ message: 'Parameters not provided' });
+    return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: 'Tutorial could not be deleted' });

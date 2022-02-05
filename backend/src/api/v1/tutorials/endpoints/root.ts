@@ -5,10 +5,8 @@ import { Request, Response } from 'express';
 AWS.config.update({ region: 'ap-southeast-2' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-// Represents smallest possible id
+// Represents the smallest and largest possible id
 const MIN_ID = '000000';
-
-// Represents largest possible id
 const MAX_ID = 'zzzzzz';
 
 export default async (req: Request, res: Response) => {
@@ -29,9 +27,9 @@ export default async (req: Request, res: Response) => {
       const data = await docClient.query(params).promise();
 
       if (data) return res.status(200).json(data);
-      return res.status(400).json({ message: 'Something went wrong' });
+      return res.status(400).json({ message: 'Tutorials could not be retrieved' });
     }
-    return res.status(400).json({ message: 'Parameters not provided' });
+    return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
     console.log(err);
     return res.status(400).json({ message: 'Tutorials could not be retrieved' });

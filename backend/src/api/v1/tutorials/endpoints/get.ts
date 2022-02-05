@@ -10,12 +10,11 @@ export default async (req: Request, res: Response) => {
       const data = await getTutorial(course, startDatetimeIdentifier);
       return res.status(200).json(data);
     }
-    return res.status(400).json({ message: 'Parameters not provided' });
+
+    return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
     console.log(err);
-    if (err instanceof Error && err.message === 'no tutorial') {
-      return res.status(400).json({ message: 'No tutorial found' });
-    }
+    if (err instanceof Error) return res.status(400).json({ message: err.message });
     return res.status(400).json({ message: 'Tutorial could not be retrieved' });
   }
 };
