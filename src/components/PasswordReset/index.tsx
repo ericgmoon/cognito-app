@@ -44,7 +44,12 @@ const NewPasswordForm = ({ onComplete } : NewPasswordFormProps) => {
 
   const onSubmit = async (data: Data) => {
     setLoading(true);
-    await sendPasswordResetCode(data.email, () => onSuccess(data), onFailure);
+    try {
+      await sendPasswordResetCode(data.email);
+      onSuccess(data);
+    } catch (err) {
+      onFailure(err);
+    }
   };
 
   const getErrorMessage = (type: string, field: string): string => {
@@ -103,20 +108,14 @@ interface PasswordResetCodeEntryProps {
   onConfirm: () => void,
 }
 
-const PasswordResetCodeEntry = ({ email, newPassword, onConfirm }: PasswordResetCodeEntryProps) => {
-  // TODO: Handle this as a form
-  const onSuccess = () => onConfirm();
-  const onFailure = () => { throw Error('Could not reset password'); };
-
-  return (
-    <VerificationCode
-      confirm={async ({ verification }) =>
-        confirmPasswordResetCode(email, verification, newPassword, onSuccess, onFailure)}
-      resend={async () => sendPasswordResetCode(email)}
-      onConfirm={onConfirm}
-    />
-  );
-};
+const PasswordResetCodeEntry = ({ email, newPassword, onConfirm }: PasswordResetCodeEntryProps) => (
+  <VerificationCode
+    confirm={async ({ verification }) =>
+      confirmPasswordResetCode(email, verification, newPassword)}
+    resend={async () => sendPasswordResetCode(email)}
+    onConfirm={onConfirm}
+  />
+);
 
 interface PasswordResetProps {
   onComplete: () => void;

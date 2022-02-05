@@ -86,26 +86,22 @@ export const resendConfirmationCode = async (email: string | undefined) =>
  * Authenticates an AWS Cognito account, then stores it in local storage
  * @param email
  * @param password
- * @param onSuccess
- * @param onFailure
  */
 export const signIn = async (
-  email: string | undefined,
-  password: string,
-  onSuccess?: () => any,
-  onFailure?: (err? : any) => any) => {
-  if (!email || !password) throw Error('Missing email or password.');
+  email: string,
+  password: string) => new Promise((resolve, reject) => {
+  if (!email || !password) reject(Error('Missing email or password.'));
 
   const authenticationDetails = new AuthenticationDetails({
     Username: email,
     Password: password,
   });
 
-  return getCognitoUser(email)?.authenticateUser(authenticationDetails, {
-    onSuccess: () => onSuccess && onSuccess(),
-    onFailure: (err) => onFailure && onFailure(err),
+  getCognitoUser(email)?.authenticateUser(authenticationDetails, {
+    onSuccess: resolve,
+    onFailure: reject,
   });
-};
+});
 
 /**
  * Removes the AWS Cognito account from the local storage
@@ -155,17 +151,14 @@ export const changePassword = async (oldPassword: string, newPassword: string) =
 /**
  * Sends a password reset code to the user's mobile
  * @param email
- * @param onSuccess
- * @param onFailure
  */
 export const sendPasswordResetCode = (
-  email: string | undefined,
-  onSuccess?: () => any,
-  onFailure?: (err? : any) => any) =>
+  email: string | undefined) => new Promise((resolve, reject) => {
   getCognitoUser(email)?.forgotPassword({
-    onSuccess: () => onSuccess && onSuccess(),
-    onFailure: (err) => onFailure && onFailure(err),
+    onSuccess: resolve,
+    onFailure: reject,
   });
+});
 
 /**
  * Verifies the password reset code to update the user's password
@@ -173,19 +166,16 @@ export const sendPasswordResetCode = (
  * @param email
  * @param verificationCode
  * @param newPassword
- * @param onSuccess
- * @param onFailure
  */
 export const confirmPasswordResetCode = (
   email: string | undefined,
   verificationCode: string,
-  newPassword: string,
-  onSuccess?: () => any,
-  onFailure?: (err? : any) => any) =>
+  newPassword: string) => new Promise((resolve, reject) => {
   getCognitoUser(email)?.confirmPassword(verificationCode, newPassword, {
-    onSuccess: () => onSuccess && onSuccess(),
-    onFailure: (err) => onFailure && onFailure(err),
+    onSuccess: resolve,
+    onFailure: reject,
   });
+});
 
 /**
  * Provides the current user's AWS Cognito attributes through a callback
@@ -208,47 +198,39 @@ export const getCurrentUserAttributes = async (
 
 /**
  * Sends an email to the current user containing the verification code
- * @param onSuccess
- * @param onFailure
  */
-export const sendEmailConfirmationCode = async (
-  onSuccess?: () => any,
-  onFailure?: (err? : any) => any) => {
+export const sendEmailConfirmationCode = async () => new Promise((resolve, reject) => {
   const user = getCurrentUser();
   // `getSession` must be called on the same instance of user for this function to work
   if (user) {
-    return user?.getSession(() =>
+    user?.getSession(() =>
       user.getAttributeVerificationCode('email', {
-        onSuccess: () => onSuccess && onSuccess(),
-        onFailure: (err) => onFailure && onFailure(err),
+        onSuccess: resolve,
+        onFailure: reject,
       }),
     );
   }
-  throw Error('No user is currently authenticated.');
-};
+  reject(Error('No user is currently authenticated.'));
+});
 
 /**
  * Verifies an email for the current user via the emailed verification code
  * @param verificationCode
- * @param onSuccess
- * @param onFailure
  */
 export const confirmEmailConfirmationCode = async (
-  verificationCode: string,
-  onSuccess?: () => any,
-  onFailure?: (err? : any) => any) => {
+  verificationCode: string) => new Promise((resolve, reject) => {
   const user = getCurrentUser();
   if (user) {
     // `getSession` must be called on the same instance of user for this function to work
-    return user?.getSession(() =>
+    user?.getSession(() =>
       user.verifyAttribute('email', verificationCode, {
-        onSuccess: () => onSuccess && onSuccess(),
-        onFailure: (err) => onFailure && onFailure(err),
+        onSuccess: resolve,
+        onFailure: reject,
       }),
     );
   }
-  throw Error('No user is currently authenticated.');
-};
+  reject(Error('No user is currently authenticated.'));
+});
 
 /**
  * Async function returning whether or not a user is currently authenticated

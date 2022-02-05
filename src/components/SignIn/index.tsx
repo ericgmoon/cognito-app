@@ -40,7 +40,12 @@ const SignIn = ({ onAuthenticate } : SignInProps) => {
 
   const onSubmit = async (data: Data) => {
     setLoading(true);
-    await signIn(data.email, data.password, onSuccess, onFailure);
+    try {
+      await signIn(data.email, data.password);
+      onSuccess();
+    } catch (err) {
+      onFailure(err);
+    }
   };
 
   const getErrorMessage = (type: string, field: string): string => {
