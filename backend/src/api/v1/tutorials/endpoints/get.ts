@@ -8,16 +8,16 @@ export default async (req: Request, res: Response) => {
 
     if (course && startDatetimeIdentifier) {
       const data = await getTutorial(course, startDatetimeIdentifier);
-      return res.status(200).json({
-        message: 'Tutorial retrieved',
-        data,
-      });
+      if (data) {
+        return res.status(200).json({
+          message: 'Tutorial retrieved',
+          data,
+        });
+      }
+      return res.status(400).json({ message: 'Tutorial could not be found' });
     }
-
     return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
-    console.log(err);
-    if (err instanceof Error) return res.status(400).json({ message: err.message });
     return res.status(400).json({ message: 'Tutorial could not be retrieved' });
   }
 };

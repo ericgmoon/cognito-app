@@ -10,27 +10,27 @@ export default async (req: Request, res: Response) => {
   try {
     const { body: { course, startDatetimeIdentifier, gradYear, studentId } } = req;
 
-    if (course && startDatetimeIdentifier && gradYear &&
-      studentId) {
-      const studentData = await getStudent(gradYear, studentId);
-      const tutorialData = await getTutorial(course, startDatetimeIdentifier);
+    if (course && startDatetimeIdentifier && gradYear && studentId) {
+      const student = await getStudent(gradYear, studentId);
+      const tutorial = await getTutorial(course, startDatetimeIdentifier);
 
-      if (!studentData) throw Error('Student not found');
-      if (!tutorialData) throw Error('Tutorial not found');
+      if (!student) throw Error('Student not found');
+      if (!tutorial) throw Error('Tutorial not found');
 
       // Checks that student hasn't already booked
-      if (tutorialData.Item?.attendees?.filter((student:any) =>
-        student.id === studentId).length > 0) {
+      if (tutorial?.attendees?.filter((attendee: any) =>
+        attendee.studentId === studentId).length > 0) {
         return res.status(400).json({ message: 'Already booked by student' });
       }
 
-      const attendee = {
-        id: studentId,
-        firstName: studentData?.Item?.firstName,
-        lastName: studentData?.Item?.lastName,
+      const attendeeEntry = {
+        gradYear,
+        studentId,
+        firstName: student?.firstName,
+        lastName: student?.lastName,
       };
 
-      const tutorial = {
+      const tutorialKey = {
         course,
         startDatetimeIdentifier,
       };
@@ -43,7 +43,7 @@ export default async (req: Request, res: Response) => {
         },
         UpdateExpression: 'SET attendees = list_append(attendees, :attendee)',
         ExpressionAttributeValues: {
-          ':attendee': [attendee],
+          ':attendee': [attendeeEntry],
         },
       };
 
@@ -55,7 +55,7 @@ export default async (req: Request, res: Response) => {
         },
         UpdateExpression: 'SET tutorials = list_append(tutorials, :tutorial)',
         ExpressionAttributeValues: {
-          ':tutorial': [tutorial],
+          ':tutorial': [tutorialKey],
         },
       };
 
@@ -73,10 +73,6 @@ export default async (req: Request, res: Response) => {
     }
     return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
-    console.log(err);
-    if (err instanceof Error) {
-      return res.status(400).json({ message: err.message });
-    }
     return res.status(400).json({ message: 'Tutorial could not be booked' });
   }
 };

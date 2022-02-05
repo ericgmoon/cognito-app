@@ -24,8 +24,5 @@ export const getTutorial = async (course: any, startDatetimeIdentifier: any) => 
   };
 
   const data = await docClient.get(params).promise();
-
-  if (data?.Item) return data;
-
-  return null;
+  return data?.Item;
 };

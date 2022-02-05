@@ -56,6 +56,7 @@ exports.handler = async (event, _context, callback) => {
         phoneNumber,
         username: event.request.userName,
         email: event.request.userAttributes.email,
+        tutorials: [],
         createdAt: new Date().getTime(),
       };
       await createStudentEntry(studentItem);

@@ -12,8 +12,5 @@ export const getStudent = async (gradYear: any, studentId: any) => {
   };
 
   const data = await docClient.get(params).promise();
-
-  if (data?.Item) return data;
-
-  return null;
+  return data?.Item;
 };
