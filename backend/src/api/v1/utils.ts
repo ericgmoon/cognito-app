@@ -27,10 +27,9 @@ export const getTutorial = async (course: any, startDatetimeIdentifier: any) => 
 
   const data = await docClient.get(params).promise();
 
-  if (data?.Item) {
-    return data;
-  }
-  throw new Error('no tutorial');
+  if (data?.Item) return data;
+
+  return null;
 };
 
 export const getStudent = async (gradYear: any, studentId: any) => {
@@ -44,8 +43,7 @@ export const getStudent = async (gradYear: any, studentId: any) => {
 
   const data = await docClient.get(params).promise();
 
-  if (data?.Item) {
-    return data;
-  }
-  throw new Error('no student');
+  if (data?.Item) return data;
+
+  return null;
 };
