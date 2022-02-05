@@ -9,7 +9,7 @@ import axios, { AxiosError } from 'axios';
 export const validateNewUser = async (phoneNumber: string | undefined,
   onError?: (err: AxiosError) => void) => {
   if (phoneNumber) {
-    return axios('http://localhost:3001/v1/users/validate', { params: { phoneNumber } })
+    return axios(`${process.env.REACT_APP_BACKEND_URI}users/validate`, { params: { phoneNumber } })
       .catch((err) => {
         if (axios.isAxiosError(err) && onError) onError(err);
       });

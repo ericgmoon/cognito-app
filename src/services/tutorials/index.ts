@@ -11,7 +11,7 @@ import axios, { AxiosError } from 'axios';
 export const getTutorialsInRange = async (startDatetime: string, endDatetime: string,
   course: string, onError?: (err: AxiosError) => void) => {
   if (startDatetime && endDatetime && course) {
-    return axios('http://localhost:3001/v1/tutorials', {
+    return axios(`${process.env.REACT_APP_BACKEND_URI}}tutorials`, {
       params: {
         startDatetime, endDatetime, course,
       },

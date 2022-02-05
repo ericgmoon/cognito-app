@@ -1,9 +1,17 @@
+import AWS from 'aws-sdk';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 
 // Configure environment variables
 dotenv.config();
+
+// Configure AWS
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET,
+  region: process.env.AWS_REGION,
+});
 
 // Declare a new express app
 const app = express();

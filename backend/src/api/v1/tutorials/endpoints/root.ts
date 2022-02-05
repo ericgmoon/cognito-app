@@ -1,8 +1,6 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-// Set up DocClient
-AWS.config.update({ region: 'ap-southeast-2' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 // Represents the smallest and largest possible id

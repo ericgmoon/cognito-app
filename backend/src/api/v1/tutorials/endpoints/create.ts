@@ -3,8 +3,6 @@ import { Request, Response } from 'express';
 
 import { makeId } from '../utils';
 
-// Set up DocClient
-AWS.config.update({ region: 'ap-southeast-2' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default async (req: Request, res: Response) => {
