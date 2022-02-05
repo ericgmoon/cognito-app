@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material';
 import styled from 'styled-components';
 
 import Button from '../Button';
@@ -29,11 +28,4 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Title = styled(Typography)`
-  && {
-    color: ${({ theme }) => (theme.palette.secondary.dark)};
-    font-weight: bold;
-  }
-`;
-
-export { RootContainer, FormContainer, StyledButton, StyledTextField, Title };
+export { RootContainer, FormContainer, StyledButton, StyledTextField };

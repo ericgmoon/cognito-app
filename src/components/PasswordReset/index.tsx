@@ -13,7 +13,7 @@ import {
 import VerificationCode from '../VerificationCode';
 
 import {
-  FormContainer, RootContainer, StyledButton, StyledTextField, Title,
+  FormContainer, RootContainer, StyledButton, StyledTextField,
 } from './index.styles';
 
 interface Data {
@@ -59,46 +59,41 @@ const NewPasswordForm = ({ onComplete } : NewPasswordFormProps) => {
   };
 
   return (
-    <>
-      <Title variant="h6">
-        Reset Your Password
-      </Title>
-      <FormContainer onSubmit={handleSubmit(onSubmit)}>
-        <Collapse in={errorOpen}>
-          <Alert
-            severity="error"
-            action={(
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => setErrorOpen(false)}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            )}
-          >
-            {errorMessage}
-          </Alert>
-        </Collapse>
-        <StyledTextField
-          placeholder="Email"
-          {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
-          error={!!errors.email}
-          errorMessage={errors.email ? getErrorMessage(errors.email.type, 'email') : ''}
-        />
-        <StyledTextField
-          placeholder="New Password"
-          type="password"
-          {...register('password', { required: true })}
-          error={!!errors.password}
-          errorMessage={errors.password ? getErrorMessage(errors.password.type, 'new password') : ''}
-        />
-        <StyledButton type="submit" loading={loading}>
-          Reset Password
-        </StyledButton>
-      </FormContainer>
-    </>
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <Collapse in={errorOpen}>
+        <Alert
+          severity="error"
+          action={(
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => setErrorOpen(false)}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          )}
+        >
+          {errorMessage}
+        </Alert>
+      </Collapse>
+      <StyledTextField
+        placeholder="Email"
+        {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
+        error={!!errors.email}
+        errorMessage={errors.email ? getErrorMessage(errors.email.type, 'email') : ''}
+      />
+      <StyledTextField
+        placeholder="New Password"
+        type="password"
+        {...register('password', { required: true })}
+        error={!!errors.password}
+        errorMessage={errors.password ? getErrorMessage(errors.password.type, 'new password') : ''}
+      />
+      <StyledButton type="submit" loading={loading}>
+        Reset Password
+      </StyledButton>
+    </FormContainer>
   );
 };
 
@@ -114,17 +109,12 @@ const PasswordResetCodeEntry = ({ email, newPassword, onConfirm }: PasswordReset
   const onFailure = () => { throw Error('Could not reset password'); };
 
   return (
-    <>
-      <Title variant="h6">
-        Reset Your Password
-      </Title>
-      <VerificationCode
-        confirm={async ({ verification }) =>
-          confirmPasswordResetCode(email, verification, newPassword, onSuccess, onFailure)}
-        resend={async () => sendPasswordResetCode(email)}
-        onConfirm={onConfirm}
-      />
-    </>
+    <VerificationCode
+      confirm={async ({ verification }) =>
+        confirmPasswordResetCode(email, verification, newPassword, onSuccess, onFailure)}
+      resend={async () => sendPasswordResetCode(email)}
+      onConfirm={onConfirm}
+    />
   );
 };
 
