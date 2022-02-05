@@ -32,7 +32,7 @@ export default async (req: Request, res: Response) => {
       if (data) {
         return res.status(201).json({
           message: `Created tutorial at ${startDatetime}`,
-          item: {
+          data: {
             course,
             startDatetimeIdentifier: `${startDatetime}#${id}`,
             description,

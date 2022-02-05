@@ -10,7 +10,7 @@ export default async (req: Request, res: Response) => {
       const data = await getTutorial(course, startDatetimeIdentifier);
       return res.status(200).json({
         message: 'Tutorial retrieved',
-        item: data,
+        data,
       });
     }
 

@@ -26,7 +26,7 @@ export default async (req: Request, res: Response) => {
 
       const data = await docClient.query(params).promise();
 
-      if (data) return res.status(200).json(data);
+      if (data) return res.status(200).json({ data });
       return res.status(400).json({ message: 'Tutorials could not be retrieved' });
     }
     return res.status(400).json({ message: 'Insufficient information provided' });
