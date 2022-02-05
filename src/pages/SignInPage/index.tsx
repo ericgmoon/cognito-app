@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Divider, Grid, Link,
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from '../../components/Button';
 import { AuthPageLayout } from '../../components/PageLayout';
+import PasswordReset from '../../components/PasswordReset';
 import SignIn from '../../components/SignIn';
 import logo from '../../images/logo.png';
 
@@ -21,6 +22,7 @@ import {
 const SignInPage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const [isPasswordResetting, setIsPasswordResetting] = useState(false);
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -53,23 +55,41 @@ const SignInPage = () => {
             <Divider orientation={isMd ? 'vertical' : 'horizontal'} variant={isMd ? 'fullWidth' : 'middle'}> <Bold>OR</Bold> </Divider>
           </Grid>
           <Grid item xs={12} sm={12} md={5}>
-            <Container>
-              <SignIn
-                onAuthenticate={() => navigate('/')}
-              />
-
-              <FooterText>Forgot password?&nbsp;
-                <Link
-                  component="button"
-                  variant="body1"
-                  onClick={() => { console.log('hello world'); }}
-                  underline="always"
-                  type="button"
-                >
-                  Reset Password
-                </Link>
-              </FooterText>
-            </Container>
+            {isPasswordResetting ? (
+              <Container>
+                <PasswordReset
+                  onComplete={() => setIsPasswordResetting(false)}
+                />
+                <FooterText>No need to reset?&nbsp;
+                  <Link
+                    component="button"
+                    variant="body1"
+                    onClick={() => setIsPasswordResetting(false)}
+                    underline="always"
+                    type="button"
+                  >
+                    Return to Sign In
+                  </Link>
+                </FooterText>
+              </Container>
+            ) : (
+              <Container>
+                <SignIn
+                  onAuthenticate={() => navigate('/')}
+                />
+                <FooterText>Forgot password?&nbsp;
+                  <Link
+                    component="button"
+                    variant="body1"
+                    onClick={() => setIsPasswordResetting(true)}
+                    underline="always"
+                    type="button"
+                  >
+                    Reset Password
+                  </Link>
+                </FooterText>
+              </Container>
+            )}
           </Grid>
         </Grid>
       </RootContainer>
