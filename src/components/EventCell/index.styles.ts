@@ -17,6 +17,9 @@ const Card = styled(MUICard)`
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    &:hover {
+      background-color: ${({ theme }) => theme.palette.gray.dark};
+    }
   }
 `;
 
