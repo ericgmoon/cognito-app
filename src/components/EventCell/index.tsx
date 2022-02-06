@@ -3,25 +3,14 @@ import React, { useRef } from 'react';
 import useDimensions from '../../utils/react/hooks/useDimensions';
 
 import {
-  ActionButton,
-  ButtonContainer,
   Card,
   CardContent,
   Content,
   ContentText,
   Header,
   HeaderText,
-  OnlineCircle,
 } from './index.styles';
 import { stringifyTime } from './utils';
-
-interface OnlineIndicatorProps {
-  online?: boolean,
-  children: React.ReactElement,
-}
-
-const OnlineIndicator = ({ online = false, children }: OnlineIndicatorProps) =>
-  (online ? <OnlineCircle variant="dot" color="online">{children}</OnlineCircle> : children);
 
 interface EventCellProps {
   startDatetime: number,
@@ -29,16 +18,9 @@ interface EventCellProps {
   color?: 'primary' | 'chemistry' | 'physics',
   title?: string,
   subtitle?: string,
-  actionButton?: {
-    text: string,
-    onClick: () => void,
-    color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | undefined,
-    online?: boolean,
-  },
-  disabled?: boolean,
 }
 
-const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '', actionButton, disabled = false }: EventCellProps) => {
+const EventCell = ({ startDatetime, duration, color = 'primary', title = '', subtitle = '' }: EventCellProps) => {
   const startTime = stringifyTime(startDatetime);
   const endTime = stringifyTime(startDatetime + duration * 60000);
 
@@ -46,14 +28,14 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
   const { width } = useDimensions(ref);
 
   return (
-    <Card ref={ref as React.RefObject<HTMLDivElement>} long={!!actionButton}>
+    <Card ref={ref as React.RefObject<HTMLDivElement>}>
       <CardContent>
-        <Header color={disabled ? 'darkGray' : color}>
+        <Header color={color}>
           <HeaderText variant="subtitle2">
             {width > 144 ? `${startTime} - ${endTime}` : startTime}
           </HeaderText>
         </Header>
-        <Content color={disabled ? 'darkGray' : color}>
+        <Content color={color}>
           <ContentText variant="subtitle2">
             {title}
           </ContentText>
@@ -61,21 +43,6 @@ const EventCell = ({ startDatetime, duration, color = 'primary', title = '', sub
             {subtitle}
           </ContentText>
         </Content>
-        {actionButton && (
-          <ButtonContainer>
-            <OnlineIndicator online={actionButton.online}>
-              <ActionButton
-                variant="outlined"
-                onClick={disabled ? () => {} : actionButton.onClick}
-                color={disabled ? 'darkGray' : (actionButton.color || color)}
-                disableRipple
-                blockPointer={disabled}
-              >
-                {actionButton.text}
-              </ActionButton>
-            </OnlineIndicator>
-          </ButtonContainer>
-        )}
       </CardContent>
     </Card>
   );

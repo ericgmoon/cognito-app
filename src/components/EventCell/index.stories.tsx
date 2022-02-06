@@ -27,11 +27,6 @@ TutorialJoin.args = {
   color: 'chemistry',
   title: 'Chemistry',
   subtitle: 'Tutorial',
-  actionButton: {
-    text: 'Join',
-    onClick: () => {},
-    online: true,
-  },
 };
 
 export const TutorialCancel = Template.bind({});
@@ -41,11 +36,6 @@ TutorialCancel.args = {
   color: 'chemistry',
   title: 'Chemistry',
   subtitle: 'Tutorial',
-  actionButton: {
-    text: 'Cancel',
-    onClick: () => {},
-    color: 'error',
-  },
 };
 
 export const TutorialFull = Template.bind({});
@@ -55,9 +45,4 @@ TutorialFull.args = {
   color: 'chemistry',
   title: 'Chemistry',
   subtitle: 'Tutorial',
-  actionButton: {
-    text: 'Full',
-    onClick: () => {},
-  },
-  disabled: true,
 };

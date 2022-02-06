@@ -3,21 +3,15 @@ import {
 } from '@mui/material';
 import styled from 'styled-components';
 
-import Button from '../Button';
-
 interface ColorProps {
   color: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | 'chemistry' | 'physics';
 }
 
-interface LongProps {
-  long: boolean | undefined,
-}
-
-const Card = styled(MUICard)<LongProps>`
+const Card = styled(MUICard)`
   && {
     width: 100%;
     max-width: 156px;
-    height: ${({ long }) => (long ? 128 : 96)}px;
+    height: 96px;
     background-color: ${({ theme }) => theme.palette.gray.main};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
     cursor: pointer;
@@ -75,23 +69,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-interface ActionButtonProps extends ColorProps {
-  blockPointer: boolean,
-}
-
-const ActionButton = styled(Button)<ActionButtonProps>`
-  && {
-    border-width: 2px;
-    width: 96px;
-    height: 24px;
-    padding: ${({ theme }) => theme.spacing(0)};
-    &:hover {
-      border-width: 2px;
-      cursor: ${({ blockPointer }) => (blockPointer ? 'not-allowed' : 'pointer')};
-    }
-  }
-`;
-
 const OnlineCircle = styled(Badge)`
   & .MuiBadge-badge {
     min-width: 12px;
@@ -108,6 +85,5 @@ export { Card,
   HeaderText,
   Content,
   ContentText,
-  ActionButton,
   ButtonContainer,
   OnlineCircle };
