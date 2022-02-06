@@ -3,18 +3,18 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
   /* width */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
   
   /* Track */
   ::-webkit-scrollbar-track {
-    border-radius: 1px;
+    border-radius: 4px;
   }
   
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #00000015; 
-    border-radius: 1px;
+    border-radius: 4px;
   }
   
   /* Handle on hover */
