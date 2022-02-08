@@ -44,33 +44,53 @@ const EventCell = ({
 
   switch (state) {
     case 'today':
-      buttons = [{
-        label: 'JOIN',
-        onClick: onJoin,
-        color: 'success',
-        closeOnClick: true,
-      }];
+      buttons = [
+        {
+          label: 'CANCEL',
+          disabled: true,
+        }, {
+          label: 'JOIN',
+          onClick: onJoin,
+          color: 'success',
+          closeOnClick: true,
+        },
+      ];
       break;
     case 'open':
-      buttons = [{
-        label: 'CANCEL',
-        onClick: onCancel,
-        color: 'error',
-        closeOnClick: true,
-      }, {
-        label: 'BOOK',
-        onClick: onBook,
-        color: 'info',
-        closeOnClick: true,
-      }];
+      buttons = [
+        {
+          label: 'CANCEL',
+          onClick: onCancel,
+          color: 'error',
+          closeOnClick: true,
+        }, {
+          label: 'BOOK',
+          onClick: onBook,
+          color: 'info',
+          closeOnClick: true,
+        },
+      ];
       break;
     case 'booked':
-      buttons = [{
-        label: 'CANCEL',
-        onClick: onCancel,
-        color: 'error',
-        closeOnClick: true,
-      }];
+      buttons = [
+        {
+          label: 'CANCEL',
+          onClick: onCancel,
+          color: 'error',
+          closeOnClick: true,
+        }, {
+          label: 'BOOKED',
+          disabled: true,
+        },
+      ];
+      break;
+    case 'full':
+      buttons = [
+        {
+          label: 'FULL',
+          disabled: true,
+        },
+      ];
       break;
     default:
       break;

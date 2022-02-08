@@ -13,7 +13,8 @@ type ModalButton = {
   label: string,
   onClick?: () => void,
   color?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray',
-  closeOnClick?: boolean
+  closeOnClick?: boolean,
+  disabled?: boolean,
 }
 
 interface ModalProps {
@@ -81,6 +82,7 @@ const Modal = ({
                   if (button.closeOnClick) handleClose();
                 }}
                 color={button.color}
+                disabled={button.disabled}
               >
                 {button.label}
               </Button>
