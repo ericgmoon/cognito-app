@@ -26,3 +26,35 @@ export const getTutorial = async (course: any, startDatetimeIdentifier: any) => 
   const data = await docClient.get(params).promise();
   return data?.Item;
 };
+
+export const removeTutorialFromStudent =
+  async (gradYear: string, studentId: string, tutorialIndex: number) => {
+    // The standard method of using ExpressionAttributeValues to inject the
+    // tutorialIndex doesn't seem to work for index values
+    const params = {
+      TableName: 'students',
+      Key: {
+        gradYear: parseInt(String(gradYear), 10),
+        studentId,
+      },
+      UpdateExpression: `REMOVE tutorials[${tutorialIndex}]`,
+    };
+
+    return docClient.update(params).promise();
+  };
+
+export const removeAttendeeFromTutorial =
+  async (course: string, startDatetimeIdentifier: string, attendeeIndex: number) => {
+    // The standard method of using ExpressionAttributeValues to inject the
+    // studentIndex doesn't seem to work for index values
+    const params = {
+      TableName: 'tutorials',
+      Key: {
+        course,
+        startDatetimeIdentifier,
+      },
+      UpdateExpression: `REMOVE attendees[${attendeeIndex}]`,
+    };
+
+    return docClient.update(params).promise();
+  };

@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
 import { getStudent } from '../../users/utils';
+import { removeTutorialFromStudent } from '../utils';
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -18,22 +19,6 @@ const deleteTutorial = async (course: string, startDatetimeIdentifier: string) =
   const data = await docClient.delete(params).promise();
   return data?.Attributes;
 };
-
-const removeTutorialFromStudent =
-  async (gradYear: string, studentId: string, tutorialIndex: number) => {
-    // The standard method of using ExpressionAttributeValues to inject the
-    // tutorialIndex doesn't seem to work for index values
-    const params = {
-      TableName: 'students',
-      Key: {
-        gradYear: parseInt(String(gradYear), 10),
-        studentId,
-      },
-      UpdateExpression: `REMOVE tutorials[${tutorialIndex}]`,
-    };
-
-    return docClient.update(params).promise();
-  };
 
 interface Attendee {
   gradYear: string,
