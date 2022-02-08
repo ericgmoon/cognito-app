@@ -23,10 +23,10 @@ interface EventCellProps {
   color?: 'primary' | 'chemistry' | 'physics',
   title?: string,
   properties: {[key: string]: string},
-  state?: 'today' | 'open' | 'full' | 'booked' | 'readOnly',
+  state?: 'imminent' | 'open' | 'full' | 'booked' | 'readOnly',
   onJoin?: () => void,
   onBook?: () => void,
-  onCancel?: () => void,
+  onUnbook?: () => void,
 }
 
 const EventCell = ({
@@ -38,15 +38,15 @@ const EventCell = ({
   state = 'readOnly',
   onJoin = () => {},
   onBook = () => {},
-  onCancel = () => {},
+  onUnbook = () => {},
 }: EventCellProps) => {
   let buttons: any[] = [];
 
   switch (state) {
-    case 'today':
+    case 'imminent':
       buttons = [
         {
-          label: 'CANCEL',
+          label: 'UNBOOK',
           disabled: true,
         }, {
           label: 'JOIN',
@@ -57,30 +57,20 @@ const EventCell = ({
       ];
       break;
     case 'open':
-      buttons = [
-        {
-          label: 'CANCEL',
-          onClick: onCancel,
-          color: 'error',
-          closeOnClick: true,
-        }, {
-          label: 'BOOK',
-          onClick: onBook,
-          color: 'info',
-          closeOnClick: true,
-        },
-      ];
+      buttons = [{
+        label: 'BOOK',
+        onClick: onBook,
+        color: 'info',
+        closeOnClick: true,
+      }];
       break;
     case 'booked':
       buttons = [
         {
-          label: 'CANCEL',
-          onClick: onCancel,
+          label: 'UNBOOK',
+          onClick: onUnbook,
           color: 'error',
           closeOnClick: true,
-        }, {
-          label: 'BOOKED',
-          disabled: true,
         },
       ];
       break;
