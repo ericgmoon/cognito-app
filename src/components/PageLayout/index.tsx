@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { CircularProgress } from '@mui/material';
+import {
+  Alert, CircularProgress, Snackbar,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
 
 import { getIsUserAuthenticated } from '../../auth';
 import { useDispatch, useSelector } from '../../redux/hooks';
+import useSnackbar from '../../utils/react/hooks/useSnackbar';
 
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -35,6 +38,27 @@ const LoadingWrapper = ({ children, loading, decorate }: LoadingWrapperProps) =>
     {children}
   </>
 ));
+
+interface SnackbarProviderProps {
+  children: React.ReactElement | React.ReactElement[],
+}
+
+const SnackbarProvider = ({ children } : SnackbarProviderProps) => {
+  const {
+    open, message, type, closeSnackbar,
+  } = useSnackbar();
+
+  return (
+    <>
+      {children}
+      <Snackbar open={open} autoHideDuration={6000} onClose={closeSnackbar}>
+        <Alert onClose={closeSnackbar} severity={type} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+    </>
+  );
+};
 
 interface ContentProps {
   children: React.ReactElement | React.ReactElement[],
@@ -148,7 +172,9 @@ export const PageLayout = ({
     <>
       {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
       {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
-      <Content decorate={decorate} loading={loading}>{children}</Content>
+      <SnackbarProvider>
+        <Content decorate={decorate} loading={loading}>{children}</Content>
+      </SnackbarProvider>
     </>
   );
 };
