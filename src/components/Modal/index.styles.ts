@@ -9,7 +9,7 @@ const Container = styled(Box)`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 400px;
+    width: min(400px, 95%);
     background-color: ${({ theme }) => theme.palette.gray.light};
     box-shadow: 24;
     padding: ${({ theme }) => theme.spacing(3)};
