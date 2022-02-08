@@ -19,30 +19,3 @@ Tutorial.args = {
   title: 'Chemistry',
   subtitle: 'Tutorial',
 };
-
-export const TutorialJoin = Template.bind({});
-TutorialJoin.args = {
-  startDatetime: new Date().getTime(),
-  duration: 30,
-  color: 'chemistry',
-  title: 'Chemistry',
-  subtitle: 'Tutorial',
-};
-
-export const TutorialCancel = Template.bind({});
-TutorialCancel.args = {
-  startDatetime: new Date().getTime(),
-  duration: 30,
-  color: 'chemistry',
-  title: 'Chemistry',
-  subtitle: 'Tutorial',
-};
-
-export const TutorialFull = Template.bind({});
-TutorialFull.args = {
-  startDatetime: new Date().getTime(),
-  duration: 30,
-  color: 'chemistry',
-  title: 'Chemistry',
-  subtitle: 'Tutorial',
-};
