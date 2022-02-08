@@ -12,7 +12,7 @@ const StyledTextField = styled(InputBase)<InputBaseProps>`
     font-size: ${({ size }) => (size === 'small' ? '0.75rem' : '1rem')};
     padding:  ${({ theme }) => theme.spacing(1)};
     border: ${({ size }) => (size === 'small' ? '1px' : '2px')} solid;
-    border-color: ${({ error, theme }) => (error ? theme.palette.error.main : theme.palette.gray.dark)};
+    border-color: ${({ error, theme }) => (error ? theme.palette.error.light : theme.palette.gray.dark)};
     box-shadow: ${({ error, theme }) => (error ? `${alpha(theme.palette.error.main, 0.25)} 0 0 0 0.1rem` : 'none')};
     text-align: center;
     transition: ${({ theme }) => theme.transitions.create([
@@ -21,9 +21,9 @@ const StyledTextField = styled(InputBase)<InputBaseProps>`
   ])};
   
   &:focus {
-    box-shadow: ${({ error, theme }) => (error ? alpha(theme.palette.error.main, 0.25) :
+    box-shadow: ${({ error, theme }) => (error ? alpha(theme.palette.error.light, 0.25) :
     alpha(theme.palette.primary.main, 0.25))} 0 0 0 0.1rem;
-    border-color: ${({ error, theme }) => (error ? theme.palette.error.main :
+    border-color: ${({ error, theme }) => (error ? theme.palette.error.light :
     theme.palette.primary.main)};
     }
   }

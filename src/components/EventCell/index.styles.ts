@@ -3,26 +3,23 @@ import {
 } from '@mui/material';
 import styled from 'styled-components';
 
-import Button from '../Button';
-
 interface ColorProps {
   color: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | 'chemistry' | 'physics';
 }
 
-interface LongProps {
-  long: boolean | undefined,
-}
-
-const Card = styled(MUICard)<LongProps>`
+const Card = styled(MUICard)`
   && {
     width: 100%;
     max-width: 156px;
-    height: ${({ long }) => (long ? 128 : 96)}px;
+    height: 96px;
     background-color: ${({ theme }) => theme.palette.gray.main};
     border-radius: ${({ theme }) => theme.shape.borderRadius}px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
+    &:hover {
+      background-color: ${({ theme }) => theme.palette.gray.dark};
+    }
   }
 `;
 
@@ -32,7 +29,7 @@ const CardContent = styled(MUICardContent)`
   }
 `;
 
-const Header = styled.div<ColorProps>`
+const TimeTextContainer = styled.div<ColorProps>`
   height: 32px;
   background-color: ${({ theme, color }) => theme.palette[color].dark};
   color: ${({ theme, color }) => theme.palette[color].contrastText};
@@ -43,7 +40,7 @@ const Header = styled.div<ColorProps>`
   align-items: center;
 `;
 
-const HeaderText = styled(Typography)`
+const TimeText = styled(Typography)`
   && {
     font-weight: 600;
     font-size: 0.8rem;
@@ -66,6 +63,8 @@ const ContentText = styled(Typography)`
   && {
     font-weight: bold;
     user-select: none;
+    padding-left: ${({ theme }) => theme.spacing(2)};
+    padding-right: ${({ theme }) => theme.spacing(2)};
   }
 `;
 
@@ -73,23 +72,6 @@ const ButtonContainer = styled.div`
   height: 32px;
   display: flex;
   justify-content: center;
-`;
-
-interface ActionButtonProps extends ColorProps {
-  blockPointer: boolean,
-}
-
-const ActionButton = styled(Button)<ActionButtonProps>`
-  && {
-    border-width: 2px;
-    width: 96px;
-    height: 24px;
-    padding: ${({ theme }) => theme.spacing(0)};
-    &:hover {
-      border-width: 2px;
-      cursor: ${({ blockPointer }) => (blockPointer ? 'not-allowed' : 'pointer')};
-    }
-  }
 `;
 
 const OnlineCircle = styled(Badge)`
@@ -102,12 +84,35 @@ const OnlineCircle = styled(Badge)`
   }
 `;
 
+const TopModalLine = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const ModalLine = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(1)};
+  display: flex;
+  flex-direction: row;
+`;
+
+const ModalHeading = styled(Typography)`
+  && {
+    font-weight: 600;
+  }
+`;
+
+const ModalContent = styled(Typography)`
+`;
+
 export { Card,
   CardContent,
-  Header,
-  HeaderText,
+  TimeTextContainer,
+  TopModalLine,
+  TimeText,
+  ModalLine,
+  ModalHeading,
+  ModalContent,
   Content,
   ContentText,
-  ActionButton,
   ButtonContainer,
   OnlineCircle };
