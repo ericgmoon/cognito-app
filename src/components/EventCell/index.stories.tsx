@@ -16,6 +16,8 @@ Tutorial.args = {
   startDatetime: new Date().getTime(),
   duration: 30,
   color: 'chemistry',
-  title: 'Chemistry',
-  subtitle: 'Tutorial',
+  title: 'Chemistry Tutorial',
+  properties: {
+    Tutor: 'Shane Wang',
+  },
 };

@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 
 import {
-  Button, ButtonBar, ChildBox, CloseIconButton, Container, Description, Title,
+  Button, ButtonBar, ChildBox, CloseIconButton, Container, Description, Title, TitleContainer,
 } from './index.styles';
 
 type ModalButton = {
@@ -21,6 +21,7 @@ interface ModalProps {
   handleClose: (event?: object, reason?: string) => void
   hideCloseIcon?: boolean,
   title?: string,
+  titleColor?: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | 'chemistry' | 'physics',
   description?: string,
   buttons?: ModalButton[],
   children?: React.ReactElement,
@@ -34,6 +35,7 @@ const Modal = ({
   children = <div />,
   description,
   buttons = [],
+  titleColor = 'primary',
 }: ModalProps) => (
   <MUIModal
     aria-labelledby="transition-modal-title"
@@ -54,9 +56,11 @@ const Modal = ({
           </CloseIconButton>
         )}
         {title && (
-          <Title variant="h6">
-            {title}
-          </Title>
+          <TitleContainer color={titleColor}>
+            <Title variant="h6">
+              {title}
+            </Title>
+          </TitleContainer>
         )}
         {description && (
           <Description>

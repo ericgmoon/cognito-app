@@ -60,7 +60,6 @@ const CalendarColumn = (
             startDatetime={entry.startDatetime}
             duration={entry.duration}
             title={entry.title}
-            subtitle={entry.subtitle}
             color={entry.color}
           />
         </CellContainer>

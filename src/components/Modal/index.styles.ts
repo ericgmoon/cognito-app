@@ -3,6 +3,10 @@ import {
 } from '@mui/material';
 import styled from 'styled-components';
 
+interface ColorProps {
+  color: 'primary' | 'secondary' | 'error' | 'warning' | 'info' | 'success' | 'gray' | 'darkGray' | 'chemistry' | 'physics';
+}
+
 const Container = styled(Box)`
   && {
     position: absolute;
@@ -24,6 +28,10 @@ const CloseIconButton = styled(IconButton)`
     right: ${({ theme }) => theme.spacing(2)};
     top: ${({ theme }) => theme.spacing(2)};
   }
+`;
+
+const TitleContainer = styled.div<ColorProps>`
+  color: ${({ theme, color }) => theme.palette[color].dark};
 `;
 
 const Title = styled(Typography)`
@@ -54,4 +62,11 @@ const ChildBox = styled.div`
   margin-top: ${({ theme }) => theme.spacing(2)};
 `;
 
-export { Container, CloseIconButton, Title, Description, ButtonBar, Button, ChildBox };
+export { Container,
+  CloseIconButton,
+  Title,
+  TitleContainer,
+  Description,
+  ButtonBar,
+  Button,
+  ChildBox };

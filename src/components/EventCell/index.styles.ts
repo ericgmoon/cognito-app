@@ -29,7 +29,7 @@ const CardContent = styled(MUICardContent)`
   }
 `;
 
-const Header = styled.div<ColorProps>`
+const TimeTextContainer = styled.div<ColorProps>`
   height: 32px;
   background-color: ${({ theme, color }) => theme.palette[color].dark};
   color: ${({ theme, color }) => theme.palette[color].contrastText};
@@ -40,7 +40,7 @@ const Header = styled.div<ColorProps>`
   align-items: center;
 `;
 
-const HeaderText = styled(Typography)`
+const TimeText = styled(Typography)`
   && {
     font-weight: 600;
     font-size: 0.8rem;
@@ -63,6 +63,8 @@ const ContentText = styled(Typography)`
   && {
     font-weight: bold;
     user-select: none;
+    padding-left: ${({ theme }) => theme.spacing(2)};
+    padding-right: ${({ theme }) => theme.spacing(2)};
   }
 `;
 
@@ -82,10 +84,34 @@ const OnlineCircle = styled(Badge)`
   }
 `;
 
+const TopModalLine = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const ModalLine = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(1)};
+  display: flex;
+  flex-direction: row;
+`;
+
+const ModalHeading = styled(Typography)`
+  && {
+    font-weight: 600;
+  }
+`;
+
+const ModalContent = styled(Typography)`
+`;
+
 export { Card,
   CardContent,
-  Header,
-  HeaderText,
+  TimeTextContainer,
+  TopModalLine,
+  TimeText,
+  ModalLine,
+  ModalHeading,
+  ModalContent,
   Content,
   ContentText,
   ButtonContainer,

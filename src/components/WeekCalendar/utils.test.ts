@@ -63,100 +63,86 @@ describe('splitEntriesByDay', () => {
         // 25th of December 11.30 AM
         startDatetime: 1640392200000,
         duration: 30,
-        title: 'Chemistry',
-        subtitle: 'Tutorial',
+        title: 'Chemistry Tutorial',
       },
       {
         // 25th of December 10.30 AM
         startDatetime: 1640388600000,
         duration: 30,
-        title: 'Chemistry',
-        subtitle: 'Tutorial',
+        title: 'Chemistry Tutorial',
       },
       {
         // 25th of December 11.59 PM
         startDatetime: 1640437140000,
         duration: 30,
-        title: 'Chemistry',
-        subtitle: 'Tutorial',
+        title: 'Chemistry Tutorial',
       },
       {
         // 26th of December 12.01 AM
         startDatetime: 1640437260000,
         duration: 30,
-        title: 'Biology',
-        subtitle: 'Tutorial',
+        title: 'Biology Tutorial',
       },
       {
         // 26th of December 11.59 PM
         startDatetime: 1640523540000,
         duration: 30,
-        title: 'Physics',
-        subtitle: 'Tutorial',
+        title: 'Physics Tutorial',
       },
       {
         // 27th of December 12.01 AM
         startDatetime: 1640523660000,
         duration: 30,
-        title: 'Chemistry',
-        subtitle: 'Tutorial',
+        title: 'Chemistry Tutorial',
       },
       {
         // 30th of December 12.01 AM
         startDatetime: 1640782860000,
         duration: 30,
-        title: 'Chemistry',
-        subtitle: 'Tutorial',
+        title: 'Chemistry Tutorial',
       },
     ])).toStrictEqual({
       1640350800000: [
         {
           startDatetime: 1640388600000,
           duration: 30,
-          title: 'Chemistry',
-          subtitle: 'Tutorial',
+          title: 'Chemistry Tutorial',
         },
         {
           startDatetime: 1640392200000,
           duration: 30,
-          title: 'Chemistry',
-          subtitle: 'Tutorial',
+          title: 'Chemistry Tutorial',
         },
         {
           startDatetime: 1640437140000,
           duration: 30,
-          title: 'Chemistry',
-          subtitle: 'Tutorial',
+          title: 'Chemistry Tutorial',
         },
       ],
       1640437200000: [
         {
           startDatetime: 1640437260000,
           duration: 30,
-          title: 'Biology',
-          subtitle: 'Tutorial',
+          title: 'Biology Tutorial',
         },
         {
           startDatetime: 1640523540000,
           duration: 30,
-          title: 'Physics',
-          subtitle: 'Tutorial',
+          title: 'Physics Tutorial',
         },
       ],
       1640523600000: [
         {
           startDatetime: 1640523660000,
           duration: 30,
-          title: 'Chemistry',
-          subtitle: 'Tutorial',
+          title: 'Chemistry Tutorial',
         },
       ],
       1640782800000: [
         {
           startDatetime: 1640782860000,
           duration: 30,
-          title: 'Chemistry',
-          subtitle: 'Tutorial',
+          title: 'Chemistry Tutorial',
         },
       ],
     });
