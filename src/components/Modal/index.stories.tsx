@@ -30,9 +30,7 @@ const CustomUIComponent = ({ closeModal }: {closeModal?: () => void}) => (
   }}
   >
     <Button
-      sx={{
-        width: '80%', mt: 2, mb: 2,
-      }}
+      sx={{ width: '80%' }}
       onClick={closeModal}
     >
       Woof
