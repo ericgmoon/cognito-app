@@ -19,7 +19,7 @@ type ModalButton = {
 interface ModalProps {
   open: boolean,
   handleClose: (event?: object, reason?: string) => void
-  showCloseIcon?: boolean,
+  hideCloseIcon?: boolean,
   title?: string,
   description?: string,
   buttons?: ModalButton[],
@@ -29,7 +29,7 @@ interface ModalProps {
 const Modal = ({
   open = false,
   handleClose = () => {},
-  showCloseIcon = true,
+  hideCloseIcon = false,
   title,
   children = <div />,
   description,
@@ -48,7 +48,7 @@ const Modal = ({
   >
     <Fade in={open}>
       <Container>
-        {showCloseIcon && (
+        {!hideCloseIcon && (
           <CloseIconButton onClick={handleClose}>
             <CloseIcon />
           </CloseIconButton>
