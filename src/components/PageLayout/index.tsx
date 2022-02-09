@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import {
-  Alert, CircularProgress, Snackbar,
+  CircularProgress, Snackbar,
 } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
@@ -19,7 +19,7 @@ import {
   close, toggle,
 } from './drawerOpenSlice';
 import {
-  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain, Title,
+  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain, SnackbarAlert, Title,
 } from './index.styles';
 
 interface LoadingWrapperProps {
@@ -76,9 +76,9 @@ const SnackbarProvider = ({ children } : SnackbarProviderProps) => {
         onClose={closeSnackbar}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       >
-        <Alert onClose={closeSnackbar} severity={type} sx={{ width: '100%' }}>
+        <SnackbarAlert onClose={closeSnackbar} severity={type}>
           {message}
-        </Alert>
+        </SnackbarAlert>
       </Snackbar>
     </SnackbarContext.Provider>
   );
