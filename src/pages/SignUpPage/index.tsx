@@ -77,7 +77,7 @@ const SignUpPage = () => {
             confirm={async ({ verification }) => confirmSignUp(email, verification)}
             resend={async () => resendConfirmationCode(email)}
             onConfirm={finishSignUp}
-          />,
+          />
         </Container>
       </Grid>
     </Grid>
