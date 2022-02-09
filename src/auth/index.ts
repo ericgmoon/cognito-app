@@ -29,8 +29,11 @@ const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.getUsern
 const signUp = async (
   email: string | undefined,
   password: string | undefined,
-  phoneNumber: string | undefined) => {
-  if (!email || !password || !phoneNumber) throw Error('Missing required details.');
+  phoneNumber: string | undefined) => new Promise<void>((resolve, reject) => {
+  if (!email || !password || !phoneNumber) {
+    reject(Error('Missing required details.'));
+    return;
+  }
 
   const emailAttribute = new CognitoUserAttribute({
     Name: 'email',
@@ -44,22 +47,23 @@ const signUp = async (
 
   const userAttributes = [emailAttribute, phoneNumberAttribute];
 
-  return getCognitoUserPool().signUp(email, password, userAttributes, [], (err) => {
-    if (err) throw err;
+  getCognitoUserPool().signUp(email, password, userAttributes, [], (err) => {
+    if (err) reject(err);
+    else resolve();
   });
-};
+});
 
 export const signUpWithValidation = async (
   email: string | undefined,
   password: string | undefined,
   phoneNumber: string | undefined) => {
   // Check if the user is validated / whitelisted
-  const response = await validateNewUser(phoneNumber, (err) => {
-    if (err?.response?.data?.message) throw Error(err?.response?.data?.message);
-  });
+  const response = await validateNewUser(phoneNumber);
 
-  if (response?.data?.data) return signUp(email, password, phoneNumber);
-  throw Error('Unable to verify user.');
+  // If user is valid, attempt sign up
+  if (response?.data?.data) {
+    await signUp(email, password, phoneNumber);
+  }
 };
 
 /**
@@ -68,8 +72,11 @@ export const signUpWithValidation = async (
  * @param verificationCode
  */
 export const confirmSignUp = async (email: string | undefined, verificationCode: string) =>
-  getCognitoUser(email)?.confirmRegistration(verificationCode, true, (err) => {
-    if (err) throw err;
+  new Promise<void>((resolve, reject) => {
+    getCognitoUser(email)?.confirmRegistration(verificationCode, true, (err) => {
+      if (err) reject(err);
+      else resolve();
+    });
   });
 
 /**
@@ -78,8 +85,11 @@ export const confirmSignUp = async (email: string | undefined, verificationCode:
  * @returns
  */
 export const resendConfirmationCode = async (email: string | undefined) =>
-  getCognitoUser(email)?.resendConfirmationCode((err) => {
-    if (err) throw err;
+  new Promise<void>((resolve, reject) => {
+    getCognitoUser(email)?.resendConfirmationCode((err) => {
+      if (err) reject(err);
+      else resolve();
+    });
   });
 
 /**
@@ -118,17 +128,18 @@ export const signOut = async () => {
 /**
  * Invalidates all session tokens associated with an AWS Cognito account
  */
-export const globalSignOut = async (
-  onSuccess?: () => any,
-  onFailure?: (err? : any) => any) => {
+export const globalSignOut = async () => {
   const username = await getCurrentUsername();
 
   if (username) {
-    return getCognitoUser(username)?.globalSignOut({
-      onSuccess: () => onSuccess && onSuccess(),
-      onFailure: (err) => onFailure && onFailure(err),
+    return new Promise((resolve, reject) => {
+      getCognitoUser(username)?.globalSignOut({
+        onSuccess: resolve,
+        onFailure: reject,
+      });
     });
   }
+
   throw Error('No user is currently authenticated.');
 };
 
@@ -141,8 +152,11 @@ export const changePassword = async (oldPassword: string, newPassword: string) =
   const username = await getCurrentUsername();
 
   if (username) {
-    return getCognitoUser(username)?.changePassword(oldPassword, newPassword, (err) => {
-      if (err) throw err;
+    return new Promise<void>((resolve, reject) => {
+      getCognitoUser(username)?.changePassword(oldPassword, newPassword, (err) => {
+        if (err) reject(err);
+        else resolve();
+      });
     });
   }
   throw Error('No user is currently authenticated.');
