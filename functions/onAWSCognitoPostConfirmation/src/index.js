@@ -4,7 +4,7 @@ const AWS = require('aws-sdk');
 AWS.config.update({ region: 'ap-southeast-2' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-const getStudentDetailsFromPhoneNumber = async (phoneNumber) => {
+const getAccountDetailsFromPhoneNumber = async (phoneNumber) => {
   if (phoneNumber) {
     const params = {
       TableName: 'approvedAccounts',
@@ -12,7 +12,7 @@ const getStudentDetailsFromPhoneNumber = async (phoneNumber) => {
     };
     const data = await docClient.get(params).promise();
 
-    if (data.Item) return data.Item.studentDetails || {};
+    if (data.Item) return data.Item || {};
     return false;
   }
   return false;
@@ -28,41 +28,60 @@ const deleteApprovedAccount = async (phoneNumber) => {
   }
 };
 
-const createStudentEntry = async (studentItem) => {
+const createStudentEntry = async (entry) => {
   const params = {
     TableName: 'students',
-    Item: studentItem,
+    Item: entry,
+  };
+  await docClient.put(params).promise();
+};
+
+const createStaffEntry = async (entry) => {
+  const params = {
+    TableName: 'staff',
+    Item: entry,
   };
   await docClient.put(params).promise();
 };
 
 exports.handler = async (event, _context, callback) => {
   try {
-    const studentId = event.request.userAttributes.sub;
+    const accountId = event.request.userAttributes.sub;
     const phoneNumber = event.request.userAttributes.phone_number;
 
     // Only run this trigger for post-confirmation of sign ups
     const isFromSignUp = event.triggerSource === 'PostConfirmation_ConfirmSignUp';
 
-    if (isFromSignUp && studentId && phoneNumber) {
-      // Get the student details
-      const studentDetails = await getStudentDetailsFromPhoneNumber(phoneNumber);
-      if (!studentDetails) return { statusCode: 400 };
+    if (isFromSignUp && accountId && phoneNumber) {
+      // Get the account details
+      const { accountDetails, group } = await getAccountDetailsFromPhoneNumber(phoneNumber);
+      if (!accountDetails) return { statusCode: 400 };
 
-      // Remove the student from the approvedAccounts table
+      // Remove account from the approvedAccounts table
       await deleteApprovedAccount(phoneNumber);
 
-      // Create student item on the students table
-      const studentItem = {
-        ...studentDetails,
-        studentId,
-        phoneNumber,
-        username: event.request.userName,
-        email: event.request.userAttributes.email,
-        tutorials: [],
-        createdAt: new Date().getTime(),
-      };
-      await createStudentEntry(studentItem);
+      if (group === 'Admins' || group === 'Managers' || group === 'Owners' || group === 'Tutors') {
+        // Create entry on the staff table
+        await createStaffEntry({
+          ...accountDetails,
+          staffId: accountId,
+          phoneNumber,
+          email: event.request.userAttributes.email,
+          primaryGroup: group,
+          groups: [group],
+          createdAt: new Date().getTime(),
+        });
+      } else {
+        // Create entry on the students table
+        await createStudentEntry({
+          ...accountDetails,
+          studentId: accountId,
+          phoneNumber,
+          email: event.request.userAttributes.email,
+          tutorials: [],
+          createdAt: new Date().getTime(),
+        });
+      }
 
       // Return to AWS Cognito
       return callback(null, event);
