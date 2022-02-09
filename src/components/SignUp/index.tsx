@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useForm } from 'react-hook-form';
 
-import { signUpWithValidation } from '../../auth';
+import { signUpWithValidation } from '../../services/auth';
 import FixedLengthField from '../FixedLengthField';
 import TextField from '../TextField';
 

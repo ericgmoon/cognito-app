@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { confirmSignUp, resendConfirmationCode } from '../../auth';
+import { confirmSignUp, resendConfirmationCode } from '../../services/auth';
 import { AuthPageLayout } from '../../components/PageLayout';
 import SignUp from '../../components/SignUp';
 import VerificationCode from '../../components/VerificationCode';

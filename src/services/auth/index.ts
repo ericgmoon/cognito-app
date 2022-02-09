@@ -2,7 +2,7 @@ import {
   AuthenticationDetails, CognitoUserAttribute, NodeCallback,
 } from 'amazon-cognito-identity-js';
 
-import { validateNewUser } from '../services/users';
+import { validateNewUser } from '../users';
 
 import {
   getCognitoUser, getCognitoUserPool,
