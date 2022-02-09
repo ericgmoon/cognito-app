@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  createContext, useCallback, useEffect, useState,
+} from 'react';
 
 import {
   Alert, CircularProgress, Snackbar,
 } from '@mui/material';
+import { AlertColor } from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
 
 import { getIsUserAuthenticated } from '../../auth';
 import { useDispatch, useSelector } from '../../redux/hooks';
-import useSnackbar from '../../utils/react/hooks/useSnackbar';
 
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -39,24 +41,46 @@ const LoadingWrapper = ({ children, loading, decorate }: LoadingWrapperProps) =>
   </>
 ));
 
+type SnackbarContextValue = (message: string, type?: AlertColor) => void;
+type SnackbarContextDefault = () => void;
+
+export const SnackbarContext =
+  createContext<SnackbarContextValue | SnackbarContextDefault>(() => {});
+
 interface SnackbarProviderProps {
   children: React.ReactElement | React.ReactElement[],
 }
 
 const SnackbarProvider = ({ children } : SnackbarProviderProps) => {
-  const {
-    open, message, type, closeSnackbar,
-  } = useSnackbar();
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState<string>('');
+  const [type, setType] = useState<AlertColor>('info');
+
+  const closeSnackbar = (event_?: any, reason?: string) => {
+    if (reason === 'clickaway') return;
+    setOpen(false);
+  };
+
+  const createSnackbar = useCallback((newMessage: string, newType?: AlertColor) => {
+    setMessage(newMessage);
+    setType(newType || 'info');
+    setOpen(true);
+  }, []);
 
   return (
-    <>
+    <SnackbarContext.Provider value={createSnackbar}>
       {children}
-      <Snackbar open={open} autoHideDuration={6000} onClose={closeSnackbar}>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
         <Alert onClose={closeSnackbar} severity={type} sx={{ width: '100%' }}>
           {message}
         </Alert>
       </Snackbar>
-    </>
+    </SnackbarContext.Provider>
   );
 };
 

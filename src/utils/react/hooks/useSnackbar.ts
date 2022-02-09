@@ -2,30 +2,10 @@
  * React hook to handle snackbars
  */
 
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 
-import { AlertColor } from '@mui/material/Alert';
+import { SnackbarContext } from '../../../components/PageLayout';
 
-export default () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
-  const [type, setType] = useState<AlertColor>('info');
+const useSnackBars = () => useContext(SnackbarContext);
 
-  useEffect(() => {
-    setOpen(true);
-  }, [message]);
-
-  const triggerSnackbar = (newMessage: string, newType: AlertColor) => {
-    setMessage(newMessage);
-    setType(newType);
-  };
-
-  const closeSnackbar = (_event?: any, reason?: string) => {
-    if (reason === 'clickaway') return;
-    setOpen(false);
-  };
-
-  return {
-    open, message, type, triggerSnackbar, closeSnackbar,
-  };
-};
+export default useSnackBars;

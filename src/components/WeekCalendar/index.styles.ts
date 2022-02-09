@@ -6,9 +6,9 @@ const RootContainer = styled.div`
 `;
 
 const ColumnContainer = styled.div`
-width: 100%;
-display: flex;
-flex-orientation: row;
+  width: 100%;
+  display: flex;
+  flex-orientation: row;
 `;
 
 interface CalendarEntryContainerProps {
