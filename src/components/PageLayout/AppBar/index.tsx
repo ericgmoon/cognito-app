@@ -7,7 +7,7 @@ import { Badge, Box } from '@mui/material';
 import { AppBarProps as MUIAppBarProps } from '@mui/material/AppBar';
 import { useNavigate } from 'react-router-dom';
 
-import { signOut } from '../../../auth';
+import { signOut } from '../../../services/auth';
 import ProfilePill from '../ProfilePill';
 
 import {

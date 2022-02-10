@@ -18,7 +18,7 @@ export default async (req: Request, res: Response) => {
     }
     return res.status(400).json({ message: 'Insufficient information provided' });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(400).json({ message: 'Tutorial could not be retrieved' });
   }
 };
