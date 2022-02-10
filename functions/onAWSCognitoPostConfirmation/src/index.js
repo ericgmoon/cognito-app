@@ -4,6 +4,9 @@ const AWS = require('aws-sdk');
 AWS.config.update({ region: 'ap-southeast-2' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
+// Set up Cognito IDP
+const cognitoIdp = new AWS.CognitoIdentityServiceProvider();
+
 const getAccountDetailsFromPhoneNumber = async (phoneNumber) => {
   if (phoneNumber) {
     const params = {
@@ -44,10 +47,20 @@ const createStaffEntry = async (entry) => {
   await docClient.put(params).promise();
 };
 
+const addCognitoUserToGroup = async (userPoolId, username, group) => {
+  const params = {
+    GroupName: group,
+    UserPoolId: userPoolId,
+    Username: username,
+  };
+  await cognitoIdp.adminAddUserToGroup(params).promise();
+};
+
 exports.handler = async (event, _context, callback) => {
   try {
     const accountId = event.request.userAttributes.sub;
     const phoneNumber = event.request.userAttributes.phone_number;
+    const { userPoolId, userName } = event;
 
     // Only run this trigger for post-confirmation of sign ups
     const isFromSignUp = event.triggerSource === 'PostConfirmation_ConfirmSignUp';
@@ -56,6 +69,10 @@ exports.handler = async (event, _context, callback) => {
       // Get the account details
       const { accountDetails, group } = await getAccountDetailsFromPhoneNumber(phoneNumber);
       if (!accountDetails) return { statusCode: 400 };
+
+      // Register group on AWS Cognito
+      console.log(`${userPoolId} ${userName} ${group}`);
+      await addCognitoUserToGroup(userPoolId, userName, group);
 
       // Remove account from the approvedAccounts table
       await deleteApprovedAccount(phoneNumber);
