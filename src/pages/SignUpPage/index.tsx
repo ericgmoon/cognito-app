@@ -12,11 +12,11 @@ import logo from '../../images/logo.png';
 import { confirmSignUp, resendConfirmationCode } from '../../services/auth';
 
 import {
-  Container, FooterText, HeaderContainer, Logo, RootContainer, Title,
+  Container, FooterText, HeaderContainer, Logo, RootContainer, Title, VerificationCodeContainer,
 } from './index.styles';
 
 const SignUpPage = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
@@ -73,11 +73,13 @@ const SignUpPage = () => {
         <Container>
           <Typography variant="h6">Please enter the verification code</Typography>
           <Typography variant="h6">sent to your mobile device.</Typography>
-          <VerificationCode
-            confirm={async ({ verification }) => confirmSignUp(email, verification)}
-            resend={async () => resendConfirmationCode(email)}
-            onConfirm={finishSignUp}
-          />
+          <VerificationCodeContainer>
+            <VerificationCode
+              confirm={async ({ verification }) => confirmSignUp(email, verification)}
+              resend={async () => resendConfirmationCode(email)}
+              onConfirm={finishSignUp}
+            />
+          </VerificationCodeContainer>
         </Container>
       </Grid>
     </Grid>
