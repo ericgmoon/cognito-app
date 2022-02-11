@@ -16,7 +16,7 @@ import {
 } from './index.styles';
 
 const SignUpPage = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
