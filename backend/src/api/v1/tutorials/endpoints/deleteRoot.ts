@@ -27,7 +27,7 @@ interface Attendee {
 
 export default async (req: Request, res: Response) => {
   try {
-    const { query: { course, startDatetimeIdentifier } } = req;
+    const { params: { course, startDatetimeIdentifier } } = req;
 
     if (course && startDatetimeIdentifier) {
       // Delete tutorial

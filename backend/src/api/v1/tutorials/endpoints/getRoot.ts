@@ -4,7 +4,7 @@ import { getTutorial } from '../utils';
 
 export default async (req: Request, res: Response) => {
   try {
-    const { query: { course, startDatetimeIdentifier } } = req;
+    const { params: { course, startDatetimeIdentifier } } = req;
 
     if (course && startDatetimeIdentifier) {
       const data = await getTutorial(course, startDatetimeIdentifier);
