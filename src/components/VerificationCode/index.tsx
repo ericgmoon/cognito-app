@@ -7,8 +7,10 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
+import FixedLengthField from '../FixedLengthField';
+
 import {
-  FooterText, StyledButton, StyledField, StyledVerification,
+  FixedLengthFieldContainer, FooterText, StyledButton, StyledVerification,
 } from './index.styles';
 
 interface Data {
@@ -77,13 +79,15 @@ const VerificationCode = ({ confirm, resend, onConfirm } : VerificationCodeProps
           {errorMessage}
         </Alert>
       </Collapse>
-      <StyledField
-        error={!!errors.verification}
-        errorMessage=""
-        maxLength={6}
-        numbersOnly
-        {...register('verification', { required: true, pattern: /\d{6}/ })}
-      />
+      <FixedLengthFieldContainer>
+        <FixedLengthField
+          error={!!errors.verification}
+          errorMessage=""
+          maxLength={6}
+          numbersOnly
+          {...register('verification', { required: true, pattern: /\d{6}/ })}
+        />
+      </FixedLengthFieldContainer>
       <StyledButton type="submit" loading={loading}>
         Verify
       </StyledButton>

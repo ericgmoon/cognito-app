@@ -58,4 +58,14 @@ const FooterText = styled(Typography)`
   }
 `;
 
-export { Title, Logo, HeaderContainer, RootContainer, Container, FooterText };
+const VerificationCodeContainer = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(2)};
+`;
+
+export { Title,
+  Logo,
+  HeaderContainer,
+  RootContainer,
+  Container,
+  FooterText,
+  VerificationCodeContainer };
