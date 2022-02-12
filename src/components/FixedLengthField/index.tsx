@@ -92,8 +92,10 @@ const FixedLengthField = forwardRef((
   };
 
   const removeEditableChar = () => {
-    if (value.length > prefixLength) setValue(value.slice(0, -1));
-    proxyRef.current.focus();
+    if (value.length > prefixLength) {
+      setValue(value.slice(0, -1));
+      proxyRef.current.focus();
+    }
   };
 
   const isNum = (x: string) => !Number.isNaN(parseInt(x, 10));
