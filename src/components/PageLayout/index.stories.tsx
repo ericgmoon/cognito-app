@@ -2,7 +2,18 @@ import React from 'react';
 
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import useSnackbar from '../../utils/react/hooks/useSnackbar';
+import Button from '../Button';
+
 import { PageLayout } from '.';
+
+const DummyContent = () => {
+  const createSnackbar = useSnackbar();
+
+  return (
+    <Button onClick={() => createSnackbar('Hello World', 'info')}>Open Snackbar</Button>
+  );
+};
 
 export default {
   title: 'Components/PageLayout',
@@ -13,13 +24,13 @@ const Template: ComponentStory<typeof PageLayout> = (args) => <PageLayout {...ar
 
 export const Default = Template.bind({});
 Default.args = {
-  children: <>(Insert content here)</>,
+  children: <DummyContent />,
 };
 
 export const Decorated = Template.bind({});
 Decorated.args = {
   decorate: true,
-  children: <>(Insert content here)</>,
+  children: <DummyContent />,
 };
 
 export const Loading = Template.bind({});
