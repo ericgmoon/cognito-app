@@ -8,7 +8,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 export default async (req: Request, res: Response) => {
   try {
-    const { body: { course, startDatetimeIdentifier, gradYear, studentId } } = req;
+    const {
+      params: { course, startDatetimeIdentifier },
+      body: { gradYear, studentId },
+    } = req;
 
     if (course && startDatetimeIdentifier && gradYear && studentId) {
       const student = await getStudent(gradYear, studentId);

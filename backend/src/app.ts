@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 
+import addAuthContext from './middleware/addAuthContext';
+
 // Configure environment variables
 dotenv.config();
 
@@ -22,6 +24,9 @@ app.use(cors({ credentials: true, origin: true }));
 
 // Enable json for all methods
 app.use(express.json());
+
+// Add auth context
+app.use(addAuthContext);
 
 // Route
 app.use('/v1/users', require('./api/v1/users').router);

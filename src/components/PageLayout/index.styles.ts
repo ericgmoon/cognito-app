@@ -1,4 +1,6 @@
-import { Box, Typography } from '@mui/material';
+import {
+  Alert, Box, Typography,
+} from '@mui/material';
 import styled from 'styled-components';
 
 interface LoadingContainerProps {
@@ -53,4 +55,10 @@ const Title = styled(Typography)`
   }
 `;
 
-export { LoadingContainer, SmallMain, MediumMain, ContentContainer, Nav, Title };
+const SnackbarAlert = styled(Alert)`
+  && {
+    width: 100%;
+  }
+`;
+
+export { LoadingContainer, SmallMain, MediumMain, ContentContainer, Nav, Title, SnackbarAlert };

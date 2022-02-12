@@ -1,3 +1,7 @@
+/**
+ * React hook to get the dimensions of a passed ref
+ */
+
 import React, { useEffect, useState } from 'react';
 
 export default (ref: React.MutableRefObject<HTMLDivElement | undefined> | null | undefined) => {

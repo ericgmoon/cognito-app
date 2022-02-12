@@ -1,8 +1,8 @@
-import book from './book';
-import create from './create';
-import get from './get';
-import remove from './remove';
-import root from './root';
-import unbook from './unbook';
+import remove from './deleteRoot';
+import root from './getQuery';
+import get from './getRoot';
+import create from './postNew';
+import book from './putBook';
+import unbook from './putUnbook';
 
 export { unbook, root, create, remove, get, book };

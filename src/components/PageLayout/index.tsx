@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  createContext, useCallback, useEffect, useState,
+} from 'react';
 
-import { CircularProgress } from '@mui/material';
+import {
+  CircularProgress, Snackbar,
+} from '@mui/material';
+import { AlertColor } from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
@@ -14,7 +19,7 @@ import {
   close, toggle,
 } from './drawerOpenSlice';
 import {
-  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain, Title,
+  ContentContainer, LoadingContainer, MediumMain, Nav, SmallMain, SnackbarAlert, Title,
 } from './index.styles';
 
 interface LoadingWrapperProps {
@@ -35,6 +40,49 @@ const LoadingWrapper = ({ children, loading, decorate }: LoadingWrapperProps) =>
     {children}
   </>
 ));
+
+type SnackbarContextValue = (message: string, type?: AlertColor) => void;
+type SnackbarContextDefault = () => void;
+
+export const SnackbarContext =
+  createContext<SnackbarContextValue | SnackbarContextDefault>(() => {});
+
+interface SnackbarProviderProps {
+  children: React.ReactElement | React.ReactElement[],
+}
+
+const SnackbarProvider = ({ children } : SnackbarProviderProps) => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState<string>('');
+  const [type, setType] = useState<AlertColor>('info');
+
+  const closeSnackbar = (event_?: any, reason?: string) => {
+    if (reason === 'clickaway') return;
+    setOpen(false);
+  };
+
+  const createSnackbar = useCallback((newMessage: string, newType?: AlertColor) => {
+    setMessage(newMessage);
+    setType(newType || 'info');
+    setOpen(true);
+  }, []);
+
+  return (
+    <SnackbarContext.Provider value={createSnackbar}>
+      {children}
+      <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={closeSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      >
+        <SnackbarAlert onClose={closeSnackbar} severity={type}>
+          {message}
+        </SnackbarAlert>
+      </Snackbar>
+    </SnackbarContext.Provider>
+  );
+};
 
 interface ContentProps {
   children: React.ReactElement | React.ReactElement[],
@@ -148,7 +196,9 @@ export const PageLayout = ({
     <>
       {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
       {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
-      <Content decorate={decorate} loading={loading}>{children}</Content>
+      <SnackbarProvider>
+        <Content decorate={decorate} loading={loading}>{children}</Content>
+      </SnackbarProvider>
     </>
   );
 };
