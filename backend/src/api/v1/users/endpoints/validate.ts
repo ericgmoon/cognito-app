@@ -22,7 +22,7 @@ export default async (req: Request, res: Response) => {
 
     return res.status(400).json({ message: 'Phone number was not provided' });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(400).json({ message: 'Student could not be validated' });
   }
 };

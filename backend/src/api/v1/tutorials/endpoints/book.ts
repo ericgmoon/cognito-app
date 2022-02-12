@@ -14,8 +14,8 @@ export default async (req: Request, res: Response) => {
       const student = await getStudent(gradYear, studentId);
       const tutorial = await getTutorial(course, startDatetimeIdentifier);
 
-      if (!student) throw Error('Student not found');
-      if (!tutorial) throw Error('Tutorial not found');
+      if (!student) return res.status(400).json({ message: 'Student not found' });
+      if (!tutorial) return res.status(400).json({ message: 'Tutorial not found' });
 
       // Checks that student hasn't already booked
       if (tutorial?.attendees?.filter((attendee: any) =>

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import {
   confirmPasswordResetCode,
   sendPasswordResetCode,
-} from '../../auth';
+} from '../../services/auth';
 import VerificationCode from '../VerificationCode';
 
 import {

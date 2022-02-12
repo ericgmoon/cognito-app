@@ -5,8 +5,8 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Navigate } from 'react-router-dom';
 
-import { getIsUserAuthenticated } from '../../auth';
 import { useDispatch, useSelector } from '../../redux/hooks';
+import { getIsUserAuthenticated } from '../../services/auth';
 
 import AppBar from './AppBar';
 import Drawer from './Drawer';

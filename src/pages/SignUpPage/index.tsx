@@ -5,11 +5,11 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { confirmSignUp, resendConfirmationCode } from '../../auth';
 import { AuthPageLayout } from '../../components/PageLayout';
 import SignUp from '../../components/SignUp';
 import VerificationCode from '../../components/VerificationCode';
 import logo from '../../images/logo.png';
+import { confirmSignUp, resendConfirmationCode } from '../../services/auth';
 
 import {
   Container, FooterText, HeaderContainer, Logo, RootContainer, Title,
@@ -77,7 +77,7 @@ const SignUpPage = () => {
             confirm={async ({ verification }) => confirmSignUp(email, verification)}
             resend={async () => resendConfirmationCode(email)}
             onConfirm={finishSignUp}
-          />,
+          />
         </Container>
       </Grid>
     </Grid>

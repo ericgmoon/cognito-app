@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { signIn } from '../../auth';
+import { signIn } from '../../services/auth';
 
 import {
   StyledButton, StyledSignIn, StyledTextField,
