@@ -21,6 +21,16 @@ const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
 const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.getUsername();
 
 /**
+ * @returns Currently authenticated user's access token
+ */
+export const getAccessToken = () => new Promise((resolve, reject) => {
+  getCurrentUser()?.getSession((err: Error, session: any) => {
+    if (err) reject(err);
+    else resolve(session?.accessToken?.jwtToken);
+  });
+});
+
+/**
  * Creates an unverified AWS Cognito account
  * @param email
  * @param password
