@@ -1,16 +1,18 @@
 import express from 'express';
 
+import protect from '../../../middleware/protect';
+
 import {
-  book, create, get, remove, root, unbook,
+  deleteRoot, getQuery, getRoot, postNew, putBook, putUnbook,
 } from './endpoints';
 
 const router = express.Router();
 
-router.route('/query').get(root);
-router.route('/new').post(create);
-router.route('/:course/:startDatetimeIdentifier').get(get);
-router.route('/:course/:startDatetimeIdentifier').delete(remove);
-router.route('/:course/:startDatetimeIdentifier/book').put(book);
-router.route('/:course/:startDatetimeIdentifier/unbook').put(unbook);
+router.route('/query').get(getQuery);
+router.route('/new').post(postNew);
+router.route('/:course/:startDatetimeIdentifier').get(protect(getRoot));
+router.route('/:course/:startDatetimeIdentifier').delete(protect(deleteRoot));
+router.route('/:course/:startDatetimeIdentifier/book').put(putBook);
+router.route('/:course/:startDatetimeIdentifier/unbook').put(putUnbook);
 
 export { router };
