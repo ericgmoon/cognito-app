@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-import { getStudent } from '../../users/utils';
+import { getStudent } from '../../students/utils';
 import { getTutorial } from '../utils';
 
 const docClient = new AWS.DynamoDB.DocumentClient();

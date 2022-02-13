@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { getStudent } from '../../users/utils';
+import { getStudent } from '../../students/utils';
 import {
   getTutorial, removeAttendeeFromTutorial, removeTutorialFromStudent,
 } from '../utils';
