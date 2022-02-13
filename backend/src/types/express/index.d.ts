@@ -5,7 +5,7 @@ declare global {
     interface Request {
       context: {
         userId: string | undefined,
-        userGroups: [string] | []
+        userGroups: string[] | []
       }
     }
   }
