@@ -50,7 +50,6 @@ const Nav = styled(Box)``;
 const Title = styled(Typography)`
   && {
     color: ${({ theme }) => theme.palette.secondary.main};
-    margin-bottom: ${({ theme }) => theme.spacing(4)};
     font-weight: bold;
   }
 `;
