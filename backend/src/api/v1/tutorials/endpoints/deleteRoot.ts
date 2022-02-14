@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
 import { getStudent } from '../../students/utils';
+import { isAdmin } from '../../utils';
 import { removeTutorialFromStudent } from '../utils';
 
 const docClient = new AWS.DynamoDB.DocumentClient();
@@ -28,6 +29,8 @@ interface Attendee {
 export default async (req: Request, res: Response) => {
   try {
     const { params: { course, startDatetimeIdentifier } } = req;
+
+    if (!isAdmin(req)) return res.status(401).json({ message: 'Only admins may delete tutorials' });
 
     if (course && startDatetimeIdentifier) {
       // Delete tutorial

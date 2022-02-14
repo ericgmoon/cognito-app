@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import { getStudent } from '../../students/utils';
+import { isStudent } from '../../utils';
 import {
   getTutorial, removeAttendeeFromTutorial, removeTutorialFromStudent,
 } from '../utils';
@@ -11,6 +12,9 @@ export default async (req: Request, res: Response) => {
       params: { course, startDatetimeIdentifier },
       body: { gradYear, studentId },
     } = req;
+
+    if (!isStudent(req)) return res.status(401).json({ message: 'Only students may unbook tutorials' });
+    if (req.context.userId !== studentId) return res.status(401).json({ message: 'Unauthorised action' });
 
     if (course && startDatetimeIdentifier && gradYear && studentId) {
       const student = await getStudent(gradYear, studentId);
