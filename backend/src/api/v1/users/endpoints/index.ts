@@ -1,3 +1,3 @@
-import validate from './getValidate';
+import getValidate from './getValidate';
 
-export { validate };
+export { getValidate };
