@@ -6,11 +6,29 @@ export default async (req: Request, res: Response) => {
   try {
     const { params: { gradYear, studentId } } = req;
 
-    console.log(gradYear, studentId);
+    const isCaller = studentId === req.context.userId;
+
     if (gradYear && studentId) {
       const data = await getStudent(gradYear, studentId);
 
-      if (data) return res.status(200).json({ data });
+      if (data) {
+        let exposedData = (({ firstName, lastName, tutorials }) =>
+          ({
+            gradYear, studentId, firstName, lastName, tutorials,
+          }))(data);
+
+        // Attach more attributes if request is made by the target student
+        if (isCaller) {
+          exposedData = {
+            ...exposedData,
+            ...(({ email, phoneNumber }) => ({
+              email, phoneNumber,
+            }))(data),
+          };
+        }
+
+        return res.status(200).json({ data: exposedData });
+      }
       return res.status(400).json({ message: 'Student could not be found' });
     }
 
