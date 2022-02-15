@@ -1,9 +1,9 @@
 import express from 'express';
 
-import { validate } from './endpoints';
+import { getValidate } from './endpoints';
 
 const router = express.Router();
 
-router.route('/validate').get(validate);
+router.route('/validate').get(getValidate);
 
 export { router };
