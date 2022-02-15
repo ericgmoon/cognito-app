@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import chalk from 'chalk';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
@@ -35,7 +36,17 @@ app.use('/v1/staff', require('./api/v1/staff').router);
 app.use('/v1/tutorials', require('./api/v1/tutorials').router);
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}...`);
+  console.log(chalk.green(`[server] Server running on port ${port}...`));
+
+  const { SERVER_MODE } = process.env;
+  if (SERVER_MODE === 'dev') {
+    const { DEV_MODE_USER_ID } = process.env;
+    const DEV_MODE_USER_GROUPS = process.env.DEV_MODE_USER_GROUPS?.split(',') || [];
+    console.warn(chalk.red('[warning] Server is currently running in DEV mode'));
+    console.log(chalk.blue('[info] Mocking authentication with the following credentials:\n'));
+    console.log(chalk.blue(`${chalk.bold('\tUser ID: ')}${DEV_MODE_USER_ID}`));
+    console.log(chalk.blue(`${chalk.bold('\tUser Groups: ')}${DEV_MODE_USER_GROUPS}\n`));
+  }
 });
 
 export default app;
