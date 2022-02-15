@@ -1,7 +1,8 @@
 import AWS from 'aws-sdk';
 import { Request, Response } from 'express';
 
-import { getStudent } from '../../users/utils';
+import { getStudent } from '../../students/utils';
+import { isStudent } from '../../utils';
 import { getTutorial } from '../utils';
 
 const docClient = new AWS.DynamoDB.DocumentClient();
@@ -12,6 +13,9 @@ export default async (req: Request, res: Response) => {
       params: { course, startDatetimeIdentifier },
       body: { gradYear, studentId },
     } = req;
+
+    if (!isStudent(req)) return res.status(401).json({ message: 'Only students may book tutorials' });
+    if (req.context.userId !== studentId) return res.status(401).json({ message: 'Unauthorised action' });
 
     if (course && startDatetimeIdentifier && gradYear && studentId) {
       const student = await getStudent(gradYear, studentId);

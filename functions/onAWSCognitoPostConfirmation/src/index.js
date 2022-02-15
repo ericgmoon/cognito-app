@@ -84,7 +84,6 @@ exports.handler = async (event, _context, callback) => {
           staffId: accountId,
           phoneNumber,
           email: event.request.userAttributes.email,
-          primaryGroup: group,
           groups: [group],
           createdAt: new Date().getTime(),
         });
