@@ -19,33 +19,45 @@ const pem = jwkToPem(
     // use: 'sig',
   });
 
+const { SERVER_MODE, DEV_MODE_USER_ID } = process.env;
+const DEV_MODE_USER_GROUPS = process.env.DEV_MODE_USER_GROUPS?.split(',') || [];
+
 const APP_CLIENT_ID = process.env.AWS_COGNITO_APP_CLIENT_ID;
 const BASE_URI = process.env.AWS_COGNITO_BASE_URI;
 const USER_POOL_ID = process.env.AWS_COGNITO_USER_POOL_ID;
 
 const addAuthContext = (req: Request, res: Response, next: NextFunction) => {
-  const accessToken: string = req.get('Authorization') || '';
+  if (SERVER_MODE === 'dev') {
+    req.context = {
+      userId: DEV_MODE_USER_ID,
+      userGroups: DEV_MODE_USER_GROUPS,
+    };
 
-  // Set default contexts
-  req.context = {
-    userId: undefined,
-    userGroups: [],
-  };
+    next();
+  } else {
+    const accessToken: string = req.get('Authorization') || '';
 
-  try {
-    const payload: any = jwt.verify(accessToken, pem, { algorithms: ['RS256'] });
+    // Set default contexts
+    req.context = {
+      userId: undefined,
+      userGroups: [],
+    };
 
-    if (payload?.client_id === APP_CLIENT_ID
-      && payload?.iss === `${BASE_URI}${USER_POOL_ID}`
-      && payload?.token_use === 'access') {
-      req.context = {
-        userId: payload.sub,
-        userGroups: payload['cognito:groups'],
-      };
+    try {
+      const payload: any = jwt.verify(accessToken, pem, { algorithms: ['RS256'] });
+
+      if (payload?.client_id === APP_CLIENT_ID
+        && payload?.iss === `${BASE_URI}${USER_POOL_ID}`
+        && payload?.token_use === 'access') {
+        req.context = {
+          userId: payload.sub,
+          userGroups: payload['cognito:groups'],
+        };
+      }
+      next();
+    } catch (err) {
+      next();
     }
-    next();
-  } catch (err) {
-    next();
   }
 };
 
