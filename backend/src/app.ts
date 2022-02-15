@@ -30,6 +30,8 @@ app.use(addAuthContext);
 
 // Route
 app.use('/v1/users', require('./api/v1/users').router);
+app.use('/v1/students', require('./api/v1/students').router);
+app.use('/v1/staff', require('./api/v1/staff').router);
 app.use('/v1/tutorials', require('./api/v1/tutorials').router);
 
 app.listen(port, () => {
