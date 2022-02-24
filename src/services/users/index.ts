@@ -1,15 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { cognitoApi } from '../cognitoApi';
 
 // Define a service using a base URL and expected endpoints
-export const userApi = createApi({
-  reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_BACKEND_URI}users` }),
-  tagTypes: ['Users'],
+export const usersApi = cognitoApi.injectEndpoints({
   endpoints: (build) => ({
     validateNewUser: build.mutation<any, string | undefined>({
       query(phoneNumber) {
         return {
-          url: 'validate',
+          url: 'users/validate',
           params: { phoneNumber },
           method: 'GET',
         };
@@ -20,4 +17,4 @@ export const userApi = createApi({
   }),
 });
 
-export const { useValidateNewUserMutation } = userApi;
+export const { useValidateNewUserMutation } = usersApi;

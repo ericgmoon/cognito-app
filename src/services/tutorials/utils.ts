@@ -17,13 +17,13 @@ const getSubject = (courseCode: string) => {
   }
 };
 
-const sentenceCase = (sentence: string) =>
+const toSentenceCase = (sentence: string) =>
   sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
-export const tutorialToCalendarEntry = (tutorial: Tutorial): CalendarEntry => ({
+export const toCalendarEntry = (tutorial: Tutorial): CalendarEntry => ({
   startDatetime: parseInt(tutorial.startDatetimeIdentifier.split('#')[0], 10),
   duration: tutorial.duration,
-  title: `${sentenceCase(getSubject(tutorial.course) ?? 'unknown')} Tutorial`,
+  title: `${toSentenceCase(getSubject(tutorial.course) ?? 'unknown')} Tutorial`,
   color: getSubject(tutorial.course),
   action: 'JOIN',
 });

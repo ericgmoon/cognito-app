@@ -1,21 +1,17 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { CalendarEntry } from '../../components/WeekCalendar/types';
+import { cognitoApi } from '../cognitoApi';
 
 import { Tutorial } from './types';
-import { tutorialToCalendarEntry } from './utils';
+import { toCalendarEntry } from './utils';
 
-export const tutorialsApi = createApi({
-  reducerPath: 'tutorialsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: `${process.env.REACT_APP_BACKEND_URI}tutorials/` }),
-  tagTypes: ['Tutorials'],
+export const tutorialsApi = cognitoApi.injectEndpoints({
   endpoints: (build) => ({
     getTutorialsInRange: build.query<CalendarEntry[],
     {startDatetime: number, endDatetime: number, course: string}>({
       query(arg) {
         const { startDatetime, endDatetime, course } = arg;
         return {
-          url: 'query',
+          url: 'tutorials/query',
           params: {
             startDatetime, endDatetime, course,
           },
@@ -23,7 +19,7 @@ export const tutorialsApi = createApi({
         };
       },
       transformResponse(response: any) {
-        return response.data.Items.map((tutorial: Tutorial) => tutorialToCalendarEntry(tutorial));
+        return response.data.Items.map((tutorial: Tutorial) => toCalendarEntry(tutorial));
       },
     }),
   }),
