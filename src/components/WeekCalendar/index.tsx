@@ -61,6 +61,8 @@ const CalendarColumn = (
             duration={entry.duration}
             title={entry.title}
             color={entry.color}
+            state={entry.state}
+            properties={entry.properties}
           />
         </CellContainer>
       ))}
