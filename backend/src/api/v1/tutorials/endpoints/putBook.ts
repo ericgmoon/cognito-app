@@ -30,6 +30,11 @@ export default async (req: Request, res: Response) => {
         return res.status(400).json({ message: 'Already booked by student' });
       }
 
+      // Checks tutorial is not full
+      if (tutorial?.attendees?.length >= tutorial?.capacity) {
+        return res.status(400).json({ message: 'Tutorial is full' });
+      }
+
       const attendeeEntry = {
         gradYear,
         studentId,

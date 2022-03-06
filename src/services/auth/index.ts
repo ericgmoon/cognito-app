@@ -2,8 +2,6 @@ import {
   AuthenticationDetails, CognitoUserAttribute, NodeCallback,
 } from 'amazon-cognito-identity-js';
 
-import { validateNewUser } from '../users';
-
 import {
   getCognitoUser, getCognitoUserPool,
 } from './utils';
@@ -36,7 +34,7 @@ export const getAccessToken = () => new Promise((resolve, reject) => {
  * @param password
  * @param phoneNumber
  */
-const signUp = async (
+export const signUp = async (
   email: string | undefined,
   password: string | undefined,
   phoneNumber: string | undefined) => new Promise<void>((resolve, reject) => {
@@ -62,19 +60,6 @@ const signUp = async (
     else resolve();
   });
 });
-
-export const signUpWithValidation = async (
-  email: string | undefined,
-  password: string | undefined,
-  phoneNumber: string | undefined) => {
-  // Check if the user is validated / whitelisted
-  const response = await validateNewUser(phoneNumber);
-
-  // If user is valid, attempt sign up
-  if (response?.data?.data) {
-    await signUp(email, password, phoneNumber);
-  }
-};
 
 /**
  * Verifies an existing AWS Cognito account based on the SMS code delivered to user

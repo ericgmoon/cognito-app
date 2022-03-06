@@ -1,24 +1,28 @@
-import axios, { AxiosError } from 'axios';
+import { CalendarEntry } from '../../components/WeekCalendar/types';
+import { cognitoApi } from '../cognitoApi';
 
-/**
- * Checks if the user is whitelisted
- * @param startDatetime
- * @param endDatetime
- * @param course
- * @param onError Callback which is executed when the API call encounters an error
- * @returns List of tutorials between the two datetimes supplied
- */
-export const getTutorialsInRange = async (startDatetime: string, endDatetime: string,
-  course: string, onError?: (err: AxiosError) => void) => {
-  if (startDatetime && endDatetime && course) {
-    return axios(`${process.env.REACT_APP_BACKEND_URI}}tutorials`, {
-      params: {
-        startDatetime, endDatetime, course,
+import { Tutorial } from './types';
+import { toCalendarEntry } from './utils';
+
+export const tutorialsApi = cognitoApi.injectEndpoints({
+  endpoints: (build) => ({
+    getTutorialsInRange: build.query<CalendarEntry[],
+    {startDatetime: number, endDatetime: number, course: string}>({
+      query(arg) {
+        const { startDatetime, endDatetime, course } = arg;
+        return {
+          url: 'tutorials/query',
+          params: {
+            startDatetime, endDatetime, course,
+          },
+          method: 'GET',
+        };
       },
-    })
-      .catch((err) => {
-        if (axios.isAxiosError(err) && onError) onError(err);
-      });
-  }
-  return null;
-};
+      transformResponse(response: any) {
+        return response.data.Items.map((tutorial: Tutorial) => toCalendarEntry(tutorial));
+      },
+    }),
+  }),
+});
+
+export const { useGetTutorialsInRangeQuery } = tutorialsApi;
