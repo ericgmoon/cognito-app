@@ -7,6 +7,8 @@ import { getTutorial } from '../utils';
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
+const MSINDAY = 86400000;
+
 export default async (req: Request, res: Response) => {
   try {
     const {
@@ -23,6 +25,11 @@ export default async (req: Request, res: Response) => {
 
       if (!student) return res.status(400).json({ message: 'Student not found' });
       if (!tutorial) return res.status(400).json({ message: 'Tutorial not found' });
+
+      // Checks tutorial is at least a day in the future
+      if (parseInt(startDatetimeIdentifier.split('#')[0], 10) <= Date.now() + MSINDAY) {
+        return res.status(400).json({ message: 'Tutorial is not at least a day in the future' });
+      }
 
       // Checks that student hasn't already booked
       if (tutorial?.attendees?.filter((attendee: any) =>
