@@ -6,6 +6,6 @@ import { getRoot } from './endpoints';
 
 const router = express.Router();
 
-router.route('/:gradYear/:studentId').get(protect(getRoot));
+router.route('/:studentId').get(protect(getRoot));
 
 export { router };

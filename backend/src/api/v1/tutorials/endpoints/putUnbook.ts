@@ -10,14 +10,14 @@ export default async (req: Request, res: Response) => {
   try {
     const {
       params: { course, startDatetimeIdentifier },
-      body: { gradYear, studentId },
+      body: { studentId },
     } = req;
 
     if (!isStudent(req)) return res.status(401).json({ message: 'Only students may unbook tutorials' });
     if (req.context.userId !== studentId) return res.status(401).json({ message: 'Unauthorised action' });
 
-    if (course && startDatetimeIdentifier && gradYear && studentId) {
-      const student = await getStudent(gradYear, studentId);
+    if (course && startDatetimeIdentifier && studentId) {
+      const student = await getStudent(studentId);
       const tutorial = await getTutorial(course, startDatetimeIdentifier);
 
       if (!student) return res.status(400).json({ message: 'Student not found' });
@@ -34,15 +34,14 @@ export default async (req: Request, res: Response) => {
         .indexOf(`${course}#${startDatetimeIdentifier}`);
 
       // Get the index of the student in the tutorial's attendees list
-      const attendeeIndex = tutorial?.attendees?.map((x: any) => `${x.gradYear}#${x.studentId}`)
-        .indexOf(`${gradYear}#${studentId}`);
+      const attendeeIndex = tutorial?.attendees?.map((x: any) => x.studentId).indexOf(studentId);
 
       // This database operation should be atomic, but DynamoDB does not provide an atomic
       // 'update' operation currently. Should update this if that feature is ever released.
       const updateOutput =
       await Promise.all([
         removeAttendeeFromTutorial(course, startDatetimeIdentifier, attendeeIndex),
-        removeTutorialFromStudent(gradYear, studentId, tutorialIndex),
+        removeTutorialFromStudent(studentId, tutorialIndex),
       ]);
 
       if (updateOutput) return res.status(200).json({ message: 'Booking cancelled' });
