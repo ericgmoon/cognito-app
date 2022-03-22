@@ -14,9 +14,19 @@ type AttributeCallbackFn = NodeCallback<Error, CognitoUserAttribute[]>;
 const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
 
 /**
- * @returns Username of `getCurrentUser()`
+ * @returns ID/Username of `getCurrentUser()`
  */
-const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+export const getCurrentUserId = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+
+/**
+ * @returns Currently authenticated user's Cognito groups
+ */
+export const getCurrentUserGroups = () => new Promise((resolve, reject) => {
+  getCurrentUser()?.getSession((err: Error, session: any) => {
+    if (err) reject(err);
+    else resolve(session?.idToken?.payload['cognito:groups']);
+  });
+});
 
 /**
  * @returns Currently authenticated user's access token
@@ -112,7 +122,7 @@ export const signIn = async (
  * Removes the AWS Cognito account from the local storage
  */
 export const signOut = async () => {
-  const username = await getCurrentUsername();
+  const username = await getCurrentUserId();
 
   if (username) {
     return getCognitoUser(username)?.signOut();
@@ -124,7 +134,7 @@ export const signOut = async () => {
  * Invalidates all session tokens associated with an AWS Cognito account
  */
 export const globalSignOut = async () => {
-  const username = await getCurrentUsername();
+  const username = await getCurrentUserId();
 
   if (username) {
     return new Promise((resolve, reject) => {
@@ -144,7 +154,7 @@ export const globalSignOut = async () => {
  * @param newPassword
  */
 export const changePassword = async (oldPassword: string, newPassword: string) => {
-  const username = await getCurrentUsername();
+  const username = await getCurrentUserId();
 
   if (username) {
     return new Promise<void>((resolve, reject) => {

@@ -1,7 +1,6 @@
 export type Student = {
   studentId: string,
   firstName: string,
-  gradYear: number
 }
 
 export type Tutorial = {
