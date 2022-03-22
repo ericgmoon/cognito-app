@@ -28,13 +28,12 @@ export const getTutorial = async (course: any, startDatetimeIdentifier: any) => 
 };
 
 export const removeTutorialFromStudent =
-  async (gradYear: string, studentId: string, tutorialIndex: number) => {
+  async (studentId: string, tutorialIndex: number) => {
     // The standard method of using ExpressionAttributeValues to inject the
     // tutorialIndex doesn't seem to work for index values
     const params = {
       TableName: 'students',
       Key: {
-        gradYear: parseInt(String(gradYear), 10),
         studentId,
       },
       UpdateExpression: `REMOVE tutorials[${tutorialIndex}]`,
