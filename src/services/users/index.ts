@@ -1,19 +1,20 @@
-import axios from 'axios';
+import { cognitoApi } from '../cognitoApi';
 
-/**
- * Checks if the user is whitelisted
- * @param phoneNumber
- * @returns User record on the whitelist, or `null` if it is not whitelisted
- */
-export const validateNewUser = async (phoneNumber: string | undefined) => {
-  if (phoneNumber) {
-    try {
-      const response = await axios(`${process.env.REACT_APP_BACKEND_URI}users/validate`, { params: { phoneNumber } });
-      return response;
-    } catch (err) {
-      if (axios.isAxiosError(err)) throw Error(err?.response?.data?.message);
-      else throw err;
-    }
-  }
-  return null;
-};
+// Define a service using a base URL and expected endpoints
+export const usersApi = cognitoApi.injectEndpoints({
+  endpoints: (build) => ({
+    validateNewUser: build.mutation<any, string | undefined>({
+      query(phoneNumber) {
+        return {
+          url: 'users/validate',
+          params: { phoneNumber },
+          method: 'GET',
+        };
+      },
+      // Invalidates all queries that subscribe to this User `phoneNumber` only.
+      invalidatesTags: (phoneNumber) => [{ type: 'Users', phoneNumber }],
+    }),
+  }),
+});
+
+export const { useValidateNewUserMutation } = usersApi;

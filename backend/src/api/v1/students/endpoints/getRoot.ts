@@ -4,15 +4,15 @@ import { getStudent } from '../utils';
 
 export default async (req: Request, res: Response) => {
   try {
-    const { params: { gradYear, studentId } } = req;
+    const { params: { studentId } } = req;
 
     const isCaller = studentId === req.context.userId;
 
-    if (gradYear && studentId) {
-      const data = await getStudent(gradYear, studentId);
+    if (studentId) {
+      const data = await getStudent(studentId);
 
       if (data) {
-        let exposedData = (({ firstName, lastName, tutorials }) =>
+        let exposedData = (({ gradYear, firstName, lastName, tutorials }) =>
           ({
             gradYear, studentId, firstName, lastName, tutorials,
           }))(data);

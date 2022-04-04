@@ -22,7 +22,6 @@ const deleteTutorial = async (course: string, startDatetimeIdentifier: string) =
 };
 
 interface Attendee {
-  gradYear: string,
   studentId: string
 }
 
@@ -41,12 +40,12 @@ export default async (req: Request, res: Response) => {
         const { attendees } = deletedTutorial;
 
         attendees.forEach(async (attendee: Attendee) => {
-          const { gradYear, studentId } = attendee;
-          const student = await getStudent(gradYear, studentId);
+          const { studentId } = attendee;
+          const student = await getStudent(studentId);
 
           const tutorialIndex = student?.tutorials?.map((x: any) => `${x.course}#${x.startDatetimeIdentifier}`)
             .indexOf(`${course}#${startDatetimeIdentifier}`);
-          await removeTutorialFromStudent(gradYear, studentId, tutorialIndex);
+          await removeTutorialFromStudent(studentId, tutorialIndex);
         });
 
         return res.status(200).json({ message: 'Tutorial deleted' });

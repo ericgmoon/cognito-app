@@ -12,7 +12,8 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useForm } from 'react-hook-form';
 
-import { signUpWithValidation } from '../../services/auth';
+import { signUp } from '../../services/auth';
+import { useValidateNewUserMutation } from '../../services/users';
 import FixedLengthField from '../FixedLengthField';
 import TextField from '../TextField';
 
@@ -35,6 +36,7 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [validateNewUser] = useValidateNewUserMutation();
 
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -53,7 +55,8 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
   const onSubmit = async (data: Data) => {
     setLoading(true);
     try {
-      await signUpWithValidation(data.email, data.password, data.phone);
+      await validateNewUser(data.email);
+      await signUp(data.email, data.password, data.phone);
       onSuccess(data.email);
     } catch (error: any) {
       onFailure(error);

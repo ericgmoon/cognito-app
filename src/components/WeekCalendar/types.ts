@@ -3,7 +3,8 @@ export type CalendarEntry = {
   duration: number,
   title: string,
   color?: 'primary' | 'chemistry' | 'physics',
-  action?: 'BOOK' | 'JOIN' | 'CANCEL' | 'FULL',
+  properties?: {[key: string]: string},
+  state?: 'imminent' | 'open' | 'full' | 'booked' | 'readOnly',
 }
 
 export type CalendarData = {

@@ -2,8 +2,6 @@ import {
   AuthenticationDetails, CognitoUserAttribute, NodeCallback,
 } from 'amazon-cognito-identity-js';
 
-import { validateNewUser } from '../users';
-
 import {
   getCognitoUser, getCognitoUserPool,
 } from './utils';
@@ -16,9 +14,19 @@ type AttributeCallbackFn = NodeCallback<Error, CognitoUserAttribute[]>;
 const getCurrentUser = () => getCognitoUserPool().getCurrentUser();
 
 /**
- * @returns Username of `getCurrentUser()`
+ * @returns ID/Username of `getCurrentUser()`
  */
-const getCurrentUsername = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+export const getCurrentUserId = () => getCognitoUserPool().getCurrentUser()?.getUsername();
+
+/**
+ * @returns Currently authenticated user's Cognito groups
+ */
+export const getCurrentUserGroups = () => new Promise((resolve, reject) => {
+  getCurrentUser()?.getSession((err: Error, session: any) => {
+    if (err) reject(err);
+    else resolve(session?.idToken?.payload['cognito:groups']);
+  });
+});
 
 /**
  * @returns Currently authenticated user's access token
@@ -36,7 +44,7 @@ export const getAccessToken = () => new Promise((resolve, reject) => {
  * @param password
  * @param phoneNumber
  */
-const signUp = async (
+export const signUp = async (
   email: string | undefined,
   password: string | undefined,
   phoneNumber: string | undefined) => new Promise<void>((resolve, reject) => {
@@ -62,19 +70,6 @@ const signUp = async (
     else resolve();
   });
 });
-
-export const signUpWithValidation = async (
-  email: string | undefined,
-  password: string | undefined,
-  phoneNumber: string | undefined) => {
-  // Check if the user is validated / whitelisted
-  const response = await validateNewUser(phoneNumber);
-
-  // If user is valid, attempt sign up
-  if (response?.data?.data) {
-    await signUp(email, password, phoneNumber);
-  }
-};
 
 /**
  * Verifies an existing AWS Cognito account based on the SMS code delivered to user
@@ -127,7 +122,7 @@ export const signIn = async (
  * Removes the AWS Cognito account from the local storage
  */
 export const signOut = async () => {
-  const username = await getCurrentUsername();
+  const username = await getCurrentUserId();
 
   if (username) {
     return getCognitoUser(username)?.signOut();
@@ -139,7 +134,7 @@ export const signOut = async () => {
  * Invalidates all session tokens associated with an AWS Cognito account
  */
 export const globalSignOut = async () => {
-  const username = await getCurrentUsername();
+  const username = await getCurrentUserId();
 
   if (username) {
     return new Promise((resolve, reject) => {
@@ -159,7 +154,7 @@ export const globalSignOut = async () => {
  * @param newPassword
  */
 export const changePassword = async (oldPassword: string, newPassword: string) => {
-  const username = await getCurrentUsername();
+  const username = await getCurrentUserId();
 
   if (username) {
     return new Promise<void>((resolve, reject) => {

@@ -11,14 +11,14 @@ export default async (req: Request, res: Response) => {
   try {
     const {
       params: { course, startDatetimeIdentifier },
-      body: { gradYear, studentId },
+      body: { studentId },
     } = req;
 
     if (!isStudent(req)) return res.status(401).json({ message: 'Only students may book tutorials' });
     if (req.context.userId !== studentId) return res.status(401).json({ message: 'Unauthorised action' });
 
-    if (course && startDatetimeIdentifier && gradYear && studentId) {
-      const student = await getStudent(gradYear, studentId);
+    if (course && startDatetimeIdentifier && studentId) {
+      const student = await getStudent(studentId);
       const tutorial = await getTutorial(course, startDatetimeIdentifier);
 
       if (!student) return res.status(400).json({ message: 'Student not found' });
@@ -30,8 +30,12 @@ export default async (req: Request, res: Response) => {
         return res.status(400).json({ message: 'Already booked by student' });
       }
 
+      // Checks tutorial is not full
+      if (tutorial?.attendees?.length >= tutorial?.capacity) {
+        return res.status(400).json({ message: 'Tutorial is full' });
+      }
+
       const attendeeEntry = {
-        gradYear,
         studentId,
         firstName: student?.firstName,
         lastName: student?.lastName,
@@ -57,7 +61,6 @@ export default async (req: Request, res: Response) => {
       const studentParams = {
         TableName: 'students',
         Key: {
-          gradYear: parseInt(String(gradYear), 10),
           studentId,
         },
         UpdateExpression: 'SET tutorials = list_append(tutorials, :tutorial)',
