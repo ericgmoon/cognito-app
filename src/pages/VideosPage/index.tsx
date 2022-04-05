@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { Typography } from '@mui/material';
+import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
+import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
+import VideoLibraryRoundedIcon from '@mui/icons-material/VideoLibraryRounded';
+import {
+  Divider, Link, Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -10,8 +15,19 @@ import YouTubePlayer from '../../components/YouTubePlayer';
 import routes from '../routes.json';
 
 import {
+  AboutWrapper,
   BreadcrumbsWrapper,
-  ColumnContainer, NavColumn, PlayerColumn, TitleBarContainer,
+  ColumnContainer,
+  NewWindowIconWrapper,
+  PlayerColumn,
+  ResourceLinkWrapper,
+  ResourcesList,
+  TitleBarContainer,
+  UtilColumn,
+  UtilDividerGap,
+  UtilHeading,
+  UtilHeadingIconWrapper,
+  UtilHeadingWrapper,
 } from './index.styles';
 
 const formatDate = (date: Date) => {
@@ -37,6 +53,56 @@ const TitleBar = ({ title, author, uploadDate } : TitleBarProps) => (
     <Typography variant="h6">{title}</Typography>
     <Typography variant="caption">{author} · {formatDate(uploadDate)}</Typography>
   </TitleBarContainer>
+);
+
+type Resource = {
+  label: string,
+  href: string,
+}
+
+interface SideBarProps {
+  resources: Resource[]
+}
+
+const SideBar = ({ resources = [] } : SideBarProps) => (
+  <>
+    {resources.length > 0 && (
+      <>
+        <UtilHeadingWrapper>
+          <UtilHeadingIconWrapper>
+            <LibraryBooksRoundedIcon />
+          </UtilHeadingIconWrapper>
+          <UtilHeading variant="h6">
+            Resources
+          </UtilHeading>
+        </UtilHeadingWrapper>
+        <ResourcesList>
+          {resources.map((res) => (
+            <Link href={res.href} color="secondary">
+              <ResourceLinkWrapper>
+                <Typography variant="body2">
+                  {res.label}
+                </Typography>
+                <NewWindowIconWrapper>
+                  <OpenInNewRoundedIcon fontSize="small" />
+                </NewWindowIconWrapper>
+              </ResourceLinkWrapper>
+            </Link>
+          ))}
+        </ResourcesList>
+      </>
+    )}
+    <Divider />
+    <UtilDividerGap />
+    <UtilHeadingWrapper>
+      <UtilHeadingIconWrapper>
+        <VideoLibraryRoundedIcon />
+      </UtilHeadingIconWrapper>
+      <UtilHeading variant="h6">
+        Chapter
+      </UtilHeading>
+    </UtilHeadingWrapper>
+  </>
 );
 
 const VideosPage = () => {
@@ -76,8 +142,30 @@ const VideosPage = () => {
             author="Eric Moon"
             uploadDate={new Date()}
           />
+          <Divider />
+          <AboutWrapper>
+            <Typography variant="body2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+              ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+              in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+              sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+              mollit anim id est laborum.
+            </Typography>
+          </AboutWrapper>
+          {!isMd && <Divider />}
         </PlayerColumn>
-        <NavColumn stack={!isMd} />
+        <UtilColumn stack={!isMd}>
+          <SideBar
+            resources={[
+              {
+                label: 'M1L3 Lesson Notes',
+                href: '/',
+              },
+            ]}
+          />
+        </UtilColumn>
       </ColumnContainer>
     </ProtectedPageLayout>
   );
