@@ -24,6 +24,8 @@ const YouTubePlayer = ({ videoId }: EmbeddedVideoProps) => {
       rel: 0,
       // Hides the YouTube logo
       modestbranding: 1,
+      // Starts playing the video as soon as it loads
+      autoplay: 1,
     },
     host: 'https://www.youtube-nocookie.com',
   };

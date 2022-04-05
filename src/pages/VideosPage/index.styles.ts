@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { ListSubheader, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 const TitleBarContainer = styled.div`
@@ -43,56 +43,40 @@ const BreadcrumbsWrapper = styled.div`
     margin-left: ${({ theme }) => theme.spacing(1)};
 `;
 
-const UtilHeadingWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: ${({ theme }) => theme.spacing(2)};
-`;
-
-const UtilHeadingIconWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    margin-right: ${({ theme }) => theme.spacing(1)};
-    color: ${({ theme }) => theme.palette.secondary.main};
-`;
-
-const UtilHeading = styled(Typography)`
+const SidebarHeaderWrapper = styled(ListSubheader)`
     && {
         color: ${({ theme }) => theme.palette.secondary.main};
-        font-weight: bold;
+        user-select: none;
     }
 `;
 
-const ResourcesList = styled.div`
-    margin-bottom: ${({ theme }) => theme.spacing(2)};
+const SidebarHeader = styled(Typography)`
+    && {
+        font-weight: 600;
+    }
 `;
 
-const ResourceLinkWrapper = styled.div`
-    display: flex;
-    align-items: center;
+interface Selectable {
+  selected?: boolean
+}
+
+const ListIndexLabel = styled.span<Selectable>`
+    color: ${({ theme, selected }) => (selected ? theme.palette.error.main : theme.palette.secondary.main)};
+    font-weight: 600;
 `;
 
-const NewWindowIconWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    margin-left: 4px;
-`;
-
-const UtilDividerGap = styled.div`
-    height: ${({ theme }) => theme.spacing(2)};
+const ListLabel = styled.span<Selectable>`
+    color: ${({ theme, selected }) => (selected ? theme.palette.error.main : 'inherit')};
+    font-weight: ${({ selected }) => (selected ? 600 : -1)};
 `;
 
 export { TitleBarContainer,
   AboutWrapper,
   ColumnContainer,
   PlayerColumn,
+  ListIndexLabel,
+  ListLabel,
+  SidebarHeaderWrapper,
+  SidebarHeader,
   UtilColumn,
-  UtilHeadingIconWrapper,
-  BreadcrumbsWrapper,
-  UtilHeadingWrapper,
-  UtilHeading,
-  ResourcesList,
-  NewWindowIconWrapper,
-  ResourceLinkWrapper,
-  UtilDividerGap };
+  BreadcrumbsWrapper };

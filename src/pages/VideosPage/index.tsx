@@ -1,10 +1,12 @@
 import React from 'react';
 
-import LibraryBooksRoundedIcon from '@mui/icons-material/LibraryBooksRounded';
-import OpenInNewRoundedIcon from '@mui/icons-material/OpenInNewRounded';
-import VideoLibraryRoundedIcon from '@mui/icons-material/VideoLibraryRounded';
 import {
-  Divider, Link, Typography,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -18,16 +20,13 @@ import {
   AboutWrapper,
   BreadcrumbsWrapper,
   ColumnContainer,
-  NewWindowIconWrapper,
+  ListIndexLabel,
+  ListLabel,
   PlayerColumn,
-  ResourceLinkWrapper,
-  ResourcesList,
+  SidebarHeader,
+  SidebarHeaderWrapper,
   TitleBarContainer,
   UtilColumn,
-  UtilDividerGap,
-  UtilHeading,
-  UtilHeadingIconWrapper,
-  UtilHeadingWrapper,
 } from './index.styles';
 
 const formatDate = (date: Date) => {
@@ -60,48 +59,76 @@ type Resource = {
   href: string,
 }
 
-interface SideBarProps {
-  resources: Resource[]
+type Video = {
+  videoId: string,
+  title: string,
+  href: string,
 }
 
-const SideBar = ({ resources = [] } : SideBarProps) => (
+interface SideBarProps {
+  resources?: Resource[],
+  relatedVideos?: Video[],
+  currentVideoId: string,
+}
+
+const SideBar = ({ resources = [], relatedVideos = [], currentVideoId } : SideBarProps) => (
   <>
     {resources.length > 0 && (
-      <>
-        <UtilHeadingWrapper>
-          <UtilHeadingIconWrapper>
-            <LibraryBooksRoundedIcon />
-          </UtilHeadingIconWrapper>
-          <UtilHeading variant="h6">
-            Resources
-          </UtilHeading>
-        </UtilHeadingWrapper>
-        <ResourcesList>
-          {resources.map((res) => (
-            <Link href={res.href} color="secondary">
-              <ResourceLinkWrapper>
+      <List subheader={(
+        <SidebarHeaderWrapper disableSticky>
+          <SidebarHeader variant="overline">
+            RESOURCES
+          </SidebarHeader>
+        </SidebarHeaderWrapper>
+      )}
+      >
+        {resources.map((res, index) => (
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary={(
                 <Typography variant="body2">
-                  {res.label}
+                  <ListIndexLabel>{String.fromCharCode(index + 'A'.charCodeAt(0))}</ListIndexLabel>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <ListLabel>
+                    {res.label}
+                  </ListLabel>
                 </Typography>
-                <NewWindowIconWrapper>
-                  <OpenInNewRoundedIcon fontSize="small" />
-                </NewWindowIconWrapper>
-              </ResourceLinkWrapper>
-            </Link>
-          ))}
-        </ResourcesList>
-      </>
+              )}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
     )}
-    <Divider />
-    <UtilDividerGap />
-    <UtilHeadingWrapper>
-      <UtilHeadingIconWrapper>
-        <VideoLibraryRoundedIcon />
-      </UtilHeadingIconWrapper>
-      <UtilHeading variant="h6">
-        Chapter
-      </UtilHeading>
-    </UtilHeadingWrapper>
+    {relatedVideos.length > 0 && (
+      <List subheader={(
+        <SidebarHeaderWrapper disableSticky>
+          <SidebarHeader variant="overline">
+            RELATED VIDEOS
+          </SidebarHeader>
+        </SidebarHeaderWrapper>
+      )}
+      >
+        {relatedVideos.map((vid, index) => (
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary={(
+                <Typography variant="body2">
+                  <ListIndexLabel selected={currentVideoId === vid.videoId}>
+                    {index + 1}
+                  </ListIndexLabel>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <ListLabel selected={currentVideoId === vid.videoId}>
+                    {vid.title}
+                  </ListLabel>
+                </Typography>
+              )}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    )}
   </>
 );
 
@@ -135,7 +162,7 @@ const VideosPage = () => {
       <ColumnContainer stack={!isMd}>
         <PlayerColumn stack={!isMd}>
           <YouTubePlayer
-            videoId="m8xSZ9Fr4c0"
+            videoId="1uPyq63aRvg"
           />
           <TitleBar
             title="Atomic Spectra"
@@ -163,7 +190,39 @@ const VideosPage = () => {
                 label: 'M1L3 Lesson Notes',
                 href: '/',
               },
+              {
+                label: 'Atomic Spectra Simulation',
+                href: '/',
+              },
             ]}
+            relatedVideos={[
+              {
+                videoId: 'dummyVideoId1',
+                title: 'Separating Mixtures',
+                href: '/',
+              },
+              {
+                videoId: 'dummyVideoId2',
+                title: 'Significant Figures',
+                href: '/',
+              },
+              {
+                videoId: 'dummyVideoId3',
+                title: 'Bohr\'s Model',
+                href: '/',
+              },
+              {
+                videoId: 'dummyVideoId4',
+                title: 'Atomic Spectra',
+                href: '/',
+              },
+              {
+                videoId: 'dummyVideoId5',
+                title: 'Intermolecular Forces',
+                href: '/',
+              },
+            ]}
+            currentVideoId="dummyVideoId4"
           />
         </UtilColumn>
       </ColumnContainer>
