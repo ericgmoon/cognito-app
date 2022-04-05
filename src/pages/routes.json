@@ -1,0 +1,23 @@
+{
+    "videos": {
+        "root": "/videos",
+        "chem": "/",
+        "chemMod1": "/",
+        "chemMod2": "/",
+        "chemMod3": "/",
+        "chemMod4": "/",
+        "chemMod5": "/",
+        "chemMod6": "/",
+        "chemMod7": "/",
+        "chemMod8": "/",
+        "phys": "/",
+        "physMod1": "/",
+        "physMod2": "/",
+        "physMod3": "/",
+        "physMod4": "/",
+        "physMod5": "/",
+        "physMod6": "/",
+        "physMod7": "/",
+        "physMod8": "/"
+    }
+}

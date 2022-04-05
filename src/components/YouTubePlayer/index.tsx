@@ -5,7 +5,7 @@ import { Options } from 'react-youtube';
 import { FrameContainer, StyledReactYoutube } from './index.styles';
 
 interface EmbeddedVideoProps {
-  videoId?: string,
+  videoId: string,
 }
 
 const YouTubePlayer = ({ videoId }: EmbeddedVideoProps) => {
