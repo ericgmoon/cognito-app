@@ -212,6 +212,28 @@ export const PageLayout = ({
   );
 };
 
+interface AuthPageLayoutProps {
+  children: React.ReactElement | React.ReactElement[],
+  title: string,
+}
+
+export const AuthPageLayout = ({ children, title }: AuthPageLayoutProps) => (
+  <PageLayout redirects={{ onAuthRedirect: '/' }} title={title}>
+    {children}
+  </PageLayout>
+);
+
+interface ProtectedPageLayoutProps {
+  children: React.ReactElement | React.ReactElement[],
+  title: string,
+}
+
+export const ProtectedPageLayout = ({ children, title }: ProtectedPageLayoutProps) => (
+  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title}>
+    {children}
+  </PageLayout>
+);
+
 interface TitleWrapperProps {
   children: React.ReactElement | React.ReactElement[],
   title: string,

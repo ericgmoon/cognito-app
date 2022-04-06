@@ -5,11 +5,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { Provider as ReduxProvider } from 'react-redux';
 import {
-  BrowserRouter, Routes,
+  BrowserRouter, Route, Routes,
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { AuthRoute, ProtectedRoute } from './components/Route';
+import { AuthPageLayout, ProtectedPageLayout } from './components/PageLayout';
 import {
   AnalyticsPage,
   HomePage,
@@ -31,15 +31,78 @@ const App = () => (
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <AuthRoute path="/signin" pageTitle="Sign In" element={<SignInPage />} />
-            <AuthRoute path="/signup" pageTitle="Sign Up" element={<SignUpPage />} />
-            <ProtectedRoute path="/" pageTitle="Home" element={<HomePage />} />
-            <ProtectedRoute path="/notes" pageTitle="Notes" element={<NotesPage />} />
-            <ProtectedRoute path="/videos" pageTitle="Videos" element={<VideosPage />} />
-            <ProtectedRoute path="/quizzes" pageTitle="Quizzes" element={<QuizzesPage />} />
-            <ProtectedRoute path="/tutorials" pageTitle="Tutorials" element={<TutorialsPage />} />
-            <ProtectedRoute path="/tracker" pageTitle="Tracker" element={<TrackerPage />} />
-            <ProtectedRoute path="/analytics" pageTitle="Analytics" element={<AnalyticsPage />} />
+            <Route
+              path="/signin"
+              element={(
+                <AuthPageLayout title="Sign In">
+                  <SignInPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/signup"
+              element={(
+                <AuthPageLayout title="Sign Up">
+                  <SignUpPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/"
+              element={(
+                <ProtectedPageLayout title="Home">
+                  <HomePage />
+                </ProtectedPageLayout>
+              )}
+            />
+            <Route
+              path="/notes"
+              element={(
+                <ProtectedPageLayout title="Notes">
+                  <NotesPage />
+                </ProtectedPageLayout>
+              )}
+            />
+            <Route
+              path="/videos"
+              element={(
+                <ProtectedPageLayout title="Videos">
+                  <VideosPage />
+                </ProtectedPageLayout>
+              )}
+            />
+            <Route
+              path="/quizzes"
+              element={(
+                <ProtectedPageLayout title="Quizzes">
+                  <QuizzesPage />
+                </ProtectedPageLayout>
+              )}
+            />
+            <Route
+              path="/tutorials"
+              element={(
+                <ProtectedPageLayout title="Tutorials">
+                  <TutorialsPage />
+                </ProtectedPageLayout>
+              )}
+            />
+            <Route
+              path="/tracker"
+              element={(
+                <ProtectedPageLayout title="Tracker">
+                  <TrackerPage />
+                </ProtectedPageLayout>
+              )}
+            />
+            <Route
+              path="/analytics"
+              element={(
+                <ProtectedPageLayout title="Analytics">
+                  <AnalyticsPage />
+                </ProtectedPageLayout>
+              )}
+            />
           </Routes>
         </BrowserRouter>
       </MUIThemeProvider>
