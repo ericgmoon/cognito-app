@@ -1,10 +1,6 @@
 import React from 'react';
 
-import { ProtectedPageLayout } from '../../components/PageLayout';
-
 const AnalyticsPage = () => (
-  <ProtectedPageLayout title="Analytics">
-    <p>This is the analytics page</p>
-  </ProtectedPageLayout>
+  <p>This is the analytics page</p>
 );
 export default AnalyticsPage;

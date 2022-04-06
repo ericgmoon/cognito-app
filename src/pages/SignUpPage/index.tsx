@@ -5,7 +5,6 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import { AuthPageLayout } from '../../components/PageLayout';
 import SignUp from '../../components/SignUp';
 import VerificationCode from '../../components/VerificationCode';
 import logo from '../../images/logo.png';
@@ -96,11 +95,9 @@ const SignUpPage = () => {
   ];
 
   return (
-    <AuthPageLayout title="Sign Up">
-      <RootContainer>
-        {steps[step]}
-      </RootContainer>
-    </AuthPageLayout>
+    <RootContainer>
+      {steps[step]}
+    </RootContainer>
   );
 };
 
