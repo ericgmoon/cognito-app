@@ -5,11 +5,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { Provider as ReduxProvider } from 'react-redux';
 import {
-  BrowserRouter, Routes,
+  BrowserRouter, Route, Routes,
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { AuthRoute, ProtectedRoute } from './components/Route';
+import { AuthPageLayout } from './components/PageLayout';
 import {
   AnalyticsPage,
   HomePage,
@@ -31,15 +31,78 @@ const App = () => (
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <AuthRoute path="/signin" pageTitle="Sign In" element={<SignInPage />} />
-            <AuthRoute path="/signup" pageTitle="Sign Up" element={<SignUpPage />} />
-            <ProtectedRoute path="/" pageTitle="Home" element={<HomePage />} />
-            <ProtectedRoute path="/notes" pageTitle="Notes" element={<NotesPage />} />
-            <ProtectedRoute path="/videos" pageTitle="Videos" element={<VideosPage />} />
-            <ProtectedRoute path="/quizzes" pageTitle="Quizzes" element={<QuizzesPage />} />
-            <ProtectedRoute path="/tutorials" pageTitle="Tutorials" element={<TutorialsPage />} />
-            <ProtectedRoute path="/tracker" pageTitle="Tracker" element={<TrackerPage />} />
-            <ProtectedRoute path="/analytics" pageTitle="Analytics" element={<AnalyticsPage />} />
+            <Route
+              path="/signin"
+              element={(
+                <AuthPageLayout title="Sign In">
+                  <SignInPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/signup"
+              element={(
+                <AuthPageLayout title="Sign Up">
+                  <SignUpPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/"
+              element={(
+                <AuthPageLayout title="Home">
+                  <HomePage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/notes"
+              element={(
+                <AuthPageLayout title="Notes">
+                  <NotesPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/videos"
+              element={(
+                <AuthPageLayout title="Videos">
+                  <VideosPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/quizzes"
+              element={(
+                <AuthPageLayout title="Quizzes">
+                  <QuizzesPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/tutorials"
+              element={(
+                <AuthPageLayout title="Tutorials">
+                  <TutorialsPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/tracker"
+              element={(
+                <AuthPageLayout title="Tracker">
+                  <TrackerPage />
+                </AuthPageLayout>
+              )}
+            />
+            <Route
+              path="/analytics"
+              element={(
+                <AuthPageLayout title="Analytics">
+                  <AnalyticsPage />
+                </AuthPageLayout>
+              )}
+            />
           </Routes>
         </BrowserRouter>
       </MUIThemeProvider>
