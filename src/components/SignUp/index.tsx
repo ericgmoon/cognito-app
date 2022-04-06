@@ -28,10 +28,10 @@ interface Data {
 }
 
 interface SignUpProps {
-  goToVerify: (email: string) => void;
+  next: (email: string, password: string) => void;
 }
 
-const SignUp = ({ goToVerify } : SignUpProps) => {
+const SignUp = ({ next } : SignUpProps) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [errorOpen, setErrorOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,9 +41,9 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
   const theme = useTheme();
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const onSuccess = (email: string) => {
+  const onSuccess = (email: string, password: string) => {
     setLoading(false);
-    goToVerify(email);
+    next(email, password);
   };
 
   const onFailure = (error: any) => {
@@ -55,9 +55,9 @@ const SignUp = ({ goToVerify } : SignUpProps) => {
   const onSubmit = async (data: Data) => {
     setLoading(true);
     try {
-      await validateNewUser(data.email);
+      await validateNewUser(data.phone).unwrap();
       await signUp(data.email, data.password, data.phone);
-      onSuccess(data.email);
+      onSuccess(data.email, data.password);
     } catch (error: any) {
       onFailure(error);
     }
