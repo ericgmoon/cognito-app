@@ -158,6 +158,10 @@ interface PageLayoutProps {
    * If `true`, page decorations such as the AppBar are rendered in
    */
   decorate?: boolean,
+  /**
+   * If `true`, redirects prop is ignored
+   */
+  disableRedirect?: boolean,
 }
 
 export const PageLayout = ({
@@ -165,6 +169,7 @@ export const PageLayout = ({
   redirects,
   loading: isPageLoading = false,
   decorate = false,
+  disableRedirect = false,
   title,
 }: PageLayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -194,8 +199,12 @@ export const PageLayout = ({
 
   return (
     <>
-      {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
-      {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
+      {!disableRedirect && redirectOnAuth && (
+        <Navigate replace to={redirects.onAuthRedirect} />
+      )}
+      {!disableRedirect && redirectOnAuthless && (
+        <Navigate replace to={redirects.onAuthlessRedirect} />
+      )}
       <SnackbarProvider>
         <Content decorate={decorate} loading={loading}>{children}</Content>
       </SnackbarProvider>
@@ -203,24 +212,28 @@ export const PageLayout = ({
   );
 };
 
-interface AuthPageLayoutProps {
+interface AuthPageLayoutProps extends PageLayoutProps {
   children: React.ReactElement | React.ReactElement[],
   title: string,
 }
 
-export const AuthPageLayout = ({ children, title }: AuthPageLayoutProps) => (
-  <PageLayout redirects={{ onAuthRedirect: '/' }} title={title}>
+export const AuthPageLayout = (
+  { children, title, ...props }: AuthPageLayoutProps,
+) => (
+  <PageLayout redirects={{ onAuthRedirect: '/' }} title={title} {...props}>
     {children}
   </PageLayout>
 );
 
-interface ProtectedPageLayoutProps {
+interface ProtectedPageLayoutProps extends PageLayoutProps{
   children: React.ReactElement | React.ReactElement[],
   title: string,
 }
 
-export const ProtectedPageLayout = ({ children, title }: ProtectedPageLayoutProps) => (
-  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title}>
+export const ProtectedPageLayout = (
+  { children, title, ...props }: ProtectedPageLayoutProps,
+) => (
+  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title} {...props}>
     {children}
   </PageLayout>
 );
