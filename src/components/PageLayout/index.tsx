@@ -158,6 +158,10 @@ interface PageLayoutProps {
    * If `true`, page decorations such as the AppBar are rendered in
    */
   decorate?: boolean,
+  /**
+   * If `true`, redirects prop is ignored
+   */
+  disableRedirect?: boolean,
 }
 
 export const PageLayout = ({
@@ -165,6 +169,7 @@ export const PageLayout = ({
   redirects,
   loading: isPageLoading = false,
   decorate = false,
+  disableRedirect = false,
   title,
 }: PageLayoutProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -173,7 +178,7 @@ export const PageLayout = ({
   // Check the current authentication state
   useEffect(() => {
     // Update the Browser-recognised page title
-    document.title = `${title} - Cognito App`;
+    document.title = `Cognito ${title}`;
 
     // Check if the user is authenticated to determine redirects
     const getAuthStatus = async () => {
@@ -194,36 +199,18 @@ export const PageLayout = ({
 
   return (
     <>
-      {redirectOnAuth && (<Navigate replace to={redirects.onAuthRedirect} />)}
-      {redirectOnAuthless && (<Navigate replace to={redirects.onAuthlessRedirect} />)}
+      {!disableRedirect && redirectOnAuth && (
+        <Navigate replace to={redirects.onAuthRedirect} />
+      )}
+      {!disableRedirect && redirectOnAuthless && (
+        <Navigate replace to={redirects.onAuthlessRedirect} />
+      )}
       <SnackbarProvider>
         <Content decorate={decorate} loading={loading}>{children}</Content>
       </SnackbarProvider>
     </>
   );
 };
-
-interface AuthPageLayoutProps {
-  children: React.ReactElement | React.ReactElement[],
-  title: string,
-}
-
-export const AuthPageLayout = ({ children, title }: AuthPageLayoutProps) => (
-  <PageLayout redirects={{ onAuthRedirect: '/' }} title={title}>
-    {children}
-  </PageLayout>
-);
-
-interface ProtectedPageLayoutProps {
-  children: React.ReactElement | React.ReactElement[],
-  title: string,
-}
-
-export const ProtectedPageLayout = ({ children, title }: ProtectedPageLayoutProps) => (
-  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title}>
-    {children}
-  </PageLayout>
-);
 
 interface TitleWrapperProps {
   children: React.ReactElement | React.ReactElement[],

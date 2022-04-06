@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ProtectedPageLayout, TitleWrapper } from '../../components/PageLayout';
+import { TitleWrapper } from '../../components/PageLayout';
 import WeekCalendar from '../../components/WeekCalendar';
 import { useGetTutorialsInRangeQuery } from '../../services/tutorials';
 
@@ -14,7 +14,7 @@ const TutorialsPage = () => {
 
   const { data } = useGetTutorialsInRangeQuery(args);
   return (
-    <ProtectedPageLayout title="Tutorials">
+    <>
       <TitleWrapper title="Your Tutorials">
         <WeekCalendar startDatetime={new Date().getTime()} />
       </TitleWrapper>
@@ -24,7 +24,7 @@ const TutorialsPage = () => {
           data={data}
         />
       </TitleWrapper>
-    </ProtectedPageLayout>
+    </>
   );
 };
 export default TutorialsPage;
