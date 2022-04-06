@@ -9,7 +9,9 @@ import { AuthPageLayout } from '../../components/PageLayout';
 import SignUp from '../../components/SignUp';
 import VerificationCode from '../../components/VerificationCode';
 import logo from '../../images/logo.png';
-import { confirmSignUp, resendConfirmationCode } from '../../services/auth';
+import {
+  confirmSignUp, resendConfirmationCode, signIn,
+} from '../../services/auth';
 
 import {
   Container, FooterText, HeaderContainer, Logo, RootContainer, Title, VerificationCodeContainer,
@@ -18,14 +20,17 @@ import {
 const SignUpPage = () => {
   const [step, setStep] = useState(0);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const goToVerify = (emailInput: string) => {
+  const goToVerify = (emailInput: string, passwordInput: string) => {
     setStep(step + 1);
     setEmail(emailInput);
+    setPassword(passwordInput);
   };
 
-  const finishSignUp = () => {
+  const finishSignUp = async () => {
+    await signIn(email, password);
     navigate('/');
   };
 
@@ -47,7 +52,7 @@ const SignUpPage = () => {
       </Grid>
       <Grid item xs={12}>
         <Container>
-          <SignUp goToVerify={goToVerify} />
+          <SignUp next={goToVerify} />
           <FooterText>Already have an account? <Link href="/signin" underline="always">Sign In</Link></FooterText>
         </Container>
       </Grid>
