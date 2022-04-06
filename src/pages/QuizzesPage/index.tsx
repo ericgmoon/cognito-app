@@ -1,10 +1,6 @@
 import React from 'react';
 
-import { ProtectedPageLayout } from '../../components/PageLayout';
-
 const QuizzesPage = () => (
-  <ProtectedPageLayout title="Quizzes">
-    <p>This is the quizzes page</p>
-  </ProtectedPageLayout>
+  <p>This is the quizzes page</p>
 );
 export default QuizzesPage;

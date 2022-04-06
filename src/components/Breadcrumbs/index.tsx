@@ -4,13 +4,13 @@ import {
   Link, Breadcrumbs as MUIBreadcrumbs, Typography,
 } from '@mui/material';
 
-type PathHrefUnit = {
+export type PathHrefUnit = {
   text: string,
   href: string | '/',
   key?: never,
 }
 
-type PathKeyUnit = {
+export type PathKeyUnit = {
   text: string,
   key: string,
   href?: never,
