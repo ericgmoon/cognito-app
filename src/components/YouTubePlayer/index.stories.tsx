@@ -13,5 +13,5 @@ const Template: ComponentStory<typeof YouTubePlayer> = (args) => <YouTubePlayer 
 
 export const Default = Template.bind({});
 Default.args = {
-  videoId: 'dPsSrBuMIVs',
+  videoId: '1uPyq63aRvg',
 };
