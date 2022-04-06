@@ -212,32 +212,6 @@ export const PageLayout = ({
   );
 };
 
-interface AuthPageLayoutProps extends PageLayoutProps {
-  children: React.ReactElement | React.ReactElement[],
-  title: string,
-}
-
-export const AuthPageLayout = (
-  { children, title, ...props }: AuthPageLayoutProps,
-) => (
-  <PageLayout redirects={{ onAuthRedirect: '/' }} title={title} {...props}>
-    {children}
-  </PageLayout>
-);
-
-interface ProtectedPageLayoutProps extends PageLayoutProps{
-  children: React.ReactElement | React.ReactElement[],
-  title: string,
-}
-
-export const ProtectedPageLayout = (
-  { children, title, ...props }: ProtectedPageLayoutProps,
-) => (
-  <PageLayout redirects={{ onAuthlessRedirect: '/signin' }} decorate title={title} {...props}>
-    {children}
-  </PageLayout>
-);
-
 interface TitleWrapperProps {
   children: React.ReactElement | React.ReactElement[],
   title: string,

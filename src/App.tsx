@@ -5,10 +5,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { Provider as ReduxProvider } from 'react-redux';
 import {
-  BrowserRouter, Route, Routes,
+  BrowserRouter, Routes,
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
+import { AuthRoute, ProtectedRoute } from './components/Route';
 import {
   AnalyticsPage,
   HomePage,
@@ -30,15 +31,15 @@ const App = () => (
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path="/signin" element={<SignInPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="/notes" element={<NotesPage />} />
-            <Route path="/videos" element={<VideosPage />} />
-            <Route path="/quizzes" element={<QuizzesPage />} />
-            <Route path="/tutorials" element={<TutorialsPage />} />
-            <Route path="/tracker" element={<TrackerPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
+            <AuthRoute path="/signin" pageTitle="Sign In" element={<SignInPage />} />
+            <AuthRoute path="/signup" pageTitle="Sign Up" element={<SignUpPage />} />
+            <ProtectedRoute path="/" pageTitle="Home" element={<HomePage />} />
+            <ProtectedRoute path="/notes" pageTitle="Notes" element={<NotesPage />} />
+            <ProtectedRoute path="/videos" pageTitle="Videos" element={<VideosPage />} />
+            <ProtectedRoute path="/quizzes" pageTitle="Quizzes" element={<QuizzesPage />} />
+            <ProtectedRoute path="/tutorials" pageTitle="Tutorials" element={<TutorialsPage />} />
+            <ProtectedRoute path="/tracker" pageTitle="Tracker" element={<TrackerPage />} />
+            <ProtectedRoute path="/analytics" pageTitle="Analytics" element={<AnalyticsPage />} />
           </Routes>
         </BrowserRouter>
       </MUIThemeProvider>

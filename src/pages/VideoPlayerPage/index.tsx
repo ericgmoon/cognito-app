@@ -12,7 +12,6 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Breadcrumbs, { PathKeyUnit } from '../../components/Breadcrumbs';
-import { ProtectedPageLayout } from '../../components/PageLayout';
 import YouTubePlayer from '../../components/YouTubePlayer';
 import routes from '../routes.json';
 
@@ -158,7 +157,7 @@ const VideoPlayerPage = (
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <ProtectedPageLayout title="Videos">
+    <>
       <BreadcrumbsWrapper>
         <Breadcrumbs
           title={title}
@@ -198,7 +197,7 @@ const VideoPlayerPage = (
           />
         </UtilColumn>
       </ColumnContainer>
-    </ProtectedPageLayout>
+    </>
   );
 };
 export default VideoPlayerPage;
