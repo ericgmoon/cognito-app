@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { AuthPageLayout } from './components/PageLayout';
+import { AuthPageLayout, ProtectedPageLayout } from './components/PageLayout';
 import {
   AnalyticsPage,
   HomePage,
@@ -50,57 +50,57 @@ const App = () => (
             <Route
               path="/"
               element={(
-                <AuthPageLayout title="Home">
+                <ProtectedPageLayout title="Home">
                   <HomePage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
             <Route
               path="/notes"
               element={(
-                <AuthPageLayout title="Notes">
+                <ProtectedPageLayout title="Notes">
                   <NotesPage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
             <Route
               path="/videos"
               element={(
-                <AuthPageLayout title="Videos">
+                <ProtectedPageLayout title="Videos">
                   <VideosPage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
             <Route
               path="/quizzes"
               element={(
-                <AuthPageLayout title="Quizzes">
+                <ProtectedPageLayout title="Quizzes">
                   <QuizzesPage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
             <Route
               path="/tutorials"
               element={(
-                <AuthPageLayout title="Tutorials">
+                <ProtectedPageLayout title="Tutorials">
                   <TutorialsPage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
             <Route
               path="/tracker"
               element={(
-                <AuthPageLayout title="Tracker">
+                <ProtectedPageLayout title="Tracker">
                   <TrackerPage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
             <Route
               path="/analytics"
               element={(
-                <AuthPageLayout title="Analytics">
+                <ProtectedPageLayout title="Analytics">
                   <AnalyticsPage />
-                </AuthPageLayout>
+                </ProtectedPageLayout>
               )}
             />
           </Routes>
