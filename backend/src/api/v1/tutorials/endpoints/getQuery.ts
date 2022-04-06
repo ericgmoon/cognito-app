@@ -9,20 +9,24 @@ const MAX_ID = 'zzzzzz';
 
 export default async (req: Request, res: Response) => {
   try {
-    const { query: { startDatetime, endDatetime, course } } = req;
+    const { query: { startDatetime, endDatetime, courses } } = req;
 
-    if (startDatetime && endDatetime && course) {
-      const params = {
-        TableName: 'tutorials',
-        KeyConditionExpression: 'course = :course AND startDatetimeIdentifier BETWEEN :start AND :end',
-        ExpressionAttributeValues: {
-          ':course': course,
-          ':start': `${startDatetime}#${MIN_ID}`,
-          ':end': `${endDatetime}#${MAX_ID}`,
-        },
-      };
+    if (startDatetime && endDatetime && courses) {
+      const coursesArray = (courses as string).split(',');
+      const data: any[] = [];
+      await Promise.all(coursesArray.map(async (course) => {
+        const params = {
+          TableName: 'tutorials',
+          KeyConditionExpression: 'course = :course AND startDatetimeIdentifier BETWEEN :start AND :end',
+          ExpressionAttributeValues: {
+            ':course': course,
+            ':start': `${startDatetime}#${MIN_ID}`,
+            ':end': `${endDatetime}#${MAX_ID}`,
+          },
+        };
 
-      const data = await docClient.query(params).promise();
+        data.push(await docClient.query(params).promise());
+      }));
 
       if (data) return res.status(200).json({ data });
       return res.status(400).json({ message: 'Tutorials could not be retrieved' });

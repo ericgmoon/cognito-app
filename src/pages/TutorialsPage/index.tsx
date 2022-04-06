@@ -8,14 +8,11 @@ const MSINWEEK = 604800000;
 const MSINHOUR = 3600000;
 
 const TutorialsPage = () => {
-  const [physArgs] = useState({
-    startDatetime: Date.now() - 2 * MSINHOUR, endDatetime: Date.now() + 2 * MSINWEEK, course: 'phys11',
+  const [args] = useState({
+    startDatetime: Date.now() - 2 * MSINHOUR, endDatetime: Date.now() + 2 * MSINWEEK, courses: 'phys11,chem11',
   });
-  const [chemArgs] = useState({
-    startDatetime: Date.now() - 2 * MSINHOUR, endDatetime: Date.now() + 2 * MSINWEEK, course: 'chem11',
-  });
-  const { data: physTutorials } = useGetTutorialsInRangeQuery(physArgs);
-  const { data: chemTutorials } = useGetTutorialsInRangeQuery(chemArgs);
+
+  const { data } = useGetTutorialsInRangeQuery(args);
   return (
     <ProtectedPageLayout title="Tutorials">
       <TitleWrapper title="Your Tutorials">
@@ -24,7 +21,7 @@ const TutorialsPage = () => {
       <TitleWrapper title="All Tutorials">
         <WeekCalendar
           startDatetime={new Date().getTime()}
-          data={physTutorials?.concat(chemTutorials ?? [])}
+          data={data}
         />
       </TitleWrapper>
     </ProtectedPageLayout>

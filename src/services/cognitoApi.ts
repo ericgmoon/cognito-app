@@ -16,6 +16,6 @@ export const cognitoApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Users', 'Tutorials'],
+  tagTypes: ['Users', 'Tutorials', 'Students'],
   endpoints: () => ({}),
 });
