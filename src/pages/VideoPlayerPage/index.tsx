@@ -109,7 +109,7 @@ const SideBar = ({ resources = [], relatedVideos = [], currentVideoId } : SideBa
       )}
       >
         {relatedVideos.map((vid, index) => (
-          <ListItem disablePadding>
+          <ListItem disablePadding selected={currentVideoId === vid.videoId}>
             <ListItemButton>
               <ListItemText primary={(
                 <Typography variant="body2">
