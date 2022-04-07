@@ -5,16 +5,14 @@ import WeekCalendar from '../../components/WeekCalendar';
 import { useGetTutorialsInRangeQuery } from '../../services/tutorials';
 
 const MSINWEEK = 604800000;
+const MSINHOUR = 3600000;
 
 const TutorialsPage = () => {
-  const [physArgs] = useState({
-    startDatetime: Date.now() - 2 * MSINWEEK, endDatetime: Date.now() + 2 * MSINWEEK, course: 'phys11',
+  const [args] = useState({
+    startDatetime: Date.now() - 2 * MSINHOUR, endDatetime: Date.now() + 2 * MSINWEEK, courses: 'phys11,chem11',
   });
-  const [chemArgs] = useState({
-    startDatetime: Date.now() - 2 * 604800000, endDatetime: Date.now() + 2 * 604800000, course: 'chem11',
-  });
-  const { data: physTutorials } = useGetTutorialsInRangeQuery(physArgs);
-  const { data: chemTutorials } = useGetTutorialsInRangeQuery(chemArgs);
+
+  const { data } = useGetTutorialsInRangeQuery(args);
   return (
     <>
       <TitleWrapper title="Your Tutorials">
@@ -23,7 +21,7 @@ const TutorialsPage = () => {
       <TitleWrapper title="All Tutorials">
         <WeekCalendar
           startDatetime={new Date().getTime()}
-          data={physTutorials?.concat(chemTutorials ?? [])}
+          data={data}
         />
       </TitleWrapper>
     </>
