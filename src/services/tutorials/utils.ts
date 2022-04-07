@@ -2,7 +2,7 @@ import { CalendarEntry } from '../../components/WeekCalendar/types';
 
 import { Tutorial } from './types';
 
-const MSINMIN = 60000;
+const MS_IN_MIN = 60000;
 
 const getSubject = (courseCode: string) => {
   switch (courseCode) {
@@ -27,10 +27,10 @@ const getStartDatetime = (startDatetimeIdentifier: string) =>
 
 const getState = (tutorial: Tutorial) => {
   if (Date.now() > getStartDatetime(tutorial.startDatetimeIdentifier)
-    + tutorial.duration * MSINMIN) {
+    + tutorial.duration * MS_IN_MIN) {
     return 'readOnly';
   }
-  if (getStartDatetime(tutorial.startDatetimeIdentifier) - Date.now() < 5 * MSINMIN) {
+  if (getStartDatetime(tutorial.startDatetimeIdentifier) - Date.now() < 5 * MS_IN_MIN) {
     return 'imminent';
   }
   if (tutorial.attendees.length >= tutorial.capacity) {
