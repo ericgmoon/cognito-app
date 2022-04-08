@@ -1,0 +1,69 @@
+import AWS from 'aws-sdk';
+import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
+
+import { isAdmin } from '../../utils';
+
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+export default async (req: Request, res: Response) => {
+  try {
+    const { body:
+        { course,
+          category,
+          youtubeId,
+          title = 'Untitled Video',
+          creationDatetime = new Date().getTime(),
+          path,
+          resources = [],
+          relatedVideos = [],
+          host = 'Cognito Tuition' } } = req;
+
+    if (!isAdmin(req)) return res.status(401).json({ message: 'Only admins & tutors may add videos' });
+
+    const videoId = uuidv4();
+
+    if (course && youtubeId) {
+      const params = {
+        TableName: 'tutorials',
+        Item: {
+          course,
+          videoId,
+          category,
+          youtubeId,
+          title,
+          creationDatetime,
+          path,
+          resources,
+          relatedVideos,
+          host,
+        },
+      };
+
+      const data = await docClient.put(params).promise();
+
+      if (data) {
+        return res.status(201).json({
+          message: `Created video: ${title}`,
+          data: {
+            course,
+            videoId,
+            category,
+            youtubeId,
+            title,
+            creationDatetime,
+            path,
+            resources,
+            relatedVideos,
+            host,
+          },
+        });
+      }
+      return res.status(400).json({ message: 'Video could not be created' });
+    }
+    return res.status(400).json({ message: 'Insufficient information provided' });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json({ message: 'Video could not be created' });
+  }
+};

@@ -42,14 +42,14 @@ const formatDate = (date: Date) => {
 
 interface TitleBarProps {
   title: string,
-  author: string,
+  host: string,
   uploadDate: Date,
 }
 
-const TitleBar = ({ title, author, uploadDate } : TitleBarProps) => (
+const TitleBar = ({ title, host, uploadDate } : TitleBarProps) => (
   <TitleBarContainer>
     <Typography variant="h6">{title}</Typography>
-    <Typography variant="caption">{author} · {formatDate(uploadDate)}</Typography>
+    <Typography variant="caption">{host} · {formatDate(uploadDate)}</Typography>
   </TitleBarContainer>
 );
 
@@ -135,7 +135,7 @@ interface VideoPlayerPageProps {
   videoId: string,
   youtubeId: string,
   title: string,
-  author: string,
+  host: string,
   uploadDate: Date,
   path: PathKeyUnit[],
   resources?: Resource[],
@@ -146,7 +146,7 @@ const VideoPlayerPage = (
   { videoId,
     youtubeId,
     title,
-    author,
+    host,
     uploadDate,
     path,
     resources = [],
@@ -172,7 +172,7 @@ const VideoPlayerPage = (
           />
           <TitleBar
             title={title}
-            author={author}
+            host={host}
             uploadDate={uploadDate}
           />
           <Divider />

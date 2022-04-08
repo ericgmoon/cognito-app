@@ -11,22 +11,24 @@ export default async (req: Request, res: Response) => {
 
       if (data) {
         const exposedData = ((
-          { youtubeId,
+          { category,
+            youtubeId,
             title,
-            author,
-            uploadDate,
+            creationDatetime,
             path,
             resources,
-            relatedVideos }) => ({
+            relatedVideos,
+            host }) => ({
           course,
           videoId,
+          category,
           youtubeId,
           title,
-          author,
-          uploadDate,
+          creationDatetime,
           path,
           resources,
           relatedVideos,
+          host,
         }))(data);
 
         return res.status(200).json({ data: exposedData });
