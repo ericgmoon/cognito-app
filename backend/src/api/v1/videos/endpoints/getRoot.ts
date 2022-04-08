@@ -15,7 +15,6 @@ export default async (req: Request, res: Response) => {
             youtubeId,
             title,
             creationDatetime,
-            path,
             resources,
             relatedVideos,
             host }) => ({
@@ -25,7 +24,6 @@ export default async (req: Request, res: Response) => {
           youtubeId,
           title,
           creationDatetime,
-          path,
           resources,
           relatedVideos,
           host,

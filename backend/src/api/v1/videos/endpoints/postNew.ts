@@ -10,11 +10,10 @@ export default async (req: Request, res: Response) => {
   try {
     const { body:
         { course,
-          category,
+          category = 'uncategorised',
           youtubeId,
           title = 'Untitled Video',
           creationDatetime = new Date().getTime(),
-          path,
           resources = [],
           relatedVideos = [],
           host = 'Cognito Tuition' } } = req;
@@ -33,7 +32,6 @@ export default async (req: Request, res: Response) => {
           youtubeId,
           title,
           creationDatetime,
-          path,
           resources,
           relatedVideos,
           host,
@@ -52,7 +50,6 @@ export default async (req: Request, res: Response) => {
             youtubeId,
             title,
             creationDatetime,
-            path,
             resources,
             relatedVideos,
             host,

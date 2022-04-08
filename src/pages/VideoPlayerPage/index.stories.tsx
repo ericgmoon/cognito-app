@@ -14,21 +14,18 @@ const Template: ComponentStory<typeof VideoPlayerPage> = (args) => <VideoPlayerP
 export const Default = Template.bind({});
 Default.args = {
   title: 'Atomic Spectra',
-  author: 'Eric Moon',
+  host: 'Eric Moon',
   uploadDate: new Date(),
   videoId: 'dummyVideoId4',
   youtubeId: '1uPyq63aRvg',
   path: [
     {
-      text: 'Videos',
       key: 'root',
     },
     {
-      text: 'Chemistry',
       key: 'chem',
     },
     {
-      text: 'Module 1',
       key: 'chemMod1',
     },
   ],
