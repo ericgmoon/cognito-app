@@ -11,6 +11,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/jwk-to-pem": "^2.0.1",
     "@types/node": "^16.11.10",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@vendia/serverless-express": "^4.5.2",
     "aws-sdk": "^2.1035.0",

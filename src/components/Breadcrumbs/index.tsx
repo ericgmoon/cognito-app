@@ -5,19 +5,22 @@ import {
 } from '@mui/material';
 
 export type PathHrefUnit = {
-  text: string,
+  label: string,
   href: string | '/',
   key?: never,
 }
 
 export type PathKeyUnit = {
-  text: string,
+  label?: never,
   key: string,
   href?: never,
 }
 
 type KeyHrefMap = {
-  [index: string]: string,
+  [index: string]: {
+    label: string,
+    href: string
+  },
 }
 
 interface BreadcrumbsDirectProps {
@@ -40,9 +43,9 @@ const Breadcrumbs = ({ title, path, map }: BreadcrumbsDirectProps | BreadcrumbsM
     separator={<Typography variant="caption">/</Typography>}
   >
     {path.map((p) => (
-      <Link underline="hover" color="inherit" href={map && p.key ? map[p.key] : p.href}>
+      <Link underline="hover" color="inherit" href={(map && p.key) ? map[p.key].href : p.href}>
         <Typography variant="caption">
-          {p.text}
+          {(map && p.key) ? map[p.key].label : p.label}
         </Typography>
       </Link>
     ))}
