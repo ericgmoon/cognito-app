@@ -24,7 +24,7 @@ export default async (req: Request, res: Response) => {
 
     if (course && youtubeId) {
       const params = {
-        TableName: 'tutorials',
+        TableName: 'videos',
         Item: {
           course,
           videoId,
