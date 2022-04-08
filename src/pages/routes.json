@@ -12,6 +12,10 @@
             "label": "Chemistry",
             "href": "/videos/chemistry"
         },
+        "chemMod1": {
+            "label": "Module 1",
+            "href": "/videos/chemistry/mod1"
+        },
         "phys": {
             "label": "Physics",
             "href": "/videos/physics"

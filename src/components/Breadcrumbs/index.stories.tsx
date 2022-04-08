@@ -16,15 +16,15 @@ Href.args = {
   title: 'Atomic Spectra',
   path: [
     {
-      text: 'Chemistry',
+      label: 'Chemistry',
       href: '/',
     },
     {
-      text: 'Core Topics',
+      label: 'Core Topics',
       href: '/',
     },
     {
-      text: 'Module 1',
+      label: 'Module 1',
       href: '/',
     },
   ],
@@ -35,21 +35,27 @@ Map.args = {
   title: 'Atomic Spectra',
   path: [
     {
-      text: 'Chemistry',
       key: 'chemistry',
     },
     {
-      text: 'Core Topics',
       key: 'core',
     },
     {
-      text: 'Module 1',
       key: 'mod1',
     },
   ],
   map: {
-    chemistry: '/',
-    core: '/',
-    mod1: '/',
+    chemistry: {
+      label: 'Chemistry',
+      href: '/',
+    },
+    core: {
+      label: 'Core Topics',
+      href: '/',
+    },
+    mod1: {
+      label: 'Module 1',
+      href: '/',
+    },
   },
 };
