@@ -8,7 +8,7 @@ interface EmbeddedVideoProps {
   videoId: string,
 }
 
-const YouTubePlayer = ({ videoId }: EmbeddedVideoProps) => {
+const YouTubeVideo = ({ videoId }: EmbeddedVideoProps) => {
   const opts: Options = {
     width: '100%',
     height: '100%',
@@ -40,4 +40,4 @@ const YouTubePlayer = ({ videoId }: EmbeddedVideoProps) => {
   );
 };
 
-export default YouTubePlayer;
+export default YouTubeVideo;

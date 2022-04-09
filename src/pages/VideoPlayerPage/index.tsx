@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import Breadcrumbs, { PathKeyUnit } from '../../components/Breadcrumbs';
-import YouTubePlayer from '../../components/YouTubePlayer';
+import YouTubeVideo from '../../components/YouTubeVideo';
 import routes from '../routes.json';
 
 import {
@@ -167,7 +167,7 @@ const VideoPlayerPage = (
       </BreadcrumbsWrapper>
       <ColumnContainer stack={!isMd}>
         <PlayerColumn stack={!isMd}>
-          <YouTubePlayer
+          <YouTubeVideo
             videoId={youtubeId}
           />
           <TitleBar
